@@ -62,15 +62,16 @@ namespace FlowNetworkToolKit.Core.Base.Network
         {
             if (to != null && From != to && To != to)
                 throw new ArgumentException($"Node {to} is outside this edge.");
+            double deltaFLow = 0;
+            if (to == From) deltaFLow = -flow;
+            if (to == To || to == null) deltaFLow = flow;
 
-            if (Flow + flow > Capacity)
+            if (Flow + deltaFLow > Capacity)
                 throw new InvalidFlowException($"New flow ({Flow + flow}) exceed capacity ({Capacity})");
-            if (Flow + flow < Double.Epsilon)
+            if (Flow + deltaFLow < Double.Epsilon)
                 throw new InvalidFlowException($"New flow ({Flow + flow}) less than ({Double.Epsilon})");
 
-            if (to == From) Flow -= flow;
-            if (to == To) Flow += flow;
-            if (to == null) Flow += flow;
+            Flow += deltaFLow;
         }
 
         public override string ToString()

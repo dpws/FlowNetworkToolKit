@@ -69,6 +69,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public void Run()
         {
+            Reset();
             var errors = graph.Validate();
             if (errors.Count > 0)
                 throw new FLowNetworkValidationException(errors);
