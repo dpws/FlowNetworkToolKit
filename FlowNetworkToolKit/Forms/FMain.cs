@@ -11,8 +11,10 @@ using System.Windows.Forms;
 using FlowNetworkToolKit.Core;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Base.Network;
+using FlowNetworkToolKit.Core.Utils.Importer;
 using FlowNetworkToolKit.Core.Utils.Loader;
 using FlowNetworkToolKit.Core.Utils.Logger;
+using FlowNetworkToolKit.Core.Utils.Visualizer;
 
 namespace FlowNetworkToolKit.Forms
 {
@@ -21,9 +23,9 @@ namespace FlowNetworkToolKit.Forms
         public FMain()
         {
             InitializeComponent();
+            canvas.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
         }
-
 
         private void mnAbout_Click(object sender, EventArgs e)
         {
@@ -75,7 +77,6 @@ namespace FlowNetworkToolKit.Forms
                 Log.Write(except.Message, Log.ERROR);
                 return;
             }
-
             Refresh();
         }
 
@@ -101,6 +102,7 @@ namespace FlowNetworkToolKit.Forms
             {
                 pnPlaceHolder.Visible = false;
                 slGraphInfo.Text = $"Nodes: {Runtime.currentGraph.NodeCount} Edges: {Runtime.currentGraph.EdgeCount}";
+                Visualizer.drawGrid(e.Graphics, ClientRectangle);
             }
 
             if (Runtime.currentAlghoritm != null)
@@ -154,9 +156,45 @@ namespace FlowNetworkToolKit.Forms
                 BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance;
                 algorithm.SetGraph(Runtime.currentGraph);
                 algorithm.Run();
-                MessageBox.Show($"Max flow: {algorithm.MaxFlow}");
+                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
             }
 
+        }
+
+        private void mnOpen_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+
+
+        private void canvas_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (Visualizer.SetScale(Math.Round(Visualizer.Scale + (e.Delta / 120 * 0.05), 2)))
+            {
+                canvas.Invalidate();
+            }
+            
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dlgImportFile.ShowDialog() == DialogResult.OK)
+            {
+                var file = new FileInfo(dlgImportFile.FileName);
+                var importer = new Importer();
+                var fn = importer.Import(file);
+                if (fn != null)
+                {
+                    Runtime.currentGraph = fn;
+                    Log.Write($"Loaded flow network from {file.FullName}");
+                    Refresh();
+                }
+                else
+                {
+                    Log.Write($"Fail to load flow network from {file.FullName}", Log.ERROR);
+                }
+            }
         }
     }
 }

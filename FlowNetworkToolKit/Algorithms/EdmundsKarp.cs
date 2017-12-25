@@ -41,7 +41,7 @@ namespace FlowNetworkToolKit.Algorithms
             {
 
                 Tick();
-
+ 
                 var bottle = Double.PositiveInfinity;
 
                 // compute bottleneck capacity;

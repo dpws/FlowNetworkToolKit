@@ -88,7 +88,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
             timer.Stop();
             Elapsed = timer.Elapsed;
             OnFinish?.Invoke(this);
-            Log.Write($"Algorithm {Name}. Max flow: {MaxFlow}. Time: {Elapsed}. Ticks: {Ticks}");
+            Log.Write($"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
         }
 
         public virtual void Reset()

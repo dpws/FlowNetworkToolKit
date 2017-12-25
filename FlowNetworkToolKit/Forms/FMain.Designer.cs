@@ -31,14 +31,6 @@
             this.ssStatus = new System.Windows.Forms.StatusStrip();
             this.slGraphInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
-            this.mnAlghoritmList = new System.Windows.Forms.ToolStripComboBox();
-            this.canvas = new System.Windows.Forms.Panel();
-            this.pnPlaceHolder = new System.Windows.Forms.Panel();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.btnGenerate = new System.Windows.Forms.Button();
-            this.btnImport = new System.Windows.Forms.Button();
-            this.btnOpen = new System.Windows.Forms.Button();
-            this.btnCreate = new System.Windows.Forms.Button();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +41,22 @@
             this.mnReloadAlgorithms = new System.Windows.Forms.ToolStripMenuItem();
             this.visualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnAlghoritmList = new System.Windows.Forms.ToolStripComboBox();
             this.mnToggleLogWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAlgorithmInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.mnRunAlghoritm = new System.Windows.Forms.ToolStripMenuItem();
             this.mnRunVisualization = new System.Windows.Forms.ToolStripMenuItem();
             this.runWithoutVisualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.performanceTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.canvas = new System.Windows.Forms.Panel();
+            this.pnPlaceHolder = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnCreate = new System.Windows.Forms.Button();
+            this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
+            this.dlgImportFile = new System.Windows.Forms.OpenFileDialog();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.canvas.SuspendLayout();
@@ -93,6 +95,90 @@
             this.mainMenu.TabIndex = 1;
             this.mainMenu.Text = "menuStrip1";
             // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnCreate,
+            this.mnOpen,
+            this.importToolStripMenuItem,
+            this.mnGenerate,
+            this.mnSave,
+            this.mnExit,
+            this.mnReloadAlgorithms});
+            this.fileToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.processor;
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // mnCreate
+            // 
+            this.mnCreate.Image = global::FlowNetworkToolKit.Properties.Resources.plus;
+            this.mnCreate.Name = "mnCreate";
+            this.mnCreate.Size = new System.Drawing.Size(167, 22);
+            this.mnCreate.Text = "Create new graph";
+            // 
+            // mnOpen
+            // 
+            this.mnOpen.Image = global::FlowNetworkToolKit.Properties.Resources.folder_horizontal_open;
+            this.mnOpen.Name = "mnOpen";
+            this.mnOpen.Size = new System.Drawing.Size(167, 22);
+            this.mnOpen.Text = "Open graph...";
+            this.mnOpen.Click += new System.EventHandler(this.mnOpen_Click);
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.receipt_import;
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // mnGenerate
+            // 
+            this.mnGenerate.Image = global::FlowNetworkToolKit.Properties.Resources.puzzle;
+            this.mnGenerate.Name = "mnGenerate";
+            this.mnGenerate.Size = new System.Drawing.Size(167, 22);
+            this.mnGenerate.Text = "Generate random";
+            this.mnGenerate.Click += new System.EventHandler(this.mnGenerate_Click);
+            // 
+            // mnSave
+            // 
+            this.mnSave.Image = global::FlowNetworkToolKit.Properties.Resources.disk_return_black;
+            this.mnSave.Name = "mnSave";
+            this.mnSave.Size = new System.Drawing.Size(167, 22);
+            this.mnSave.Text = "Save graph...";
+            // 
+            // mnExit
+            // 
+            this.mnExit.Image = global::FlowNetworkToolKit.Properties.Resources.door_open_out;
+            this.mnExit.Name = "mnExit";
+            this.mnExit.Size = new System.Drawing.Size(167, 22);
+            this.mnExit.Text = "Exit";
+            this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
+            // 
+            // mnReloadAlgorithms
+            // 
+            this.mnReloadAlgorithms.Name = "mnReloadAlgorithms";
+            this.mnReloadAlgorithms.Size = new System.Drawing.Size(167, 22);
+            // 
+            // visualizationToolStripMenuItem
+            // 
+            this.visualizationToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.eye;
+            this.visualizationToolStripMenuItem.Name = "visualizationToolStripMenuItem";
+            this.visualizationToolStripMenuItem.Size = new System.Drawing.Size(101, 23);
+            this.visualizationToolStripMenuItem.Text = "Visualization";
+            this.visualizationToolStripMenuItem.Click += new System.EventHandler(this.visualizationToolStripMenuItem_Click);
+            // 
+            // mnAbout
+            // 
+            this.mnAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.mnAbout.Image = global::FlowNetworkToolKit.Properties.Resources.question;
+            this.mnAbout.Name = "mnAbout";
+            this.mnAbout.Size = new System.Drawing.Size(68, 23);
+            this.mnAbout.Text = "About";
+            this.mnAbout.ToolTipText = "About program";
+            this.mnAbout.Click += new System.EventHandler(this.mnAbout_Click);
+            // 
             // mnAlghoritmList
             // 
             this.mnAlghoritmList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -100,6 +186,63 @@
             this.mnAlghoritmList.Name = "mnAlghoritmList";
             this.mnAlghoritmList.Size = new System.Drawing.Size(200, 23);
             this.mnAlghoritmList.SelectedIndexChanged += new System.EventHandler(this.mnAlghoritmList_SelectedIndexChanged);
+            // 
+            // mnToggleLogWindow
+            // 
+            this.mnToggleLogWindow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.mnToggleLogWindow.Image = global::FlowNetworkToolKit.Properties.Resources.system_monitor;
+            this.mnToggleLogWindow.Name = "mnToggleLogWindow";
+            this.mnToggleLogWindow.Size = new System.Drawing.Size(55, 23);
+            this.mnToggleLogWindow.Text = "Log";
+            this.mnToggleLogWindow.ToolTipText = "Application log";
+            this.mnToggleLogWindow.Click += new System.EventHandler(this.mnToggleLogWindow_Click);
+            // 
+            // mnAlgorithmInfo
+            // 
+            this.mnAlgorithmInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mnAlgorithmInfo.Image = global::FlowNetworkToolKit.Properties.Resources.information;
+            this.mnAlgorithmInfo.Name = "mnAlgorithmInfo";
+            this.mnAlgorithmInfo.Size = new System.Drawing.Size(28, 23);
+            this.mnAlgorithmInfo.Text = "About algorithm";
+            this.mnAlgorithmInfo.ToolTipText = "About algorithm";
+            this.mnAlgorithmInfo.Visible = false;
+            this.mnAlgorithmInfo.Click += new System.EventHandler(this.mnAlgorithmInfo_Click);
+            // 
+            // mnRunAlghoritm
+            // 
+            this.mnRunAlghoritm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mnRunAlghoritm.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnRunVisualization,
+            this.runWithoutVisualizationToolStripMenuItem,
+            this.performanceTestToolStripMenuItem});
+            this.mnRunAlghoritm.Image = global::FlowNetworkToolKit.Properties.Resources.control;
+            this.mnRunAlghoritm.Name = "mnRunAlghoritm";
+            this.mnRunAlghoritm.Size = new System.Drawing.Size(28, 23);
+            this.mnRunAlghoritm.Text = "Run algorithm";
+            this.mnRunAlghoritm.ToolTipText = "Run algorithm";
+            this.mnRunAlghoritm.Visible = false;
+            // 
+            // mnRunVisualization
+            // 
+            this.mnRunVisualization.Image = global::FlowNetworkToolKit.Properties.Resources.eye;
+            this.mnRunVisualization.Name = "mnRunVisualization";
+            this.mnRunVisualization.Size = new System.Drawing.Size(207, 22);
+            this.mnRunVisualization.Text = "Run and visualize";
+            // 
+            // runWithoutVisualizationToolStripMenuItem
+            // 
+            this.runWithoutVisualizationToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.eye_close;
+            this.runWithoutVisualizationToolStripMenuItem.Name = "runWithoutVisualizationToolStripMenuItem";
+            this.runWithoutVisualizationToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.runWithoutVisualizationToolStripMenuItem.Text = "Run without visualization";
+            this.runWithoutVisualizationToolStripMenuItem.Click += new System.EventHandler(this.runWithoutVisualizationToolStripMenuItem_Click);
+            // 
+            // performanceTestToolStripMenuItem
+            // 
+            this.performanceTestToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.clock_select;
+            this.performanceTestToolStripMenuItem.Name = "performanceTestToolStripMenuItem";
+            this.performanceTestToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.performanceTestToolStripMenuItem.Text = "Performance test";
             // 
             // canvas
             // 
@@ -163,6 +306,7 @@
             this.btnImport.TabIndex = 2;
             this.btnImport.Text = "Import graph";
             this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // btnOpen
             // 
@@ -175,6 +319,7 @@
             this.btnOpen.TabIndex = 1;
             this.btnOpen.Text = "Open graph";
             this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.mnOpen_Click);
             // 
             // btnCreate
             // 
@@ -188,144 +333,14 @@
             this.btnCreate.Text = "Create new graph";
             this.btnCreate.UseVisualStyleBackColor = true;
             // 
-            // fileToolStripMenuItem
+            // dlgOpenFile
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnCreate,
-            this.mnOpen,
-            this.importToolStripMenuItem,
-            this.mnGenerate,
-            this.mnSave,
-            this.mnExit,
-            this.mnReloadAlgorithms});
-            this.fileToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.processor;
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
-            this.fileToolStripMenuItem.Text = "File";
+            this.dlgOpenFile.Filter = "FlowNetwork|*.xml";
             // 
-            // mnCreate
+            // dlgImportFile
             // 
-            this.mnCreate.Image = global::FlowNetworkToolKit.Properties.Resources.plus;
-            this.mnCreate.Name = "mnCreate";
-            this.mnCreate.Size = new System.Drawing.Size(167, 22);
-            this.mnCreate.Text = "Create new graph";
-            // 
-            // mnOpen
-            // 
-            this.mnOpen.Image = global::FlowNetworkToolKit.Properties.Resources.folder_horizontal_open;
-            this.mnOpen.Name = "mnOpen";
-            this.mnOpen.Size = new System.Drawing.Size(167, 22);
-            this.mnOpen.Text = "Open graph...";
-            // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.receipt_import;
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.importToolStripMenuItem.Text = "Import";
-            // 
-            // mnGenerate
-            // 
-            this.mnGenerate.Image = global::FlowNetworkToolKit.Properties.Resources.puzzle;
-            this.mnGenerate.Name = "mnGenerate";
-            this.mnGenerate.Size = new System.Drawing.Size(167, 22);
-            this.mnGenerate.Text = "Generate random";
-            this.mnGenerate.Click += new System.EventHandler(this.mnGenerate_Click);
-            // 
-            // mnSave
-            // 
-            this.mnSave.Image = global::FlowNetworkToolKit.Properties.Resources.disk_return_black;
-            this.mnSave.Name = "mnSave";
-            this.mnSave.Size = new System.Drawing.Size(167, 22);
-            this.mnSave.Text = "Save graph...";
-            // 
-            // mnExit
-            // 
-            this.mnExit.Image = global::FlowNetworkToolKit.Properties.Resources.door_open_out;
-            this.mnExit.Name = "mnExit";
-            this.mnExit.Size = new System.Drawing.Size(167, 22);
-            this.mnExit.Text = "Exit";
-            this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
-            // 
-            // mnReloadAlgorithms
-            // 
-            this.mnReloadAlgorithms.Name = "mnReloadAlgorithms";
-            this.mnReloadAlgorithms.Size = new System.Drawing.Size(167, 22);
-            // 
-            // visualizationToolStripMenuItem
-            // 
-            this.visualizationToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.eye;
-            this.visualizationToolStripMenuItem.Name = "visualizationToolStripMenuItem";
-            this.visualizationToolStripMenuItem.Size = new System.Drawing.Size(101, 23);
-            this.visualizationToolStripMenuItem.Text = "Visualization";
-            this.visualizationToolStripMenuItem.Click += new System.EventHandler(this.visualizationToolStripMenuItem_Click);
-            // 
-            // mnAbout
-            // 
-            this.mnAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.mnAbout.Image = global::FlowNetworkToolKit.Properties.Resources.question;
-            this.mnAbout.Name = "mnAbout";
-            this.mnAbout.Size = new System.Drawing.Size(68, 23);
-            this.mnAbout.Text = "About";
-            this.mnAbout.ToolTipText = "About program";
-            this.mnAbout.Click += new System.EventHandler(this.mnAbout_Click);
-            // 
-            // mnToggleLogWindow
-            // 
-            this.mnToggleLogWindow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.mnToggleLogWindow.Image = global::FlowNetworkToolKit.Properties.Resources.system_monitor;
-            this.mnToggleLogWindow.Name = "mnToggleLogWindow";
-            this.mnToggleLogWindow.Size = new System.Drawing.Size(55, 23);
-            this.mnToggleLogWindow.Text = "Log";
-            this.mnToggleLogWindow.ToolTipText = "Application log";
-            this.mnToggleLogWindow.Click += new System.EventHandler(this.mnToggleLogWindow_Click);
-            // 
-            // mnAlgorithmInfo
-            // 
-            this.mnAlgorithmInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mnAlgorithmInfo.Image = global::FlowNetworkToolKit.Properties.Resources.information;
-            this.mnAlgorithmInfo.Name = "mnAlgorithmInfo";
-            this.mnAlgorithmInfo.Size = new System.Drawing.Size(28, 23);
-            this.mnAlgorithmInfo.Text = "About algorithm";
-            this.mnAlgorithmInfo.ToolTipText = "About algorithm";
-            this.mnAlgorithmInfo.Visible = false;
-            this.mnAlgorithmInfo.Click += new System.EventHandler(this.mnAlgorithmInfo_Click);
-            // 
-            // mnRunAlghoritm
-            // 
-            this.mnRunAlghoritm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mnRunAlghoritm.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnRunVisualization,
-            this.runWithoutVisualizationToolStripMenuItem,
-            this.performanceTestToolStripMenuItem});
-            this.mnRunAlghoritm.Image = global::FlowNetworkToolKit.Properties.Resources.control;
-            this.mnRunAlghoritm.Name = "mnRunAlghoritm";
-            this.mnRunAlghoritm.Size = new System.Drawing.Size(28, 23);
-            this.mnRunAlghoritm.Text = "Run algorithm";
-            this.mnRunAlghoritm.ToolTipText = "Run algorithm";
-            this.mnRunAlghoritm.Visible = false;
-            // 
-            // mnRunVisualization
-            // 
-            this.mnRunVisualization.Image = global::FlowNetworkToolKit.Properties.Resources.eye;
-            this.mnRunVisualization.Name = "mnRunVisualization";
-            this.mnRunVisualization.Size = new System.Drawing.Size(207, 22);
-            this.mnRunVisualization.Text = "Run and visualize";
-            // 
-            // runWithoutVisualizationToolStripMenuItem
-            // 
-            this.runWithoutVisualizationToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.eye_close;
-            this.runWithoutVisualizationToolStripMenuItem.Name = "runWithoutVisualizationToolStripMenuItem";
-            this.runWithoutVisualizationToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.runWithoutVisualizationToolStripMenuItem.Text = "Run without visualization";
-            this.runWithoutVisualizationToolStripMenuItem.Click += new System.EventHandler(this.runWithoutVisualizationToolStripMenuItem_Click);
-            // 
-            // performanceTestToolStripMenuItem
-            // 
-            this.performanceTestToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.clock_select;
-            this.performanceTestToolStripMenuItem.Name = "performanceTestToolStripMenuItem";
-            this.performanceTestToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.performanceTestToolStripMenuItem.Text = "Performance test";
+            this.dlgImportFile.Filter = "csv|*.csv|FlowNetwork|*.fn";
+            this.dlgImportFile.FilterIndex = 2;
             // 
             // FMain
             // 
@@ -380,6 +395,8 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ToolStripMenuItem mnGenerate;
         private System.Windows.Forms.ToolStripStatusLabel slGraphInfo;
+        private System.Windows.Forms.OpenFileDialog dlgOpenFile;
+        private System.Windows.Forms.OpenFileDialog dlgImportFile;
     }
 }
 

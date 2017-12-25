@@ -31,7 +31,7 @@ namespace FlowNetworkToolKit.Core.Utils.Loader
                         if (type.IsSubclassOf(typeof(BaseMaxFlowAlgorithm)))
                         {
                             BaseMaxFlowAlgorithm var = (BaseMaxFlowAlgorithm)asm.CreateInstance(type.FullName);
-                            Log.Write($"  Found alghoritm class {type.Name}: {var.GetName()}");
+                            Log.Write($"  Found algorithm class {type.Name}: {var.GetName()}");
                             list.Add(new AlgorithmInfo(var.GetName(), var.GetDescription(), var.GetUrl(), type.FullName, var));
                         }
                     }
@@ -49,12 +49,12 @@ namespace FlowNetworkToolKit.Core.Utils.Loader
             if (assemblyFile == null)
             {
                 asm = Assembly.GetCallingAssembly();
-                Log.Write($"Searching alghoritms in namespace {assemblyNamespace} from {asm.EscapedCodeBase}.");
+                Log.Write($"Searching algorithms in namespace {assemblyNamespace} from {asm.EscapedCodeBase}.");
             }
             else
             {
                 asm = Assembly.LoadFrom(assemblyFile);
-                Log.Write($"Searching alghoritms in namespace {assemblyNamespace} from {assemblyFile}.");
+                Log.Write($"Searching algorithms in namespace {assemblyNamespace} from {assemblyFile}.");
             }
             Type[] typelist = asm.GetTypes();
 
@@ -65,7 +65,7 @@ namespace FlowNetworkToolKit.Core.Utils.Loader
                     if (type.Namespace == assemblyNamespace && type.IsSubclassOf(typeof(BaseMaxFlowAlgorithm)))
                     {
                         BaseMaxFlowAlgorithm var = (BaseMaxFlowAlgorithm)asm.CreateInstance(type.FullName);
-                        Log.Write($"  Found alghoritm class {type.Name}: {var.GetName()}");
+                        Log.Write($"  Found algorithm class {type.Name}: {var.GetName()}");
                         list.Add(new AlgorithmInfo(var.GetName(), var.GetDescription(), var.GetUrl(), type.FullName, var));
                     }
                 }
@@ -86,8 +86,8 @@ namespace FlowNetworkToolKit.Core.Utils.Loader
             cp.TreatWarningsAsErrors = false;
 
             cp.ReferencedAssemblies.Add("System.Core.dll");
-            cp.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GraphToolKit.Core.dll"));
-            cp.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GraphToolKit.Alghoritms.dll"));
+            //cp.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GraphToolKit.Core.dll"));
+            //cp.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GraphToolKit.Alghoritms.dll"));
 
 
             var cr = provider.CompileAssemblyFromFile(cp, sourceFile.FullName);
