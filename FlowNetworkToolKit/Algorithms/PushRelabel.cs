@@ -125,8 +125,6 @@ namespace FlowNetworkToolKit.Algorithms
             return false;
         }
 
-
-
         private void Relabel(int v)
         {
             // Initialize minimum height of an adjacent

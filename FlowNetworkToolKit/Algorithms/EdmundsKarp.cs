@@ -26,7 +26,7 @@ namespace FlowNetworkToolKit.Algorithms
 
         protected override void Init()
         {
-            if (!IsReacheable(graph.Source, graph.Target)) throw new ArgumentException("Initial flow is infeasible");
+            //if (!IsReacheable(graph.Source, graph.Target)) throw new ArgumentException("Initial flow is infeasible");
         }
 
         protected override void Logic()

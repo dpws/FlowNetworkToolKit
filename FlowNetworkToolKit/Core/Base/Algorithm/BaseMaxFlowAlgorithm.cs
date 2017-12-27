@@ -60,7 +60,8 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public virtual void SetGraph(FlowNetwork g)
         {
-                graph = originalGraph = g;
+            graph = new FlowNetwork(g);
+            originalGraph = new FlowNetwork(g);
         }
 
         protected abstract void Init();
@@ -95,7 +96,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         {
             MaxFlow = Double.Epsilon;
             Ticks = 0;
-            graph = originalGraph;
+            graph = new FlowNetwork(originalGraph);
         }
 
         #region Information

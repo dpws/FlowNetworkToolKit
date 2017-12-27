@@ -47,7 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\Dinic.cs" />
     <Compile Include="Algorithms\EdmundsKarp.cs" />
+    <Compile Include="Algorithms\GoldbergRao.cs" />
+    <Compile Include="Algorithms\GoldbergTarjan.cs" />
     <Compile Include="Algorithms\PushRelabel.cs" />
     <Compile Include="Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs" />
     <Compile Include="Core\Base\Exceptions\InvalidFlowException.cs" />
@@ -58,6 +61,7 @@
     <Compile Include="Core\Base\Network\FlowNode.cs" />
     <Compile Include="Core\Runtime.cs" />
     <Compile Include="Core\Utils\Importer\Importer.cs" />
+    <Compile Include="Core\Utils\ListExtensions.cs" />
     <Compile Include="Core\Utils\Loader\AlgorithmInfo.cs" />
     <Compile Include="Core\Utils\Loader\AlgorithmLoader.cs" />
     <Compile Include="Core\Utils\Logger\Log.cs" />

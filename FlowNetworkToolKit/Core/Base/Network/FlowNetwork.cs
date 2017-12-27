@@ -30,6 +30,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
         private int _target = -1;
 
         public new List<FlowEdge> Edges { get; protected set; } = new List<FlowEdge>();
+
         public new Dictionary<int, FlowNode> Nodes { get; protected set; } = new Dictionary<int, FlowNode>();
 
         public new int NodeCount
@@ -68,24 +69,32 @@ namespace FlowNetworkToolKit.Core.Base.Network
             }
         }
 
-       
-
         public FlowNetwork()
         {
 
         }
 
+        public FlowNetwork(List<FlowEdge> edges)
+        {
+            foreach (var edge in edges)
+                AddEdge(edge.From, edge.To, edge.Capacity, edge.Flow);
+        }
 
+        public FlowNetwork(FlowNetwork graph): this(graph.Edges)
+        {
+            Source = graph.Source;
+            Target = graph.Target;
+        }
 
-        public void AddEdge(int from, int to, double capacity)
+        public void AddEdge(int from, int to, double capacity, double f = -1)
         {
             if (from == to)
                 throw new InvalidConfigurationException("'from' cant equals 'to'");
 
-            if (capacity < Double.Epsilon)
-                throw new InvalidConfigurationException($"Capacity can't be less than {Double.Epsilon}");
-
-            var edge = new FlowEdge(from, to, capacity);
+            //if (capacity < Double.Epsilon)
+              //  throw new InvalidConfigurationException($"Capacity can't be less than {Double.Epsilon}");
+           
+            var edge = f == -1? new FlowEdge(from, to, capacity) : new FlowEdge(from, to, capacity, f);
             edge.OnFlowChanged += (sender, cap, flow) => OnEdgeFlowChanged?.Invoke(this, sender);
             edge.OnLengthChanged += (sender, length) => OnEdgeLengthChanged?.Invoke(this, sender);
 
@@ -116,6 +125,14 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public override string ToString()
         {
             return $"Edges: {EdgeCount} Nodes: {NodeCount}";
+        }
+
+        public void PushFlow(int from, int to, double flow)
+        {
+
+            var ind = Edges.IndexOf(new FlowEdge(from, to, 0));
+            if (ind == -1) ind = Edges.IndexOf(new FlowEdge(to, from, 0));
+            Edges[ind].AddFlow(flow, to);
         }
     }
 }

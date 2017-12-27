@@ -7,7 +7,7 @@ using FlowNetworkToolKit.Core.Base.Exceptions;
 
 namespace FlowNetworkToolKit.Core.Base.Network
 {
-    public class FlowEdge
+    public class FlowEdge : IEquatable<FlowEdge>
     {
         #region Events
 
@@ -21,19 +21,35 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public readonly int From;
         public readonly int To;
-        public readonly double Capacity;
+        public double Capacity;
 
         public double ResidualCapacity => Capacity - Flow;
 
         public int Length { protected set; get; } = 0;
-        public double Flow = 0;
 
+        public double Flow = 0;
 
         public FlowEdge(int from, int to, double capacity) : base()
         {
             From = from;
             To = to;
             Capacity = capacity;
+        }
+
+        public FlowEdge(int from, int to, double capacity, double flow) : base()
+        {
+            From = from;
+            To = to;
+            Capacity = capacity;
+            Flow = flow;
+        }
+
+        public FlowEdge(FlowEdge e) : base()
+        {
+            From = e.From;
+            To = e.To;
+            Capacity = e.Capacity;
+            Flow = e.Flow;
         }
 
         public int Other(int node)
@@ -66,10 +82,10 @@ namespace FlowNetworkToolKit.Core.Base.Network
             if (to == From) deltaFLow = -flow;
             if (to == To || to == null) deltaFLow = flow;
 
-            if (Flow + deltaFLow > Capacity)
-                throw new InvalidFlowException($"New flow ({Flow + flow}) exceed capacity ({Capacity})");
-            if (Flow + deltaFLow < Double.Epsilon)
-                throw new InvalidFlowException($"New flow ({Flow + flow}) less than ({Double.Epsilon})");
+            //if (Flow + deltaFLow > Capacity)
+            //    throw new InvalidFlowException($"New flow ({Flow + flow}) exceed capacity ({Capacity})");
+            //if (Flow + deltaFLow < Double.Epsilon)
+            //    throw new InvalidFlowException($"New flow ({Flow + flow}) less than ({Double.Epsilon})");
 
             Flow += deltaFLow;
         }
@@ -77,6 +93,16 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public override string ToString()
         {
             return $"{From} > {To} ({Capacity})";
+        }
+
+        public bool Equals(FlowEdge other)
+        {
+            return this.From == other.From && this.To == other.To;
+        }
+
+        public int GetHashCode(FlowEdge obj)
+        {
+            return obj.From * 31 + obj.To;
         }
     }
 }
