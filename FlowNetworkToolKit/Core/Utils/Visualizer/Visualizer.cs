@@ -18,6 +18,9 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static double Scale { private set; get; } = 1;
 
         public static Color BaseColor = Color.DarkCyan;
+        public static Color SelectedColor = Color.DarkCyan;
+        public static Brush SourceBrush = Brushes.LightSteelBlue;
+        public static Brush TargetBrush = Brushes.LightPink;
 
         public static bool SetScale(double scale)
         {
@@ -80,9 +83,20 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 var newX = (int)(node.Value.Position.X * Scale);
                 var newY = (int)(node.Value.Position.Y * Scale);
                 Point pos = new Point(newX, newY);
-                g.FillEllipse(Brushes.White, pos.X, pos.Y, NodeDiameter, NodeDiameter);
+                var bgbrush = Brushes.White;
+                var ntext = "";
+                if (node.Value.Index == Runtime.currentGraph.Source)
+                {
+                    bgbrush = SourceBrush;
+                    ntext = "Source";
+                } else if (node.Value.Index == Runtime.currentGraph.Target)
+                {
+                    bgbrush = TargetBrush;
+                    ntext = "Target";
+                }
+                g.FillEllipse(bgbrush, pos.X, pos.Y, NodeDiameter, NodeDiameter);
                 g.DrawEllipse(new Pen(BaseColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
-                var s = $"{node.Key}";
+                var s = $"{node.Value.Index}";
                 int
                     len = s.Length,
                     dx = len > 3 ? -1 : len > 2 ? 1 : len > 1 ? 2 : 6,
@@ -90,7 +104,12 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     sz = len > 2 ? 6 : 8,
                     x = pos.X + dx, y = pos.Y + dy;
                 using (var font = new Font(FontFamily.GenericSansSerif, sz))
+                {
                     g.DrawString(s, font, Brushes.Black, x, y);
+                    if(ntext.Length > 0)
+                        g.DrawString(ntext, font, Brushes.Black, x + NodeDiameter, y);
+                }
+                    
             }
 
         }
