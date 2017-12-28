@@ -79,7 +79,6 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 
                 var newX = (int)(node.Value.Position.X * Scale);
                 var newY = (int)(node.Value.Position.Y * Scale);
-                Console.WriteLine($"{node.Value.Index}: {newX} {newY}");
                 Point pos = new Point(newX, newY);
                 g.FillEllipse(Brushes.White, pos.X, pos.Y, NodeDiameter, NodeDiameter);
                 g.DrawEllipse(new Pen(BaseColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
@@ -104,8 +103,6 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             {
                 var posFrom = new Point((int)(fn.Nodes[edge.From].Position.X * Scale + NodeDiameter / 2) , (int)(fn.Nodes[edge.From].Position.Y * Scale + NodeDiameter / 2));
                 var posTo = new Point((int)(fn.Nodes[edge.To].Position.X * Scale + NodeDiameter / 2), (int)(fn.Nodes[edge.To].Position.Y * Scale + NodeDiameter / 2));
-                Console.WriteLine($"e {edge.From}: {posFrom.X} {posFrom.Y}");
-                Console.WriteLine($"e {edge.To}: {posTo.X} {posTo.Y}");
                 g.DrawLine(pen, posFrom.X, posFrom.Y, posTo.X, posTo.Y);
                 var angle = Math.Atan2(posFrom.X - posTo.X, posFrom.Y - posTo.Y);
 
@@ -131,7 +128,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
                 using (var font = new Font(FontFamily.GenericSansSerif, 10))
                 {
-                    var weight = (edge.Capacity - edge.Flow) + "/" + edge.Flow;
+                    var weight = edge.Flow + "/" +(edge.Capacity - edge.Flow);
                     var size = g.MeasureString(weight, font);
                     w.X -=(int)(size.Width / 2f);
                     w.Y -= (int)(size.Height / 2f);
