@@ -48,9 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Dinic.cs" />
-    <Compile Include="Algorithms\EdmundsKarp.cs" />
+    <Compile Include="Algorithms\EdmondsKarp.cs" />
     <Compile Include="Algorithms\GoldbergRao.cs" />
     <Compile Include="Algorithms\GoldbergTarjan.cs" />
+    <Compile Include="Algorithms\HLPR.cs" />
+    <Compile Include="Algorithms\RelabelToFront.cs" />
     <Compile Include="Algorithms\PushRelabel.cs" />
     <Compile Include="Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs" />
     <Compile Include="Core\Base\Exceptions\InvalidFlowException.cs" />

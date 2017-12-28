@@ -13,7 +13,7 @@ namespace FlowNetworkToolKit.Algorithms
         private int[] dist;
         public Dinic()
         {
-            Name = "Dinic";
+            Name = "Dinic*";
             Url = "";
             Description =
                 @"";
