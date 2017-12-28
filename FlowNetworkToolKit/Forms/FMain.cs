@@ -102,7 +102,9 @@ namespace FlowNetworkToolKit.Forms
             {
                 pnPlaceHolder.Visible = false;
                 slGraphInfo.Text = $"Nodes: {Runtime.currentGraph.NodeCount} Edges: {Runtime.currentGraph.EdgeCount}";
-                Visualizer.drawGrid(e.Graphics, ClientRectangle);
+                //Visualizer.drawGrid(e.Graphics, ClientRectangle);
+                Visualizer.drawNodes(e.Graphics, ClientRectangle);
+                Visualizer.drawEdges(e.Graphics, ClientRectangle);
             }
 
             if (Runtime.currentAlghoritm != null)
@@ -195,6 +197,11 @@ namespace FlowNetworkToolKit.Forms
                     Log.Write($"Fail to load flow network from {file.FullName}", Log.ERROR);
                 }
             }
+        }
+
+        private void FMain_Resize(object sender, EventArgs e)
+        {
+            canvas.Invalidate();
         }
     }
 }

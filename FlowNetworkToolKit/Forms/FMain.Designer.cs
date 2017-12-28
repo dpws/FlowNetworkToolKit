@@ -355,6 +355,7 @@
             this.Name = "FMain";
             this.Text = "Graph ToolKit";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FMain_Paint);
+            this.Resize += new System.EventHandler(this.FMain_Resize);
             this.ssStatus.ResumeLayout(false);
             this.ssStatus.PerformLayout();
             this.mainMenu.ResumeLayout(false);
