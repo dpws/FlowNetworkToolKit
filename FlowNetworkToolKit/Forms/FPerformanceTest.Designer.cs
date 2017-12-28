@@ -30,7 +30,7 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cblAlgorithms = new System.Windows.Forms.CheckedListBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgTestResults = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRun = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,7 +38,6 @@
             this.algorithm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxflow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.runs = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mintime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxtime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.avgtime = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,7 +45,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgTestResults)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udRunsCount)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +62,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel2.Controls.Add(this.dgTestResults);
             this.splitContainer1.Size = new System.Drawing.Size(989, 435);
             this.splitContainer1.SplitterDistance = 172;
             this.splitContainer1.TabIndex = 99;
@@ -77,29 +76,28 @@
             this.cblAlgorithms.Size = new System.Drawing.Size(172, 435);
             this.cblAlgorithms.TabIndex = 0;
             // 
-            // dataGridView1
+            // dgTestResults
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgTestResults.AllowUserToAddRows = false;
+            this.dgTestResults.AllowUserToDeleteRows = false;
+            this.dgTestResults.AllowUserToOrderColumns = true;
+            this.dgTestResults.AllowUserToResizeRows = false;
+            this.dgTestResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgTestResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.algorithm,
             this.maxflow,
             this.runs,
-            this.ticks,
             this.mintime,
             this.maxtime,
             this.avgtime});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(813, 435);
-            this.dataGridView1.TabIndex = 0;
+            this.dgTestResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgTestResults.Location = new System.Drawing.Point(0, 0);
+            this.dgTestResults.Name = "dgTestResults";
+            this.dgTestResults.ReadOnly = true;
+            this.dgTestResults.RowHeadersVisible = false;
+            this.dgTestResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgTestResults.Size = new System.Drawing.Size(813, 435);
+            this.dgTestResults.TabIndex = 0;
             // 
             // panel1
             // 
@@ -122,6 +120,7 @@
             this.btnRun.TabIndex = 9;
             this.btnRun.Text = "Run tests";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // label1
             // 
@@ -177,12 +176,6 @@
             this.runs.Name = "runs";
             this.runs.ReadOnly = true;
             // 
-            // ticks
-            // 
-            this.ticks.HeaderText = "Ticks per run";
-            this.ticks.Name = "ticks";
-            this.ticks.ReadOnly = true;
-            // 
             // mintime
             // 
             this.mintime.HeaderText = "Minimum time";
@@ -217,7 +210,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgTestResults)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udRunsCount)).EndInit();
@@ -229,7 +222,7 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.CheckedListBox cblAlgorithms;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgTestResults;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Label label1;
@@ -237,7 +230,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn algorithm;
         private System.Windows.Forms.DataGridViewTextBoxColumn maxflow;
         private System.Windows.Forms.DataGridViewTextBoxColumn runs;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ticks;
         private System.Windows.Forms.DataGridViewTextBoxColumn mintime;
         private System.Windows.Forms.DataGridViewTextBoxColumn maxtime;
         private System.Windows.Forms.DataGridViewTextBoxColumn avgtime;

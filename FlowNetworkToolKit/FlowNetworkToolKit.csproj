@@ -89,6 +89,7 @@
     <Compile Include="Core\Utils\Loader\AlgorithmLoader.cs" />
     <Compile Include="Core\Utils\Logger\Log.cs" />
     <Compile Include="Core\Utils\Logger\LogItem.cs" />
+    <Compile Include="Core\Utils\PerformanceCounter.cs" />
     <Compile Include="Core\Utils\Visualizer\Visualizer.cs" />
     <Compile Include="Forms\FAbout.cs">
       <SubType>Form</SubType>
