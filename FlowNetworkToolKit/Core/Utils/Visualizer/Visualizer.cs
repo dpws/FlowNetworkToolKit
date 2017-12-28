@@ -13,6 +13,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
     public static class Visualizer
     {
         public static int CellSize = 15;
+        public static int NodeDiameter = 24;
         public static int NodeMargin = 30;
         public static double Scale { private set; get; } = 1;
 
@@ -28,6 +29,15 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             if (delta != 0) return true;
 
             return false;
+        }
+
+        public static void Visualise(Graphics g, Rectangle ClientRectangle)
+        {
+            //Visualizer.drawGrid(g, ClientRectangle);
+            arrangeNodesByCircle(ClientRectangle);
+            drawEdges(g, ClientRectangle);
+            drawNodes(g, ClientRectangle);
+            
         }
 
         public static void drawGrid(Graphics g, Rectangle ClientRectangle)
@@ -54,6 +64,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             {
                 var a = factor * node.Key;
                 node.Value.Position = new Point(c.X + (int)(rx * Math.Sin(a)), c.Y + (int)(ry * Math.Cos(a)));
+                
             }
         }
 
@@ -61,16 +72,17 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         {
             var fn = Runtime.currentGraph;
 
-            arrangeNodesByCircle(ClientRectangle);
+            
 
             foreach (var node in fn.Nodes)
             {
-                var diameter = 24;
-                var newX = (int)(node.Value.Position.X * Scale + diameter / 2);
-                var newY = (int)(node.Value.Position.Y * Scale + diameter / 2);
+                
+                var newX = (int)(node.Value.Position.X * Scale);
+                var newY = (int)(node.Value.Position.Y * Scale);
+                Console.WriteLine($"{node.Value.Index}: {newX} {newY}");
                 Point pos = new Point(newX, newY);
-                g.FillEllipse(Brushes.White, pos.X, pos.Y, diameter, diameter);
-                g.DrawEllipse(new Pen(BaseColor, 3), pos.X, pos.Y, diameter, diameter);
+                g.FillEllipse(Brushes.White, pos.X, pos.Y, NodeDiameter, NodeDiameter);
+                g.DrawEllipse(new Pen(BaseColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
                 var s = $"{node.Key}";
                 int
                     len = s.Length,
@@ -90,9 +102,10 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             var pen = new Pen(BaseColor, 2);
             foreach (var edge in fn.Edges)
             {
-                var posFrom = new Point((int)(fn.Nodes[edge.From].Position.X * Scale), (int)(fn.Nodes[edge.From].Position.Y * Scale));
-                var posTo = new Point((int)(fn.Nodes[edge.To].Position.X * Scale), (int)(fn.Nodes[edge.To].Position.Y * Scale));
-               
+                var posFrom = new Point((int)(fn.Nodes[edge.From].Position.X * Scale + NodeDiameter / 2) , (int)(fn.Nodes[edge.From].Position.Y * Scale + NodeDiameter / 2));
+                var posTo = new Point((int)(fn.Nodes[edge.To].Position.X * Scale + NodeDiameter / 2), (int)(fn.Nodes[edge.To].Position.Y * Scale + NodeDiameter / 2));
+                Console.WriteLine($"e {edge.From}: {posFrom.X} {posFrom.Y}");
+                Console.WriteLine($"e {edge.To}: {posTo.X} {posTo.Y}");
                 g.DrawLine(pen, posFrom.X, posFrom.Y, posTo.X, posTo.Y);
                 var angle = Math.Atan2(posFrom.X - posTo.X, posFrom.Y - posTo.Y);
 
