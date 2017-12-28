@@ -23,6 +23,7 @@ namespace FlowNetworkToolKit.Forms
         public FMain()
         {
             InitializeComponent();
+            Log.Init();
             canvas.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
         }
@@ -102,7 +103,7 @@ namespace FlowNetworkToolKit.Forms
             {
                 pnPlaceHolder.Visible = false;
                 slGraphInfo.Text = $"Nodes: {Runtime.currentGraph.NodeCount} Edges: {Runtime.currentGraph.EdgeCount}";
-                Visualizer.drawGrid(e.Graphics, ClientRectangle);
+                Visualizer.Visualise(e.Graphics, ClientRectangle);
             }
 
             if (Runtime.currentAlghoritm != null)
@@ -153,10 +154,11 @@ namespace FlowNetworkToolKit.Forms
             }
             if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
             {
-                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance;
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                algorithm.OnFinish += OnAlgorithmFinished;
                 algorithm.SetGraph(Runtime.currentGraph);
-                algorithm.Run();
-                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
+                algorithm.RunAsync();
+                
             }
 
         }
@@ -195,6 +197,22 @@ namespace FlowNetworkToolKit.Forms
                     Log.Write($"Fail to load flow network from {file.FullName}", Log.ERROR);
                 }
             }
+        }
+
+        private void FMain_Resize(object sender, EventArgs e)
+        {
+            canvas.Invalidate();
+        }
+
+        private void OnAlgorithmFinished(BaseMaxFlowAlgorithm algorithm)
+        {
+                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
+        }
+
+        private void performanceTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var Form = new FPerformanceTest();
+            Form.ShowDialog();
         }
     }
 }

@@ -42,14 +42,12 @@ namespace FlowNetworkToolKit.Core.Utils.Importer
         {
             FlowNetwork g = new FlowNetwork();
             int source = -1, target = -1;
-            var txt = File.ReadAllText(file.FullName);
-
-            var tokens = txt.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var lines = tokens[0].Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             try
             {
-                foreach (var line in lines)
+                System.IO.StreamReader fs =
+                    new System.IO.StreamReader(file.FullName);
+                string line;
+                while ((line = fs.ReadLine()) != null)
                 {
                     if (line.StartsWith("SOURCE"))
                     {

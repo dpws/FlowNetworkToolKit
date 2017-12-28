@@ -93,6 +93,16 @@ namespace FlowNetworkToolKit.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap control_skip {
+            get {
+                object obj = ResourceManager.GetObject("control-skip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap disk_return_black {
             get {
                 object obj = ResourceManager.GetObject("disk-return-black", resourceCulture);

@@ -18,7 +18,6 @@ namespace FlowNetworkToolKit
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Log.Init();
             Application.Run(new FMain());
         }
     }

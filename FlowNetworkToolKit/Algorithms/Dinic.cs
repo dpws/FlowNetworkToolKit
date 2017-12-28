@@ -19,6 +19,11 @@ namespace FlowNetworkToolKit.Algorithms
                 @"";
         }
 
+        public override string GetStats()
+        {
+            return "Some statisctics";
+        }
+
         protected override void Init()
         {
            

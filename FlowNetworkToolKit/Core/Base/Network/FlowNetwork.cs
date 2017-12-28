@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,8 @@ namespace FlowNetworkToolKit.Core.Base.Network
         private int _source = -1;
         private int _target = -1;
 
-        public new List<FlowEdge> Edges { get; protected set; } = new List<FlowEdge>();
-
-        public new Dictionary<int, FlowNode> Nodes { get; protected set; } = new Dictionary<int, FlowNode>();
+        public List<FlowEdge> Edges { get; protected set; } = new List<FlowEdge>();
+        public Dictionary<int, FlowNode> Nodes { get; protected set; } = new Dictionary<int, FlowNode>();
 
         public new int NodeCount
         {
