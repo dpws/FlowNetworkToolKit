@@ -75,6 +75,7 @@
     <Compile Include="Algorithms\GoldbergTarjan.cs" />
     <Compile Include="Algorithms\PushRelabel.cs" />
     <Compile Include="Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs" />
+    <Compile Include="Core\Base\Algorithm\IStatable.cs" />
     <Compile Include="Core\Base\Exceptions\InvalidFlowException.cs" />
     <Compile Include="Core\Base\Exceptions\FlowNetworkValidationException.cs" />
     <Compile Include="Core\Base\Exceptions\InvalidConfigurationException.cs" />
@@ -113,6 +114,12 @@
     <Compile Include="Forms\FMain.Designer.cs">
       <DependentUpon>FMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FPerformanceTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FPerformanceTest.Designer.cs">
+      <DependentUpon>FPerformanceTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FAbout.resx">
@@ -123,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FMain.resx">
       <DependentUpon>FMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FPerformanceTest.resx">
+      <DependentUpon>FPerformanceTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -183,7 +193,9 @@
   <ItemGroup>
     <None Include="Resources\control.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\control-skip.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\eye-close.png" />
   </ItemGroup>

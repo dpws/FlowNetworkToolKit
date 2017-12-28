@@ -208,5 +208,11 @@ namespace FlowNetworkToolKit.Forms
         {
                 MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
         }
+
+        private void performanceTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var Form = new FPerformanceTest();
+            Form.ShowDialog();
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 {
     
 
-    public abstract class BaseMaxFlowAlgorithm : ICloneable
+    public abstract class BaseMaxFlowAlgorithm : ICloneable, IStatable
     {
 
         protected string Name;
@@ -139,6 +139,11 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public virtual string GetStats()
+        {
+            throw new NotImplementedException();
         }
     }
 }
