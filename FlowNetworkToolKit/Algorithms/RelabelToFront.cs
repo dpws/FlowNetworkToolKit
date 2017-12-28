@@ -5,27 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Base.Network;
+using FlowNetworkToolKit.Core.Utils.ListExtensions;
 
 namespace FlowNetworkToolKit.Algorithms
 {
-    class PushRelabel : BaseMaxFlowAlgorithm
-    { 
-        //selecting first active vertex
+    class RelabelToFront : BaseMaxFlowAlgorithm
+    {
 
+        //The algorithm scans the list from front to back and performs a discharge operation on the current node if it is active. 
+        //If the node is relabeled, it is moved to the front of the list, and the scan is restarted from the front.
         private int[] height;
         private double[] excess;
-        private int pushes_count;
-        private int relables_count;
-       
+        List<int> nodes;
 
-        public PushRelabel()
+        public RelabelToFront()
         {
-            Name = "PushRelabel";
+            Name = "RelabelToFront";
             Url = "";
             Description =
                 @"";
-
-
         }
 
         protected override void Init()
@@ -36,8 +34,9 @@ namespace FlowNetworkToolKit.Algorithms
             excess = new double[graph.NodeCount];
             for (int i = 0; i < excess.Length; i++)
                 excess[i] = 0;
-            pushes_count=0;
-            relables_count=0;
+            nodes = new List<int>(graph.Nodes.Keys);
+            nodes.Remove(graph.Source);
+            nodes.Remove(graph.Target);
     }
 
         protected override void Logic()
@@ -67,37 +66,33 @@ namespace FlowNetworkToolKit.Algorithms
         public void SearchMaxFlow()
         {
             Preflow(graph.Source);
-            int v = OverFlow();
-            while (v != -1 && v != graph.Target)
+            var ind = 0;
+            while(ind < nodes.Count)
             {
-                if (!Push(v))
-                    Relabel(v);
-                v = OverFlow();
+                int v = nodes[ind];
+                var prev_height = height[v];
+                Discharge(v);
+                if (height[v] > prev_height)
+                {
+                    nodes.MoveItemAtIndexToFront(ind);
+                    ind = 0;
+                }
+                else
+                    ind++;
             }
             MaxFlow = excess[graph.Target];
         }
 
-        private bool Push(int v)
+        private void Push(FlowEdge edge, int v, int other)
         {
-            foreach (var edge in graph.Nodes[v].AllEdges)
-            {
-                var other = edge.Other(v);
-                if (edge.ResidualCapacityTo(other) > 0 && height[v] > height[other])
-                {
-                    pushes_count++;
-                    double flow = Math.Min(edge.ResidualCapacityTo(other), excess[v]);
-                    excess[v] -= flow;
-                    excess[other] += flow;
-                    edge.AddFlow(flow, other);
-                    return true;
-                }
-            }
-            return false;
+            double flow = Math.Min(edge.ResidualCapacityTo(other), excess[v]);
+            excess[v] -= flow;
+            excess[other] += flow;
+            edge.AddFlow(flow, other);
         }
 
         private void Relabel(int v)
         {
-            relables_count++;
             int min_height = Int32.MaxValue;
             foreach (var edge in graph.Nodes[v].AllEdges) // Find the adjacent with minimum height
             {
@@ -108,7 +103,28 @@ namespace FlowNetworkToolKit.Algorithms
                     height[v] = min_height + 1;
                 }
             }
+        }
 
+        private void Discharge(int v)
+        {
+            var adj = graph.Nodes[v].AllEdges.Count; //all adjacent edges
+            var ptr = 0; //visited adjacent edges
+            while (excess[v] > 0)
+            {
+                if (ptr >= adj) 
+                {
+                    Relabel(v);
+                    ptr = 0;
+                    continue;
+                }
+                var edge = graph.Nodes[v].AllEdges[ptr];
+                var other = edge.Other(v);
+                if (edge.ResidualCapacityTo(other) > 0 && height[v] > height[other])
+                    Push(edge, v, other);
+                else
+                    ptr += 1;
+
+            }
         }
     }
 }
