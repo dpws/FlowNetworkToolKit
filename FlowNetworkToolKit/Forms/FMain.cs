@@ -23,6 +23,7 @@ namespace FlowNetworkToolKit.Forms
         public FMain()
         {
             InitializeComponent();
+            Log.Init();
             canvas.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
         }
@@ -155,10 +156,11 @@ namespace FlowNetworkToolKit.Forms
             }
             if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
             {
-                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance;
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                algorithm.OnFinish += OnAlgorithmFinished;
                 algorithm.SetGraph(Runtime.currentGraph);
-                algorithm.Run();
-                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
+                algorithm.RunAsync();
+                
             }
 
         }
@@ -202,6 +204,11 @@ namespace FlowNetworkToolKit.Forms
         private void FMain_Resize(object sender, EventArgs e)
         {
             canvas.Invalidate();
+        }
+
+        private void OnAlgorithmFinished(BaseMaxFlowAlgorithm algorithm)
+        {
+                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
         }
     }
 }

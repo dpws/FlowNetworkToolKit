@@ -16,6 +16,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static int NodeMargin = 30;
         public static double Scale { private set; get; } = 1;
 
+        public static Color BaseColor = Color.DarkCyan;
+
         public static bool SetScale(double scale)
         {
             var newScale = Math.Round(scale,2);   
@@ -68,7 +70,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 var newY = (int)(node.Value.Position.Y * Scale + diameter / 2);
                 Point pos = new Point(newX, newY);
                 g.FillEllipse(Brushes.White, pos.X, pos.Y, diameter, diameter);
-                g.DrawEllipse(new Pen(Color.DarkGreen, 3), pos.X, pos.Y, diameter, diameter);
+                g.DrawEllipse(new Pen(BaseColor, 3), pos.X, pos.Y, diameter, diameter);
                 var s = $"{node.Key}";
                 int
                     len = s.Length,
@@ -85,7 +87,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static void drawEdges(Graphics g, Rectangle ClientRectangle)
         {
             var fn = Runtime.currentGraph;
-            var pen = new Pen(Color.DarkGreen, 2);
+            var pen = new Pen(BaseColor, 2);
             foreach (var edge in fn.Edges)
             {
                 var posFrom = new Point((int)(fn.Nodes[edge.From].Position.X * Scale), (int)(fn.Nodes[edge.From].Position.Y * Scale));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Exceptions;
 using FlowNetworkToolKit.Core.Base.Network;
@@ -12,7 +13,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 {
     
 
-    public abstract class BaseMaxFlowAlgorithm
+    public abstract class BaseMaxFlowAlgorithm : ICloneable
     {
 
         protected string Name;
@@ -55,7 +56,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public BaseMaxFlowAlgorithm()
         {
-
+            
         }
 
         public virtual void SetGraph(FlowNetwork g)
@@ -88,14 +89,21 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
             Logic();
             timer.Stop();
             Elapsed = timer.Elapsed;
-            OnFinish?.Invoke(this);
             Log.Write($"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
+            OnFinish?.Invoke(this);
+        }
+
+        public void RunAsync()
+        {
+            var thread = new Thread(Run);
+            thread.Start();
         }
 
         public virtual void Reset()
         {
             MaxFlow = Double.Epsilon;
             Ticks = 0;
+            Elapsed = new TimeSpan(0);
             graph = new FlowNetwork(originalGraph);
         }
 
@@ -128,5 +136,9 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         #endregion
 
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

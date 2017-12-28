@@ -21,6 +21,7 @@ namespace FlowNetworkToolKit.Core.Utils.Logger
         public static void Init()
         {
             Form = new FLog();
+            var hWnd = Form.Handle;
             Form.FormClosing += delegate (object sender, FormClosingEventArgs e) {
                 e.Cancel = true;
                 ((FLog)sender).Hide();
@@ -30,14 +31,15 @@ namespace FlowNetworkToolKit.Core.Utils.Logger
 
         public static void Write(string message, int level = INFO)
         {
-            var item = new LogItem(DateTime.Now, level, message);
-            log.Add(item);
             if (Form.logVisualizer.InvokeRequired)
             {
-                Form.Invoke(new MethodInvoker(() => { Write(message, level); }));
+                if (!Form.IsHandleCreated) return;
+                 Form.Invoke(new MethodInvoker(() => { Write(message, level); }));
             }
             else
             {
+                var item = new LogItem(DateTime.Now, level, message);
+                log.Add(item);
                 var text = item.ToString();
                 Form.logVisualizer.AppendText(text);
                 Form.logVisualizer.SelectionStart = Form.logVisualizer.TextLength - text.Length + 1;
