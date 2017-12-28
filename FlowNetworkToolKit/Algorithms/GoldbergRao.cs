@@ -53,7 +53,6 @@ namespace FlowNetworkToolKit.Algorithms
                 double df = Math.Min(DFS(ref contracted_graph, ref path, ptr, graph.Target, graph.Source, Double.MaxValue), delta);
                 ExtendFlow(ref contracted_graph, scc, df, path);
                 var volfl = GetVolFL();
-                System.Console.WriteLine("volfl " + volfl);
                 if (volfl / dist[graph.Source] < F / 2)
                 {
                     F = volfl / dist[graph.Source];
@@ -74,11 +73,9 @@ namespace FlowNetworkToolKit.Algorithms
                 FlowEdge e = graph.Nodes[u].OutcomingEdges[ptr[u]];
                 if (e.Flow < e.Capacity)
                 {
-                    System.Console.WriteLine(e.From + " " + e.To);
                     double df = DFS(ref graph, ref path, ptr, dest, e.To, Math.Min(f, e.Capacity - e.Flow));
                     if (df > 0)
                     {
-                        System.Console.WriteLine(e.From + " " + e.To + " --> " + df);
                         path.Add(e);
                         return df;
                     }

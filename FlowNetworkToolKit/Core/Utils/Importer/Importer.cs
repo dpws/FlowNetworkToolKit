@@ -28,7 +28,7 @@ namespace FlowNetworkToolKit.Core.Utils.Importer
                         return FromCSV(file);
                     case ".fn":
                         return FromFn(file);
-                    case ".d":
+                    case ".dimacs":
                         return FromDimac(file);
                 }
                     

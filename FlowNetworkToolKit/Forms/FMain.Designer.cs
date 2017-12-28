@@ -134,7 +134,7 @@
             // 
             // dlgImportFile
             // 
-            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.d";
+            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
             this.dlgImportFile.FilterIndex = 2;
             // 
             // btnExit
