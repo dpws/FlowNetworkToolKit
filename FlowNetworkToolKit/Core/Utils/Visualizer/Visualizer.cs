@@ -37,9 +37,9 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static void Visualise(Graphics g, Rectangle ClientRectangle)
         {
             //Visualizer.drawGrid(g, ClientRectangle);
-            arrangeNodesByCircle(ClientRectangle);
-            drawEdges(g, ClientRectangle);
-            drawNodes(g, ClientRectangle);
+            //arrangeNodesByCircle(ClientRectangle);
+            //drawEdges(g, ClientRectangle);
+            //drawNodes(g, ClientRectangle);
             
         }
 
