@@ -1,4 +1,6 @@
-﻿namespace FlowNetworkToolKit.Forms
+﻿using System.Windows.Forms;
+
+namespace FlowNetworkToolKit.Forms
 {
     partial class FMain
     {
@@ -48,18 +50,18 @@
             this.mnRunVisualization = new System.Windows.Forms.ToolStripMenuItem();
             this.runWithoutVisualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.performanceTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.canvas = new System.Windows.Forms.Panel();
-            this.pnPlaceHolder = new System.Windows.Forms.Panel();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.btnGenerate = new System.Windows.Forms.Button();
-            this.btnImport = new System.Windows.Forms.Button();
-            this.btnOpen = new System.Windows.Forms.Button();
-            this.btnCreate = new System.Windows.Forms.Button();
             this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.dlgImportFile = new System.Windows.Forms.OpenFileDialog();
+            this.canvas = new System.Windows.Forms.PictureBox();
+            this.btnCreate = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.pnPlaceHolder = new System.Windows.Forms.Panel();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
-            this.canvas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.pnPlaceHolder.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -245,69 +247,37 @@
             this.performanceTestToolStripMenuItem.Text = "Performance test";
             this.performanceTestToolStripMenuItem.Click += new System.EventHandler(this.performanceTestToolStripMenuItem_Click);
             // 
+            // dlgOpenFile
+            // 
+            this.dlgOpenFile.Filter = "FlowNetwork|*.xml";
+            // 
+            // dlgImportFile
+            // 
+            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
+            this.dlgImportFile.FilterIndex = 2;
+            // 
             // canvas
             // 
-            this.canvas.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.canvas.Controls.Add(this.pnPlaceHolder);
+            this.canvas.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvas.Location = new System.Drawing.Point(0, 27);
+            this.canvas.Location = new System.Drawing.Point(0, 0);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(830, 337);
-            this.canvas.TabIndex = 2;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.FMain_Paint);
+            this.canvas.Size = new System.Drawing.Size(830, 386);
+            this.canvas.TabIndex = 3;
+            this.canvas.TabStop = false;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
-            // pnPlaceHolder
+            // btnCreate
             // 
-            this.pnPlaceHolder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.pnPlaceHolder.Controls.Add(this.btnExit);
-            this.pnPlaceHolder.Controls.Add(this.btnGenerate);
-            this.pnPlaceHolder.Controls.Add(this.btnImport);
-            this.pnPlaceHolder.Controls.Add(this.btnOpen);
-            this.pnPlaceHolder.Controls.Add(this.btnCreate);
-            this.pnPlaceHolder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnPlaceHolder.Location = new System.Drawing.Point(0, 0);
-            this.pnPlaceHolder.Name = "pnPlaceHolder";
-            this.pnPlaceHolder.Size = new System.Drawing.Size(830, 337);
-            this.pnPlaceHolder.TabIndex = 0;
-            // 
-            // btnExit
-            // 
-            this.btnExit.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnExit.Image = global::FlowNetworkToolKit.Properties.Resources.door_open_out;
-            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExit.Location = new System.Drawing.Point(0, 92);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(830, 23);
-            this.btnExit.TabIndex = 4;
-            this.btnExit.Text = "Close Graph ToolKit";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.mnExit_Click);
-            // 
-            // btnGenerate
-            // 
-            this.btnGenerate.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnGenerate.Image = global::FlowNetworkToolKit.Properties.Resources.puzzle;
-            this.btnGenerate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGenerate.Location = new System.Drawing.Point(0, 69);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(830, 23);
-            this.btnGenerate.TabIndex = 3;
-            this.btnGenerate.Text = "Generate random graph";
-            this.btnGenerate.UseVisualStyleBackColor = true;
-            this.btnGenerate.Click += new System.EventHandler(this.mnGenerate_Click);
-            // 
-            // btnImport
-            // 
-            this.btnImport.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnImport.Image = global::FlowNetworkToolKit.Properties.Resources.receipt_import;
-            this.btnImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnImport.Location = new System.Drawing.Point(0, 46);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(830, 23);
-            this.btnImport.TabIndex = 2;
-            this.btnImport.Text = "Import graph";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            this.btnCreate.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCreate.Image = global::FlowNetworkToolKit.Properties.Resources.plus;
+            this.btnCreate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCreate.Location = new System.Drawing.Point(0, 0);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(830, 23);
+            this.btnCreate.TabIndex = 0;
+            this.btnCreate.Text = "Create new graph";
+            this.btnCreate.UseVisualStyleBackColor = true;
             // 
             // btnOpen
             // 
@@ -322,35 +292,68 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.mnOpen_Click);
             // 
-            // btnCreate
+            // btnImport
             // 
-            this.btnCreate.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCreate.Image = global::FlowNetworkToolKit.Properties.Resources.plus;
-            this.btnCreate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCreate.Location = new System.Drawing.Point(0, 0);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(830, 23);
-            this.btnCreate.TabIndex = 0;
-            this.btnCreate.Text = "Create new graph";
-            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnImport.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnImport.Image = global::FlowNetworkToolKit.Properties.Resources.receipt_import;
+            this.btnImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImport.Location = new System.Drawing.Point(0, 46);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(830, 23);
+            this.btnImport.TabIndex = 2;
+            this.btnImport.Text = "Import graph";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
-            // dlgOpenFile
+            // btnGenerate
             // 
-            this.dlgOpenFile.Filter = "FlowNetwork|*.xml";
+            this.btnGenerate.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnGenerate.Image = global::FlowNetworkToolKit.Properties.Resources.puzzle;
+            this.btnGenerate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGenerate.Location = new System.Drawing.Point(0, 69);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(830, 23);
+            this.btnGenerate.TabIndex = 3;
+            this.btnGenerate.Text = "Generate random graph";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.mnGenerate_Click);
             // 
-            // dlgImportFile
+            // btnExit
             // 
-            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
-            this.dlgImportFile.FilterIndex = 2;
+            this.btnExit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnExit.Image = global::FlowNetworkToolKit.Properties.Resources.door_open_out;
+            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExit.Location = new System.Drawing.Point(0, 92);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(830, 23);
+            this.btnExit.TabIndex = 4;
+            this.btnExit.Text = "Close Graph ToolKit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.mnExit_Click);
+            // 
+            // pnPlaceHolder
+            // 
+            this.pnPlaceHolder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pnPlaceHolder.Controls.Add(this.btnExit);
+            this.pnPlaceHolder.Controls.Add(this.btnGenerate);
+            this.pnPlaceHolder.Controls.Add(this.btnImport);
+            this.pnPlaceHolder.Controls.Add(this.btnOpen);
+            this.pnPlaceHolder.Controls.Add(this.btnCreate);
+            this.pnPlaceHolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnPlaceHolder.Location = new System.Drawing.Point(0, 27);
+            this.pnPlaceHolder.Name = "pnPlaceHolder";
+            this.pnPlaceHolder.Size = new System.Drawing.Size(830, 337);
+            this.pnPlaceHolder.TabIndex = 2;
             // 
             // FMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 386);
-            this.Controls.Add(this.canvas);
+            this.Controls.Add(this.pnPlaceHolder);
             this.Controls.Add(this.ssStatus);
             this.Controls.Add(this.mainMenu);
+            this.Controls.Add(this.canvas);
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.mainMenu;
             this.Name = "FMain";
@@ -361,7 +364,7 @@
             this.ssStatus.PerformLayout();
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
-            this.canvas.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.pnPlaceHolder.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -379,7 +382,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnOpen;
         private System.Windows.Forms.ToolStripMenuItem mnSave;
         private System.Windows.Forms.ToolStripMenuItem mnExit;
-        private System.Windows.Forms.Panel canvas;
         private System.Windows.Forms.ToolStripMenuItem mnReloadAlgorithms;
         private System.Windows.Forms.ToolStripComboBox mnAlghoritmList;
         private System.Windows.Forms.ToolStripMenuItem mnToggleLogWindow;
@@ -389,16 +391,17 @@
         private System.Windows.Forms.ToolStripMenuItem runWithoutVisualizationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem performanceTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.Panel pnPlaceHolder;
-        private System.Windows.Forms.Button btnCreate;
-        private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.Button btnOpen;
-        private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ToolStripMenuItem mnGenerate;
         private System.Windows.Forms.ToolStripStatusLabel slGraphInfo;
         private System.Windows.Forms.OpenFileDialog dlgOpenFile;
         private System.Windows.Forms.OpenFileDialog dlgImportFile;
+        private System.Windows.Forms.PictureBox canvas;
+        private System.Windows.Forms.Button btnCreate;
+        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Panel pnPlaceHolder;
     }
 }
 

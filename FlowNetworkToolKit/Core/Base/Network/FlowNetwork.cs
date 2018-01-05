@@ -34,12 +34,12 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public List<FlowEdge> Edges { get; protected set; } = new List<FlowEdge>();
         public Dictionary<int, FlowNode> Nodes { get; protected set; } = new Dictionary<int, FlowNode>();
 
-        public new int NodeCount
+        public int NodeCount
         {
             get { return Nodes.Count; }
         }
 
-        public new int EdgeCount
+        public int EdgeCount
         {
             get { return Edges.Count; }
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FlowNetworkToolKit.Core.Utils.Logger;
 
 namespace FlowNetworkToolKit.Forms
 {
@@ -16,5 +17,6 @@ namespace FlowNetworkToolKit.Forms
         {
             InitializeComponent();
         }
+
     }
 }

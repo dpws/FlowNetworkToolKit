@@ -92,8 +92,107 @@ namespace FlowNetworkToolKit.Forms
             aboutAlgorithmForm.ShowDialog();
         }
 
-        private void FMain_Paint(object sender, PaintEventArgs e)
+        private void visualizationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+        }
+        private void mnGenerate_Click(object sender, EventArgs e)
+        {
+            FlowNetwork g = new FlowNetwork();
+            g.AddEdge(0, 1, 10);
+            g.AddEdge(0, 2, 10);
+            g.AddEdge(1, 2, 2);
+            g.AddEdge(1, 3, 4);
+            g.AddEdge(1, 4, 8);
+            g.AddEdge(2, 4, 9);
+            g.AddEdge(4, 5, 10);
+            g.AddEdge(4, 3, 6);
+            g.AddEdge(3, 5, 10);
+            g.Source = 0;
+            g.Target = 5;
+            Runtime.currentGraph = g;
+
+            canvas.Invalidate();
+        }
+
+        private void runWithoutVisualizationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Runtime.currentAlghoritm == null)
+            {
+                Log.Write("Can't determine selected algorithm.");
+                return;
+            }
+            if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
+            {
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                algorithm.OnFinish += OnAlgorithmFinished;
+                algorithm.SetGraph(Runtime.currentGraph);
+                algorithm.RunAsync();
+                
+            }
+
+        }
+
+        private void mnOpen_Click(object sender, EventArgs e)
+        {
+            Invalidate();
+            Refresh();
+            Update();
+        }
+
+
+
+        private void canvas_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (Visualizer.SetScale(Math.Round(Visualizer.Scale + (e.Delta / 120 * 0.05), 2)))
+            {
+                canvas.Invalidate();
+            }
+            
+        }
+
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dlgImportFile.ShowDialog() == DialogResult.OK)
+            {
+                var file = new FileInfo(dlgImportFile.FileName);
+                var importer = new Importer();
+                var fn = importer.Import(file);
+                if (fn != null)
+                {
+                    Runtime.currentGraph = fn;
+                    Log.Write($"Loaded flow network from {file.FullName}");
+         
+                }
+                else
+                {
+                    Log.Write($"Fail to load flow network from {file.FullName}", Log.ERROR);
+                }
+            }
+
+        }
+
+        private void FMain_Resize(object sender, EventArgs e)
+        {
+            //OnPaint();
+            Invalidate();
+        }
+
+        private void OnAlgorithmFinished(BaseMaxFlowAlgorithm algorithm)
+        {
+                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
+        }
+
+        private void performanceTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var Form = new FPerformanceTest();
+            Form.ShowDialog();
+        }
+
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            Log.Write("Repaint canvas...");
             if (Runtime.currentGraph == null)
             {
                 pnPlaceHolder.Visible = true;
@@ -119,100 +218,11 @@ namespace FlowNetworkToolKit.Forms
                 mnAlgorithmInfo.Visible = false;
                 mnRunAlghoritm.Visible = false;
             }
-
         }
 
-        private void visualizationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FMain_Paint(object sender, PaintEventArgs e)
         {
-
-        }
-        private void mnGenerate_Click(object sender, EventArgs e)
-        {
-            FlowNetwork g = new FlowNetwork();
-            g.AddEdge(0, 1, 10);
-            g.AddEdge(0, 2, 10);
-            g.AddEdge(1, 2, 2);
-            g.AddEdge(1, 3, 4);
-            g.AddEdge(1, 4, 8);
-            g.AddEdge(2, 4, 9);
-            g.AddEdge(4, 5, 10);
-            g.AddEdge(4, 3, 6);
-            g.AddEdge(3, 5, 10);
-            g.Source = 0;
-            g.Target = 5;
-            Runtime.currentGraph = g;
-
-            Refresh();
-        }
-
-        private void runWithoutVisualizationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Runtime.currentAlghoritm == null)
-            {
-                Log.Write("Can't determine selected algorithm.");
-                return;
-            }
-            if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
-            {
-                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
-                algorithm.OnFinish += OnAlgorithmFinished;
-                algorithm.SetGraph(Runtime.currentGraph);
-                algorithm.RunAsync();
-                
-            }
-
-        }
-
-        private void mnOpen_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-
-
-        private void canvas_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (Visualizer.SetScale(Math.Round(Visualizer.Scale + (e.Delta / 120 * 0.05), 2)))
-            {
-                canvas.Invalidate();
-            }
-            
-        }
-
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dlgImportFile.ShowDialog() == DialogResult.OK)
-            {
-                var file = new FileInfo(dlgImportFile.FileName);
-                var importer = new Importer();
-                var fn = importer.Import(file);
-                if (fn != null)
-                {
-                    Runtime.currentGraph = fn;
-                    Log.Write($"Loaded flow network from {file.FullName}");
-                    Refresh();
-                }
-                else
-                {
-                    Log.Write($"Fail to load flow network from {file.FullName}", Log.ERROR);
-                }
-            }
-        }
-
-        private void FMain_Resize(object sender, EventArgs e)
-        {
-            canvas.Invalidate();
-        }
-
-        private void OnAlgorithmFinished(BaseMaxFlowAlgorithm algorithm)
-        {
-                MessageBox.Show($"Max flow from {Runtime.currentGraph.Source} to {Runtime.currentGraph.Target}: {algorithm.MaxFlow}");
-        }
-
-        private void performanceTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var Form = new FPerformanceTest();
-            Form.ShowDialog();
+            Log.Write("Repainting...");
         }
     }
 }
