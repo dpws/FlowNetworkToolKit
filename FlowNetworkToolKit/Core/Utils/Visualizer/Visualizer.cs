@@ -59,6 +59,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             drawNodes(g, ClientRectangle);
         }
 
+        
+
         public static void ZoomFit(Rectangle ClientRectangle)
         {
             int padding = NodeDiameter*2;
@@ -110,8 +112,6 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static void drawNodes(Graphics g, Rectangle ClientRectangle)
         {
             var fn = Runtime.currentGraph;
-
-            
 
             foreach (var node in fn.Nodes.Values)
             {
@@ -286,7 +286,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         {
             int newX, newY;
             newX = (int)Math.Round(x / Scale + Offset.X);
-            newY = (int)Math.Round(y / Scale + Offset.X);
+            newY = (int)Math.Round(y / Scale + Offset.Y);
             return new Point(newX, newY);
         }
 
@@ -299,7 +299,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         {
             int newX, newY;
             newX = (int)Math.Round((x - Offset.X) * Scale);
-            newY = (int)Math.Round((y - Offset.Y) * Scale);
+            newY = (int)Math.Round((y - Offset.Y) * Scale);            
             return new Point(newX, newY);
         }
 

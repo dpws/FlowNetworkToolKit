@@ -200,12 +200,14 @@ namespace FlowNetworkToolKit.Forms
 
         public new void Invalidate()
         {
-            checkPlaceHolder();
+            checkControlsAccesible();
             base.Invalidate();
         }
 
-        private void checkPlaceHolder()
+        private void checkControlsAccesible()
         {
+            mnEditionEnabled.Enabled = Runtime.VisualisationEnabled;
+            mnCreationEnabled.Enabled = Runtime.VisualisationEnabled;
             if (Runtime.currentGraph == null)
             {
                 pnPlaceHolder.Visible = true;
@@ -253,6 +255,8 @@ namespace FlowNetworkToolKit.Forms
             {
                 Visualizer.Visualise(e.Graphics, pbDraw.ClientRectangle);
             }
+
+
         }
 
         private void FMain_Paint(object sender, PaintEventArgs e)
@@ -261,6 +265,8 @@ namespace FlowNetworkToolKit.Forms
 
         private void pbDraw_MouseMove(object sender, MouseEventArgs e)
         {
+            bool needInvalidate = false;
+            RuntimeManipulations.CanvasCursorPosition = e.Location;
             #region Pan
             if (e.Button == MouseButtons.Middle)
             {
@@ -275,23 +281,34 @@ namespace FlowNetworkToolKit.Forms
 
             if (Runtime.EditionEnabled)
             {
-                int hoverNode = RuntimeManipulations.GetHoverNode(e);
-                if (hoverNode != -1)
+                if (e.Button == MouseButtons.Left && RuntimeManipulations.ActiveNode != -1)
                 {
-                    Cursor = Cursors.Hand;
+                    Runtime.currentGraph.Nodes[RuntimeManipulations.ActiveNode].Position =
+                        Visualizer.TranslateScreenToAbsolutePoint(e.X, e.Y);
+                    needInvalidate = true;
                 }
                 else
                 {
-                    Cursor = Cursors.Default;
-                }
-                if (RuntimeManipulations.SetActiveNode(hoverNode))
-                {
-                    pbDraw.Invalidate();
+                    int hoverNode = RuntimeManipulations.GetHoverNode(e);
+                    if (hoverNode != -1)
+                    {
+                        Cursor = Cursors.Hand;
+                    }
+                    else
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                    if (RuntimeManipulations.SetActiveNode(hoverNode))
+                    {
+                        needInvalidate = true;
+                    }
                 }
             }
 
             #endregion
 
+            if(needInvalidate)
+                pbDraw.Invalidate();
         }
 
         private void changeCanvasOffset(MouseEventArgs e)
@@ -341,6 +358,7 @@ namespace FlowNetworkToolKit.Forms
                         Runtime.currentGraph = g;
                         Visualizer.ZoomFit(pbDraw.ClientRectangle);
                         Invalidate();
+                        pbDraw.Invalidate();
 
                     }
                     catch (Exception ex)
@@ -356,11 +374,15 @@ namespace FlowNetworkToolKit.Forms
         private void byDistanceFromSourceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Visualizer.arrangeNodesByDistance(ClientRectangle);
+            Visualizer.ZoomFit(ClientRectangle);
+            pbDraw.Invalidate();
         }
 
         private void byCircleFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Visualizer.arrangeNodesByCircle(ClientRectangle);
+            Visualizer.ZoomFit(ClientRectangle);
+            pbDraw.Invalidate();
         }
 
         private void mnVisualisationEnabled_CheckStateChanged(object sender, EventArgs e)
