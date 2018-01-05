@@ -23,15 +23,19 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static Point Offset { private set; get; } = new Point(0, 0);
 
         public static Color BaseColor = Color.DarkCyan;
-        public static Color SelectedColor = Color.DarkCyan;
+        public static Color HoverColor = Color.DarkOrange;
+        public static Color HoverIncomingEdgeColor = Color.DarkOrchid;
+        public static Color HoverOutcomingEdgeColor = Color.DarkOliveGreen;
         public static Brush SourceBrush = Brushes.LightSteelBlue;
         public static Brush TargetBrush = Brushes.LightPink;
 
-        private static double maxScale = 6f, minScale = 0.3f;
+        private static double maxScale = 10f, minScale = 0.3f;
+
+        #region Setters
 
         public static bool SetScale(double scale)
         {
-            var newScale = Math.Round(scale,2);   
+            var newScale = Math.Round(scale, 2);
             if (newScale < minScale) newScale = minScale;
             if (newScale > maxScale) newScale = maxScale;
             var delta = newScale - Scale;
@@ -41,23 +45,23 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             return false;
         }
 
-        public static bool SetOffset(Point offset)
+        public static void SetOffset(Point offset)
         {
             Offset = offset;
-            return false;
         }
+
+        #endregion
 
         public static void Visualise(Graphics g, Rectangle ClientRectangle)
         {
             drawGrid(g, ClientRectangle);
             drawEdges(g, ClientRectangle);
             drawNodes(g, ClientRectangle);
-            
         }
 
         public static void ZoomAll(Rectangle ClientRectangle)
         {
-            int padding = NodeDiameter;
+            int padding = NodeDiameter*2;
 
             double minX, minY, maxX, maxY;
 
@@ -81,10 +85,15 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         }
 
+
+        #region Drawing
+
         public static void drawGrid(Graphics g, Rectangle ClientRectangle)
         {
             var cellDim = (int)Math.Round(CellSize * Scale);
-            var cellOffset = new Point(Offset.X % cellDim, Offset.Y % cellDim);
+
+            var cellOffset = new Point((int)Math.Round(Offset.X * Scale % cellDim), (int)Math.Round(Offset.Y * Scale % cellDim));
+
             g.SmoothingMode = SmoothingMode.HighQuality;
             var r = ClientRectangle;
             using (Pen pen = new Pen(Color.FromArgb(210, 210, 255), 1))
@@ -96,59 +105,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             }
         }
 
-        public static void arrangeNodesByCircle(Rectangle ClientRectangle)
-        {
-            var fn = Runtime.currentGraph;
-            var c = new Point(ClientRectangle.Width / 2, ClientRectangle.Height / 2);
-            int rx = (int)(ClientRectangle.Width / 2.5), ry = (int)(ClientRectangle.Height / 2.5);
-            var factor = Math.PI * 2 / fn.NodeCount;
-            foreach (var node in fn.Nodes)
-            {
-                var a = factor * node.Key;
-                node.Value.Position = new Point(c.X + (int)(rx * Math.Sin(a)), c.Y + (int)(ry * Math.Cos(a)));
-                
-            }
-        }
 
-        public static void arrangeNodesByDistance(Rectangle ClientRectangle)
-        {
-            var spacing = NodeDiameter * 4;
-            Dictionary<int,int> itemsAtLevel = new Dictionary<int, int>();
-            Dictionary<int,int> levelOffsets = new Dictionary<int, int>();
-            Dictionary<int,int> levelCounter = new Dictionary<int, int>();
-            var fn = Runtime.currentGraph;
-            var distances = fn.ComputeDistances();
-            
-            foreach (var node in fn.Nodes.Values)
-            {
-                var d = distances[node.Index];
-                if (!itemsAtLevel.ContainsKey(d))
-                {
-                    itemsAtLevel[d] = 0;
-                }
-                itemsAtLevel[d]++;
-            }
-
-            int maxCountAtLevel = itemsAtLevel.Values.Max();
-
-            foreach (var level in itemsAtLevel)
-            {
-                levelOffsets[level.Key] = ((maxCountAtLevel - level.Value) * (spacing + NodeDiameter)) / 2;                
-            }
-
-            foreach (var node in fn.Nodes.Values)
-            {
-                var d = distances[node.Index];
-                if (!levelCounter.ContainsKey(d))
-                {
-                    levelCounter[d] = 0;
-                }
-
-                node.Position = new Point(d * spacing, levelCounter[d] * (spacing + NodeDiameter) + levelOffsets[d]);
-                levelCounter[d]++;
-            }
-            Log.Write("All nodes are arranged by distance");
-        }
 
         public static void drawNodes(Graphics g, Rectangle ClientRectangle)
         {
@@ -156,31 +113,30 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
             
 
-            foreach (var node in fn.Nodes)
+            foreach (var node in fn.Nodes.Values)
             {
-                
-                var newX = (int)(node.Value.Position.X * Scale) - Offset.X;
-                var newY = (int)(node.Value.Position.Y * Scale) - Offset.Y;
-                Point pos = new Point(newX, newY);
+                Point pos = TranslateAbsoluteToScreenPoint(node.Position.X, node.Position.Y);
+                pos.X -= NodeDiameter / 2;
+                pos.Y -= NodeDiameter / 2;
                 var bgbrush = Brushes.White;
                 var ntext = "";
-                if (node.Value.Index == Runtime.currentGraph.Source)
+                if (node.Index == Runtime.currentGraph.Source)
                 {
                     bgbrush = SourceBrush;
                     ntext = "Source";
-                } else if (node.Value.Index == Runtime.currentGraph.Target)
+                } else if (node.Index == Runtime.currentGraph.Target)
                 {
                     bgbrush = TargetBrush;
                     ntext = "Target";
                 }
                 g.FillEllipse(bgbrush, pos.X, pos.Y, NodeDiameter, NodeDiameter);
-                g.DrawEllipse(new Pen(BaseColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
-                var s = $"{node.Value.Index}";
+                g.DrawEllipse(new Pen(RuntimeManipulations.ActiveNode == node.Index ? HoverColor : BaseColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
+                var s = $"{node.Index}";
                 int
                     len = s.Length,
-                    dx = len > 3 ? -1 : len > 2 ? 1 : len > 1 ? 2 : 6,
+                    dx = len > 3 ? -1 : len > 2 ? 1 : len > 1 ? 4 : 6,
                     dy = 6,
-                    sz = len > 2 ? 6 : 8,
+                    sz = 8,
                     x = pos.X + dx, y = pos.Y + dy;
                 using (var font = new Font(FontFamily.GenericSansSerif, sz))
                 {
@@ -193,22 +149,36 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         }
 
+        
+
         public static void drawEdges(Graphics g, Rectangle ClientRectangle)
         {
             var fn = Runtime.currentGraph;
             var pen = new Pen(BaseColor, 2);
             foreach (var edge in fn.Edges)
             {
-                var posFrom = new Point((int) (fn.Nodes[edge.From].Position.X * Scale + NodeDiameter / 2 - Offset.X),
-                    (int) (fn.Nodes[edge.From].Position.Y * Scale + NodeDiameter / 2 - Offset.Y));
-                var posTo = new Point((int) (fn.Nodes[edge.To].Position.X * Scale + NodeDiameter / 2 - Offset.X),
-                    (int) (fn.Nodes[edge.To].Position.Y * Scale + NodeDiameter / 2 - Offset.Y));
+                pen.Color = BaseColor;
+                if (RuntimeManipulations.ActiveNode != -1)
+                {
+                    if (edge.From == RuntimeManipulations.ActiveNode)
+                    {
+                        pen.Color = HoverOutcomingEdgeColor;
+                    } else if (edge.To == RuntimeManipulations.ActiveNode)
+                    {
+                        pen.Color = HoverIncomingEdgeColor;
+                    }
+                }
+                var posFrom = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.From].Position.X,
+                    fn.Nodes[edge.From].Position.Y);
+                var posTo = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.To].Position.X,
+                    fn.Nodes[edge.To].Position.Y);
+
                 g.DrawLine(pen, posFrom.X, posFrom.Y, posTo.X, posTo.Y);
                 var angle = Math.Atan2(posFrom.X - posTo.X, posFrom.Y - posTo.Y);
 
                 int
                     arrowAngle = 30,
-                    arrowSize = 12,
+                    arrowSize = (int)Math.Round(12 * Scale),
                     arrowShift = 15;
 
                 var arrowAngleRad = ((float) arrowAngle / 180) * Math.PI;
@@ -226,8 +196,11 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             }
             foreach (var edge in fn.Edges)
                 {
-                    var posFrom = new Point((int)(fn.Nodes[edge.From].Position.X * Scale + NodeDiameter / 2 - Offset.X), (int)(fn.Nodes[edge.From].Position.Y * Scale + NodeDiameter / 2 - Offset.Y));
-                    var posTo = new Point((int)(fn.Nodes[edge.To].Position.X * Scale + NodeDiameter / 2 - Offset.X), (int)(fn.Nodes[edge.To].Position.Y * Scale + NodeDiameter / 2 - Offset.Y));
+                    var posFrom = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.From].Position.X,
+                        fn.Nodes[edge.From].Position.Y);
+                    var posTo = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.To].Position.X,
+                        fn.Nodes[edge.To].Position.Y);
+
                 var w = new Point((int)((posFrom.X + posTo.X) / 2f), (int)((posFrom.Y + posTo.Y) / 2f));
 
                 using (var font = new Font(FontFamily.GenericSansSerif, 10))
@@ -244,5 +217,101 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             }
             pen.Dispose();
         }
+
+
+        #endregion
+
+        #region Arranges
+
+        public static void arrangeNodesByCircle(Rectangle ClientRectangle)
+        {
+            var fn = Runtime.currentGraph;
+            var c = new Point(ClientRectangle.Width / 2, ClientRectangle.Height / 2);
+            int rx = (int)(ClientRectangle.Width / 2.5), ry = (int)(ClientRectangle.Height / 2.5);
+            var factor = Math.PI * 2 / fn.NodeCount;
+            foreach (var node in fn.Nodes)
+            {
+                var a = factor * node.Key;
+                node.Value.Position = new Point(c.X + (int)(rx * Math.Sin(a)), c.Y + (int)(ry * Math.Cos(a)));
+
+            }
+            Log.Write("All nodes are arranged by circle");
+        }
+
+        public static void arrangeNodesByDistance(Rectangle ClientRectangle)
+        {
+            var spacing = NodeDiameter * 5;
+            Dictionary<int, int> itemsAtLevel = new Dictionary<int, int>();
+            Dictionary<int, int> levelOffsets = new Dictionary<int, int>();
+            Dictionary<int, int> levelCounter = new Dictionary<int, int>();
+            var fn = Runtime.currentGraph;
+            var distances = fn.ComputeDistances();
+
+            foreach (var node in fn.Nodes.Values)
+            {
+                var d = distances[node.Index];
+                if (!itemsAtLevel.ContainsKey(d))
+                {
+                    itemsAtLevel[d] = 0;
+                }
+                itemsAtLevel[d]++;
+            }
+
+            int maxCountAtLevel = itemsAtLevel.Values.Max();
+
+            foreach (var level in itemsAtLevel)
+            {
+                levelOffsets[level.Key] = ((maxCountAtLevel - level.Value) * spacing) / 2;
+            }
+
+            foreach (var node in fn.Nodes.Values)
+            {
+                var d = distances[node.Index];
+                if (!levelCounter.ContainsKey(d))
+                {
+                    levelCounter[d] = 0;
+                }
+
+                node.Position = new Point(d * spacing, levelCounter[d] * spacing + levelOffsets[d]);
+                levelCounter[d]++;
+            }
+            Log.Write("All nodes are arranged by distance");
+        }
+
+        #endregion
+
+        #region Translations
+
+        public static Point TranslateScreenToAbsolutePoint(int x, int y)
+        {
+            int newX, newY;
+            newX = (int)Math.Round(x / Scale + Offset.X);
+            newY = (int)Math.Round(y / Scale + Offset.X);
+            return new Point(newX, newY);
+        }
+
+        public static Point TranslateScreenToAbsolutePoint(Point coords)
+        {
+            return TranslateScreenToAbsolutePoint(coords.X, coords.Y);
+        }
+
+        public static Point TranslateAbsoluteToScreenPoint(int x, int y)
+        {
+            int newX, newY;
+            newX = (int)Math.Round((x - Offset.X) * Scale);
+            newY = (int)Math.Round((y - Offset.Y) * Scale);
+            return new Point(newX, newY);
+        }
+
+        public static Point TranslateAbsoluteToScreenPoint(Point coords)
+        {
+            return TranslateAbsoluteToScreenPoint(coords.X, coords.Y);
+        }
+
+        
+
+        #endregion
+
+
     }
 }

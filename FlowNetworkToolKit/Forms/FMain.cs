@@ -20,9 +20,7 @@ namespace FlowNetworkToolKit.Forms
 {
     public partial class FMain : Form
     {
-        private Point LastMousePos = new Point();
-
-
+        
         public FMain()
         {
             InitializeComponent();
@@ -115,7 +113,8 @@ namespace FlowNetworkToolKit.Forms
             g.Source = 0;
             g.Target = 5;
             Runtime.currentGraph = g;
-
+            Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
+            Visualizer.ZoomAll(pbDraw.ClientRectangle);
             Invalidate();
         }
 
@@ -124,6 +123,11 @@ namespace FlowNetworkToolKit.Forms
             if (Runtime.currentAlghoritm == null)
             {
                 Log.Write("Can't determine selected algorithm.");
+                return;
+            }
+            if (Runtime.currentGraph == null)
+            {
+                Log.Write("Please, load graph first.");
                 return;
             }
             if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
@@ -168,6 +172,7 @@ namespace FlowNetworkToolKit.Forms
                     Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
                     Visualizer.ZoomAll(pbDraw.ClientRectangle);
                     Invalidate();
+                    pbDraw.Invalidate();
                 }
                 else
                 {
@@ -190,6 +195,7 @@ namespace FlowNetworkToolKit.Forms
 
         private void performanceTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (Runtime.currentGraph == null) return;
             var Form = new FPerformanceTest();
             Form.ShowDialog();
         }
@@ -254,20 +260,34 @@ namespace FlowNetworkToolKit.Forms
                 return;
             }
 
-            LastMousePos = new Point();
-        }
+            int hoverNode = RuntimeManipulations.GetHoverNode(e);
+            if (hoverNode != -1)
+            {
+                Cursor = Cursors.Hand;
+            }
+            else
+            {
+                Cursor = Cursors.Default;
+            }
+            if (RuntimeManipulations.SetActiveNode(hoverNode))
+            {
+                pbDraw.Invalidate();
+            }
+           
 
+            RuntimeManipulations.LastPanPosition = new Point();
+        }
 
         private void changeCanvasOffset(MouseEventArgs e)
         {
-            if (LastMousePos != new Point())
+            if (RuntimeManipulations.LastPanPosition != new Point())
             {
-                var newX = Visualizer.Offset.X + (e.Location.X - LastMousePos.X);
-                var newY = Visualizer.Offset.Y + (e.Location.Y - LastMousePos.Y);
+                var newX = Visualizer.Offset.X + (e.Location.X - RuntimeManipulations.LastPanPosition.X);
+                var newY = Visualizer.Offset.Y + (e.Location.Y - RuntimeManipulations.LastPanPosition.Y);
                 Visualizer.SetOffset(new Point(newX, newY));
                 pbDraw.Invalidate();
             }
-            LastMousePos = e.Location;
+            RuntimeManipulations.LastPanPosition = e.Location;
         }
 
         private void mnZoomAll_Click(object sender, EventArgs e)
