@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using FlowNetworkToolKit.Core.Base.Exceptions;
 
 namespace FlowNetworkToolKit.Core.Base.Network
 {
-    public class FlowEdge : IEquatable<FlowEdge>
+    public class FlowEdge : IEquatable<FlowEdge>, ISerializable
     {
         #region Events
 
@@ -18,17 +20,17 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public event LengthChanged OnLengthChanged;
 
         #endregion
-
-        public readonly int From;
-        public readonly int To;
+        public int From;
+        public int To;
         public double Capacity;
-
         public double ResidualCapacity => Capacity - Flow;
-
         public int Length { protected set; get; } = 0;
-
         public double Flow = 0;
 
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+        }
         public FlowEdge(int from, int to, double capacity) : base()
         {
             From = from;
@@ -94,6 +96,8 @@ namespace FlowNetworkToolKit.Core.Base.Network
         {
             return $"{From} > {To} ({Capacity})";
         }
+
+       
 
         public bool Equals(FlowEdge other)
         {

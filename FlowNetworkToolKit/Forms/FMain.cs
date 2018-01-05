@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using FlowNetworkToolKit.Core;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Base.Network;
@@ -114,7 +116,7 @@ namespace FlowNetworkToolKit.Forms
             g.Target = 5;
             Runtime.currentGraph = g;
             Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
-            Visualizer.ZoomAll(pbDraw.ClientRectangle);
+            Visualizer.ZoomFit(pbDraw.ClientRectangle);
             Invalidate();
         }
 
@@ -141,10 +143,6 @@ namespace FlowNetworkToolKit.Forms
 
         }
 
-        private void mnOpen_Click(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
 
 
 
@@ -170,7 +168,7 @@ namespace FlowNetworkToolKit.Forms
                     Runtime.currentGraph = fn;
                     Log.Write($"Loaded flow network from {file.FullName}");
                     Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
-                    Visualizer.ZoomAll(pbDraw.ClientRectangle);
+                    Visualizer.ZoomFit(pbDraw.ClientRectangle);
                     Invalidate();
                     pbDraw.Invalidate();
                 }
@@ -292,8 +290,49 @@ namespace FlowNetworkToolKit.Forms
 
         private void mnZoomAll_Click(object sender, EventArgs e)
         {
-            Visualizer.ZoomAll(pbDraw.ClientRectangle);
+            Visualizer.ZoomFit(pbDraw.ClientRectangle);
             pbDraw.Invalidate();
+        }
+
+        private void mnSave_Click(object sender, EventArgs e)
+        {
+            if (Runtime.currentGraph == null) return;
+            if (dlgSaveFile.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream fs = new FileStream(dlgSaveFile.FileName, FileMode.OpenOrCreate))
+                {
+                    var xml = Runtime.currentGraph.GenerateXml();
+                    xml.Save(fs);
+                }
+            }
+        }
+
+
+        private void mnOpen_Click(object sender, EventArgs e)
+        {
+            if (dlgOpenFile.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream fs = new FileStream(dlgOpenFile.FileName, FileMode.Open))
+                {
+                    XmlDocument xml = new XmlDocument();
+                    try
+                    {
+                        xml.Load(fs);
+                        FlowNetwork g = new FlowNetwork();
+                        g.ParseXml(xml);
+                        Runtime.currentGraph = g;
+                        Visualizer.ZoomFit(pbDraw.ClientRectangle);
+                        Invalidate();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Write("Can't load FlowNetwork from file.", Log.ERROR);
+                        Log.Write(ex.Message, Log.ERROR);
+                    }
+                    
+                }
+            }
         }
     }
 }

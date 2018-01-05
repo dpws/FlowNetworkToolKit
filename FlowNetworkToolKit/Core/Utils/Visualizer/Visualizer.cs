@@ -24,8 +24,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         public static Color BaseColor = Color.DarkCyan;
         public static Color HoverColor = Color.DarkOrange;
-        public static Color HoverIncomingEdgeColor = Color.DarkOrchid;
-        public static Color HoverOutcomingEdgeColor = Color.DarkOliveGreen;
+        public static Color HoverIncomingEdgeColor = Color.DarkRed;
+        public static Color HoverOutcomingEdgeColor = Color.Green;
         public static Brush SourceBrush = Brushes.LightSteelBlue;
         public static Brush TargetBrush = Brushes.LightPink;
 
@@ -59,7 +59,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             drawNodes(g, ClientRectangle);
         }
 
-        public static void ZoomAll(Rectangle ClientRectangle)
+        public static void ZoomFit(Rectangle ClientRectangle)
         {
             int padding = NodeDiameter*2;
 

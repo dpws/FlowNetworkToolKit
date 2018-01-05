@@ -61,6 +61,7 @@ namespace FlowNetworkToolKit.Forms
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
             this.pbDraw = new System.Windows.Forms.PictureBox();
+            this.dlgSaveFile = new System.Windows.Forms.SaveFileDialog();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.pnPlaceHolder.SuspendLayout();
@@ -164,6 +165,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.mnSave.Size = new System.Drawing.Size(210, 22);
             this.mnSave.Text = "Save graph...";
+            this.mnSave.Click += new System.EventHandler(this.mnSave_Click);
             // 
             // mnExit
             // 
@@ -259,7 +261,7 @@ namespace FlowNetworkToolKit.Forms
             // 
             this.mnRunVisualization.Image = global::FlowNetworkToolKit.Properties.Resources.eye;
             this.mnRunVisualization.Name = "mnRunVisualization";
-            this.mnRunVisualization.Size = new System.Drawing.Size(207, 22);
+            this.mnRunVisualization.Size = new System.Drawing.Size(284, 22);
             this.mnRunVisualization.Text = "Run and visualize";
             // 
             // runWithoutVisualizationToolStripMenuItem
@@ -284,7 +286,7 @@ namespace FlowNetworkToolKit.Forms
             // 
             // dlgOpenFile
             // 
-            this.dlgOpenFile.Filter = "FlowNetwork|*.xml";
+            this.dlgOpenFile.Filter = "FlowNetwork xml|*.xml";
             // 
             // dlgImportFile
             // 
@@ -380,6 +382,11 @@ namespace FlowNetworkToolKit.Forms
             this.pbDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.pbDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseMove);
             // 
+            // dlgSaveFile
+            // 
+            this.dlgSaveFile.DefaultExt = "xml";
+            this.dlgSaveFile.Filter = "FlowNetwork xml|*.xml";
+            // 
             // FMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -439,6 +446,7 @@ namespace FlowNetworkToolKit.Forms
         private PictureBox pbDraw;
         private ToolStripMenuItem mnZoomAll;
         private ToolStripStatusLabel tsVisStatus;
+        private SaveFileDialog dlgSaveFile;
     }
 }
 
