@@ -7,7 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using FlowNetworkToolKit.Core.Base.Network;
+using FlowNetworkToolKit.Core.Utils.Logger;
 
 namespace FlowNetworkToolKit.Core.Utils.Visualizer
 {
@@ -110,14 +112,42 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         public static void arrangeNodesByDistance(Rectangle ClientRectangle)
         {
-            var spacing = NodeDiameter * 6;
-
+            var spacing = NodeDiameter * 4;
+            Dictionary<int,int> itemsAtLevel = new Dictionary<int, int>();
+            Dictionary<int,int> levelOffsets = new Dictionary<int, int>();
+            Dictionary<int,int> levelCounter = new Dictionary<int, int>();
             var fn = Runtime.currentGraph;
-            foreach (var node in fn.Nodes)
+            var distances = fn.ComputeDistances();
+            
+            foreach (var node in fn.Nodes.Values)
             {
-                
-
+                var d = distances[node.Index];
+                if (!itemsAtLevel.ContainsKey(d))
+                {
+                    itemsAtLevel[d] = 0;
+                }
+                itemsAtLevel[d]++;
             }
+
+            int maxCountAtLevel = itemsAtLevel.Values.Max();
+
+            foreach (var level in itemsAtLevel)
+            {
+                levelOffsets[level.Key] = ((maxCountAtLevel - level.Value) * (spacing + NodeDiameter)) / 2;                
+            }
+
+            foreach (var node in fn.Nodes.Values)
+            {
+                var d = distances[node.Index];
+                if (!levelCounter.ContainsKey(d))
+                {
+                    levelCounter[d] = 0;
+                }
+
+                node.Position = new Point(d * spacing, levelCounter[d] * (spacing + NodeDiameter) + levelOffsets[d]);
+                levelCounter[d]++;
+            }
+            Log.Write("All nodes are arranged by distance");
         }
 
         public static void drawNodes(Graphics g, Rectangle ClientRectangle)

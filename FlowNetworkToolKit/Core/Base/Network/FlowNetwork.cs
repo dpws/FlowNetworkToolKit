@@ -27,7 +27,6 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         #endregion
 
-        private int[] dist;
         private int _source = -1;
         private int _target = -1;
 
@@ -136,30 +135,31 @@ namespace FlowNetworkToolKit.Core.Base.Network
             Edges[ind].AddFlow(flow, to);
         }
 
-        private void ComputeDistances() //для отрисовки (базовое расстояние от источника до узла)
+        public Dictionary<int, int> ComputeDistances() //для отрисовки (базовое расстояние от источника до узла)
         {
-                for (int i = 0; i < dist.Length; i++)
-                {
-                    dist[i] = -1;
-                }
-                dist[Source] = 0; //source layer (lvl) is 0
+            var distances = new Dictionary<int, int>();
+            foreach (var node in Nodes)
+            {
+                distances[node.Value.Index] = -1;
+            }
+            distances[Source] = 0;
+            var queue = new Queue<int>();
+            queue.Enqueue(Source);
+            while (queue.Count > 0)
+            {
+                var v = queue.Dequeue();
 
-                var queue = new Queue<int>();
-                queue.Enqueue(Source);
-                while (queue.Count > 0)
+                foreach (var e in Nodes[v].AllEdges)
                 {
-                    var v = queue.Dequeue();
-
-                    foreach (var e in Nodes[v].AllEdges)
+                    var w = e.Other(v);
+                    if (e.ResidualCapacityTo(w) > 0 && distances[w] < 0)
                     {
-                        var w = e.Other(v);
-                        if (e.ResidualCapacityTo(w) > 0 && dist[w] < 0)
-                        {
-                            dist[w] = dist[v] + 1;
-                            queue.Enqueue(w);
-                        }
+                        distances[w] = distances[v] + 1;
+                        queue.Enqueue(w);
                     }
                 }
+            }
+            return distances;
         }
     }
 }
