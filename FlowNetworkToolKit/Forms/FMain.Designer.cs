@@ -1,4 +1,6 @@
-﻿namespace FlowNetworkToolKit.Forms
+﻿using System.Windows.Forms;
+
+namespace FlowNetworkToolKit.Forms
 {
     partial class FMain
     {
@@ -32,15 +34,15 @@
             this.slGraphInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.mnAlghoritmList = new System.Windows.Forms.ToolStripComboBox();
-            this.canvas = new System.Windows.Forms.Panel();
-            this.pnPlaceHolder = new System.Windows.Forms.Panel();
             this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.dlgImportFile = new System.Windows.Forms.OpenFileDialog();
+            this.pnPlaceHolder = new System.Windows.Forms.Panel();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
+            this.pbDraw = new System.Windows.Forms.PictureBox();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,16 +59,19 @@
             this.mnRunVisualization = new System.Windows.Forms.ToolStripMenuItem();
             this.runWithoutVisualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.performanceTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnZoomAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsVisStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
-            this.canvas.SuspendLayout();
             this.pnPlaceHolder.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDraw)).BeginInit();
             this.SuspendLayout();
             // 
             // ssStatus
             // 
             this.ssStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.slGraphInfo});
+            this.slGraphInfo,
+            this.tsVisStatus});
             this.ssStatus.Location = new System.Drawing.Point(0, 364);
             this.ssStatus.Name = "ssStatus";
             this.ssStatus.Size = new System.Drawing.Size(830, 22);
@@ -85,6 +90,7 @@
             this.fileToolStripMenuItem,
             this.visualizationToolStripMenuItem,
             this.mnAbout,
+            this.mnZoomAll,
             this.mnAlghoritmList,
             this.mnToggleLogWindow,
             this.mnAlgorithmInfo,
@@ -103,16 +109,14 @@
             this.mnAlghoritmList.Size = new System.Drawing.Size(200, 23);
             this.mnAlghoritmList.SelectedIndexChanged += new System.EventHandler(this.mnAlghoritmList_SelectedIndexChanged);
             // 
-            // canvas
+            // dlgOpenFile
             // 
-            this.canvas.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.canvas.Controls.Add(this.pnPlaceHolder);
-            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvas.Location = new System.Drawing.Point(0, 27);
-            this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(830, 337);
-            this.canvas.TabIndex = 2;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.FMain_Paint);
+            this.dlgOpenFile.Filter = "FlowNetwork|*.xml";
+            // 
+            // dlgImportFile
+            // 
+            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
+            this.dlgImportFile.FilterIndex = 2;
             // 
             // pnPlaceHolder
             // 
@@ -123,19 +127,10 @@
             this.pnPlaceHolder.Controls.Add(this.btnOpen);
             this.pnPlaceHolder.Controls.Add(this.btnCreate);
             this.pnPlaceHolder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnPlaceHolder.Location = new System.Drawing.Point(0, 0);
+            this.pnPlaceHolder.Location = new System.Drawing.Point(0, 27);
             this.pnPlaceHolder.Name = "pnPlaceHolder";
             this.pnPlaceHolder.Size = new System.Drawing.Size(830, 337);
-            this.pnPlaceHolder.TabIndex = 0;
-            // 
-            // dlgOpenFile
-            // 
-            this.dlgOpenFile.Filter = "FlowNetwork|*.xml";
-            // 
-            // dlgImportFile
-            // 
-            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
-            this.dlgImportFile.FilterIndex = 2;
+            this.pnPlaceHolder.TabIndex = 2;
             // 
             // btnExit
             // 
@@ -200,6 +195,17 @@
             this.btnCreate.TabIndex = 0;
             this.btnCreate.Text = "Create new graph";
             this.btnCreate.UseVisualStyleBackColor = true;
+            // 
+            // pbDraw
+            // 
+            this.pbDraw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbDraw.Location = new System.Drawing.Point(0, 27);
+            this.pbDraw.Name = "pbDraw";
+            this.pbDraw.Size = new System.Drawing.Size(830, 337);
+            this.pbDraw.TabIndex = 3;
+            this.pbDraw.TabStop = false;
+            this.pbDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            this.pbDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseMove);
             // 
             // fileToolStripMenuItem
             // 
@@ -343,12 +349,30 @@
             this.performanceTestToolStripMenuItem.Text = "Performance test";
             this.performanceTestToolStripMenuItem.Click += new System.EventHandler(this.performanceTestToolStripMenuItem_Click);
             // 
+            // mnZoomAll
+            // 
+            this.mnZoomAll.AutoToolTip = true;
+            this.mnZoomAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mnZoomAll.Image = global::FlowNetworkToolKit.Properties.Resources.magnifier_zoom_fit;
+            this.mnZoomAll.Name = "mnZoomAll";
+            this.mnZoomAll.Size = new System.Drawing.Size(28, 23);
+            this.mnZoomAll.Text = "zoomAll";
+            this.mnZoomAll.ToolTipText = "Zoom fit";
+            this.mnZoomAll.Click += new System.EventHandler(this.mnZoomAll_Click);
+            // 
+            // tsVisStatus
+            // 
+            this.tsVisStatus.Name = "tsVisStatus";
+            this.tsVisStatus.Size = new System.Drawing.Size(63, 17);
+            this.tsVisStatus.Text = "tsVisStatus";
+            // 
             // FMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 386);
-            this.Controls.Add(this.canvas);
+            this.Controls.Add(this.pnPlaceHolder);
+            this.Controls.Add(this.pbDraw);
             this.Controls.Add(this.ssStatus);
             this.Controls.Add(this.mainMenu);
             this.DoubleBuffered = true;
@@ -361,8 +385,8 @@
             this.ssStatus.PerformLayout();
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
-            this.canvas.ResumeLayout(false);
             this.pnPlaceHolder.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbDraw)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -379,7 +403,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnOpen;
         private System.Windows.Forms.ToolStripMenuItem mnSave;
         private System.Windows.Forms.ToolStripMenuItem mnExit;
-        private System.Windows.Forms.Panel canvas;
         private System.Windows.Forms.ToolStripMenuItem mnReloadAlgorithms;
         private System.Windows.Forms.ToolStripComboBox mnAlghoritmList;
         private System.Windows.Forms.ToolStripMenuItem mnToggleLogWindow;
@@ -389,16 +412,19 @@
         private System.Windows.Forms.ToolStripMenuItem runWithoutVisualizationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem performanceTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.Panel pnPlaceHolder;
-        private System.Windows.Forms.Button btnCreate;
-        private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.Button btnOpen;
-        private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ToolStripMenuItem mnGenerate;
         private System.Windows.Forms.ToolStripStatusLabel slGraphInfo;
         private System.Windows.Forms.OpenFileDialog dlgOpenFile;
         private System.Windows.Forms.OpenFileDialog dlgImportFile;
+        private System.Windows.Forms.Button btnCreate;
+        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Panel pnPlaceHolder;
+        private PictureBox pbDraw;
+        private ToolStripMenuItem mnZoomAll;
+        private ToolStripStatusLabel tsVisStatus;
     }
 }
 
