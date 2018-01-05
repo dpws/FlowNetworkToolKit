@@ -15,5 +15,9 @@ namespace FlowNetworkToolKit.Core
 
         public static FlowNetwork currentGraph = null;
 
+        public static bool VisualisationEnabled = true;
+        public static bool EditionEnabled = true;
+        public static bool CreationEnabled = true;
+
     }
 }

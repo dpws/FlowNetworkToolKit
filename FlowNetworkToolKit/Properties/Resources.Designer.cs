@@ -63,6 +63,16 @@ namespace FlowNetworkToolKit.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap application_tile {
+            get {
+                object obj = ResourceManager.GetObject("application-tile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap arrow_circle_double {
             get {
                 object obj = ResourceManager.GetObject("arrow-circle-double", resourceCulture);
@@ -216,6 +226,26 @@ namespace FlowNetworkToolKit.Properties {
         internal static System.Drawing.Bitmap receipt_import {
             get {
                 object obj = ResourceManager.GetObject("receipt-import", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ring {
+            get {
+                object obj = ResourceManager.GetObject("ring", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ruler__arrow {
+            get {
+                object obj = ResourceManager.GetObject("ruler--arrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

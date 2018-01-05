@@ -232,5 +232,14 @@
   <ItemGroup>
     <None Include="Resources\magnifier-zoom-fit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application-tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ruler--arrow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -148,11 +148,11 @@ namespace FlowNetworkToolKit.Forms
 
         private void canvas_MouseWheel(object sender, MouseEventArgs e)
         {
+            if (!Runtime.VisualisationEnabled) return;
             if (Visualizer.SetScale(Math.Round(Visualizer.Scale + (e.Delta / 120 * 0.05), 2)))
             {
                pbDraw.Invalidate();
             }
-            
         }
 
 
@@ -211,6 +211,7 @@ namespace FlowNetworkToolKit.Forms
                 pnPlaceHolder.Visible = true;
                 mnZoomAll.Visible = false;
                 tsVisStatus.Visible = false;
+                mnArrangement.Enabled = false;
                 slGraphInfo.Text = $"-";
             }
             else
@@ -218,6 +219,7 @@ namespace FlowNetworkToolKit.Forms
                 pnPlaceHolder.Visible = false;
                 mnZoomAll.Visible = true;
                 tsVisStatus.Visible = true;
+                mnArrangement.Enabled = true;
                 slGraphInfo.Text = $"Nodes: {Runtime.currentGraph.NodeCount} Edges: {Runtime.currentGraph.EdgeCount}";
                 
             }
@@ -239,8 +241,15 @@ namespace FlowNetworkToolKit.Forms
 
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
-            tsVisStatus.Text = $"Scale: {Visualizer.Scale} Offset: {Visualizer.Offset.X}, {Visualizer.Offset.Y}";
-            if (Runtime.currentGraph != null)
+            if (Runtime.VisualisationEnabled)
+            {
+                tsVisStatus.Text = $"Scale: {Visualizer.Scale} Offset: {Visualizer.Offset.X}, {Visualizer.Offset.Y}";
+            }
+            else
+            {
+                tsVisStatus.Text = "Visualization disabled";
+            }
+            if (Runtime.currentGraph != null && Runtime.VisualisationEnabled)
             {
                 Visualizer.Visualise(e.Graphics, pbDraw.ClientRectangle);
             }
@@ -252,28 +261,37 @@ namespace FlowNetworkToolKit.Forms
 
         private void pbDraw_MouseMove(object sender, MouseEventArgs e)
         {
+            #region Pan
             if (e.Button == MouseButtons.Middle)
             {
                 changeCanvasOffset(e);
                 return;
             }
-
-            int hoverNode = RuntimeManipulations.GetHoverNode(e);
-            if (hoverNode != -1)
-            {
-                Cursor = Cursors.Hand;
-            }
-            else
-            {
-                Cursor = Cursors.Default;
-            }
-            if (RuntimeManipulations.SetActiveNode(hoverNode))
-            {
-                pbDraw.Invalidate();
-            }
-           
-
             RuntimeManipulations.LastPanPosition = new Point();
+
+            #endregion
+
+            #region Hover
+
+            if (Runtime.EditionEnabled)
+            {
+                int hoverNode = RuntimeManipulations.GetHoverNode(e);
+                if (hoverNode != -1)
+                {
+                    Cursor = Cursors.Hand;
+                }
+                else
+                {
+                    Cursor = Cursors.Default;
+                }
+                if (RuntimeManipulations.SetActiveNode(hoverNode))
+                {
+                    pbDraw.Invalidate();
+                }
+            }
+
+            #endregion
+
         }
 
         private void changeCanvasOffset(MouseEventArgs e)
@@ -333,6 +351,35 @@ namespace FlowNetworkToolKit.Forms
                     
                 }
             }
+        }
+
+        private void byDistanceFromSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Visualizer.arrangeNodesByDistance(ClientRectangle);
+        }
+
+        private void byCircleFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Visualizer.arrangeNodesByCircle(ClientRectangle);
+        }
+
+        private void mnVisualisationEnabled_CheckStateChanged(object sender, EventArgs e)
+        {
+            Runtime.VisualisationEnabled = mnVisualisationEnabled.Checked;
+            Invalidate();
+            pbDraw.Invalidate();
+        }
+
+        private void mnCreationEnabled_CheckStateChanged(object sender, EventArgs e)
+        {
+            Runtime.CreationEnabled = mnCreationEnabled.Checked;
+            Invalidate();
+        }
+
+        private void mnEditionEnabled_CheckStateChanged(object sender, EventArgs e)
+        {
+            Runtime.EditionEnabled = mnEditionEnabled.Checked;
+            Invalidate();
         }
     }
 }

@@ -173,6 +173,8 @@ namespace FlowNetworkToolKit.Core.Base.Network
             return distances;
         }
 
+        #region Custom serialization
+
         public XmlDocument GenerateXml()
         {
             XmlDocument document = new XmlDocument();
@@ -246,5 +248,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
                 Nodes[id].Position = new Point(x,y);
             }
         }
+
+        #endregion
     }
 }

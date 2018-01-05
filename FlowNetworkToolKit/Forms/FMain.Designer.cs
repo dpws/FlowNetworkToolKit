@@ -43,6 +43,12 @@ namespace FlowNetworkToolKit.Forms
             this.mnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnReloadAlgorithms = new System.Windows.Forms.ToolStripMenuItem();
             this.visualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnVisualisationEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnEditionEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnCreationEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnArrangement = new System.Windows.Forms.ToolStripMenuItem();
+            this.byDistanceFromSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.byCircleFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnZoomAll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAlghoritmList = new System.Windows.Forms.ToolStripComboBox();
@@ -60,8 +66,8 @@ namespace FlowNetworkToolKit.Forms
             this.btnImport = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
-            this.pbDraw = new System.Windows.Forms.PictureBox();
             this.dlgSaveFile = new System.Windows.Forms.SaveFileDialog();
+            this.pbDraw = new System.Windows.Forms.PictureBox();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.pnPlaceHolder.SuspendLayout();
@@ -183,11 +189,72 @@ namespace FlowNetworkToolKit.Forms
             // 
             // visualizationToolStripMenuItem
             // 
+            this.visualizationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnVisualisationEnabled,
+            this.mnEditionEnabled,
+            this.mnCreationEnabled,
+            this.mnArrangement});
             this.visualizationToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.eye;
             this.visualizationToolStripMenuItem.Name = "visualizationToolStripMenuItem";
             this.visualizationToolStripMenuItem.Size = new System.Drawing.Size(101, 23);
             this.visualizationToolStripMenuItem.Text = "Visualization";
             this.visualizationToolStripMenuItem.Click += new System.EventHandler(this.visualizationToolStripMenuItem_Click);
+            // 
+            // mnVisualisationEnabled
+            // 
+            this.mnVisualisationEnabled.Checked = true;
+            this.mnVisualisationEnabled.CheckOnClick = true;
+            this.mnVisualisationEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnVisualisationEnabled.Name = "mnVisualisationEnabled";
+            this.mnVisualisationEnabled.Size = new System.Drawing.Size(152, 22);
+            this.mnVisualisationEnabled.Text = "Visualization";
+            this.mnVisualisationEnabled.CheckStateChanged += new System.EventHandler(this.mnVisualisationEnabled_CheckStateChanged);
+            // 
+            // mnEditionEnabled
+            // 
+            this.mnEditionEnabled.Checked = true;
+            this.mnEditionEnabled.CheckOnClick = true;
+            this.mnEditionEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnEditionEnabled.Name = "mnEditionEnabled";
+            this.mnEditionEnabled.Size = new System.Drawing.Size(152, 22);
+            this.mnEditionEnabled.Text = "Edition";
+            this.mnEditionEnabled.CheckStateChanged += new System.EventHandler(this.mnEditionEnabled_CheckStateChanged);
+            // 
+            // mnCreationEnabled
+            // 
+            this.mnCreationEnabled.Checked = true;
+            this.mnCreationEnabled.CheckOnClick = true;
+            this.mnCreationEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnCreationEnabled.Name = "mnCreationEnabled";
+            this.mnCreationEnabled.Size = new System.Drawing.Size(152, 22);
+            this.mnCreationEnabled.Text = "Creation";
+            this.mnCreationEnabled.CheckStateChanged += new System.EventHandler(this.mnCreationEnabled_CheckStateChanged);
+            // 
+            // mnArrangement
+            // 
+            this.mnArrangement.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.byDistanceFromSourceToolStripMenuItem,
+            this.byCircleFormToolStripMenuItem});
+            this.mnArrangement.Image = global::FlowNetworkToolKit.Properties.Resources.application_tile;
+            this.mnArrangement.Name = "mnArrangement";
+            this.mnArrangement.Size = new System.Drawing.Size(152, 22);
+            this.mnArrangement.Text = "Arrangement";
+            // 
+            // byDistanceFromSourceToolStripMenuItem
+            // 
+            this.byDistanceFromSourceToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.ruler__arrow;
+            this.byDistanceFromSourceToolStripMenuItem.Name = "byDistanceFromSourceToolStripMenuItem";
+            this.byDistanceFromSourceToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.byDistanceFromSourceToolStripMenuItem.Text = "By distance from source";
+            this.byDistanceFromSourceToolStripMenuItem.Click += new System.EventHandler(this.byDistanceFromSourceToolStripMenuItem_Click);
+            // 
+            // byCircleFormToolStripMenuItem
+            // 
+            this.byCircleFormToolStripMenuItem.Image = global::FlowNetworkToolKit.Properties.Resources.ring;
+            this.byCircleFormToolStripMenuItem.Name = "byCircleFormToolStripMenuItem";
+            this.byCircleFormToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.byCircleFormToolStripMenuItem.Text = "By circle form";
+            this.byCircleFormToolStripMenuItem.Click += new System.EventHandler(this.byCircleFormToolStripMenuItem_Click);
             // 
             // mnAbout
             // 
@@ -371,6 +438,11 @@ namespace FlowNetworkToolKit.Forms
             this.btnCreate.Text = "Create new graph";
             this.btnCreate.UseVisualStyleBackColor = true;
             // 
+            // dlgSaveFile
+            // 
+            this.dlgSaveFile.DefaultExt = "xml";
+            this.dlgSaveFile.Filter = "FlowNetwork xml|*.xml";
+            // 
             // pbDraw
             // 
             this.pbDraw.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -381,11 +453,6 @@ namespace FlowNetworkToolKit.Forms
             this.pbDraw.TabStop = false;
             this.pbDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.pbDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseMove);
-            // 
-            // dlgSaveFile
-            // 
-            this.dlgSaveFile.DefaultExt = "xml";
-            this.dlgSaveFile.Filter = "FlowNetwork xml|*.xml";
             // 
             // FMain
             // 
@@ -447,6 +514,12 @@ namespace FlowNetworkToolKit.Forms
         private ToolStripMenuItem mnZoomAll;
         private ToolStripStatusLabel tsVisStatus;
         private SaveFileDialog dlgSaveFile;
+        private ToolStripMenuItem mnVisualisationEnabled;
+        private ToolStripMenuItem mnEditionEnabled;
+        private ToolStripMenuItem mnCreationEnabled;
+        private ToolStripMenuItem mnArrangement;
+        private ToolStripMenuItem byDistanceFromSourceToolStripMenuItem;
+        private ToolStripMenuItem byCircleFormToolStripMenuItem;
     }
 }
 
