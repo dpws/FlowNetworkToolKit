@@ -70,7 +70,6 @@ namespace FlowNetworkToolKit.Algorithms
                 int v = L.First((id) => excess[id] > 0); // первый активный узел в списке
                 while (excess[v] > 0) // is active
                 {
-                    Console.WriteLine(v);
                     bool block_v = true;
                     bool pushed = false;
 
@@ -82,7 +81,6 @@ namespace FlowNetworkToolKit.Algorithms
                         {
                             f = Math.Min(excess[v], edge.ResidualCapacityTo(other));
                             edge.AddFlow(f, other); // push + pull (backward push)                                                                                                                      
-                            Console.WriteLine(v + "-" + other + " push: " + f);
                             excess[v] -= f;
                             excess[other] += f;
                             pushed = true;
