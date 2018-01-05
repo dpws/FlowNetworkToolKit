@@ -165,7 +165,7 @@ namespace FlowNetworkToolKit.Forms
                 {
                     Runtime.currentGraph = fn;
                     Log.Write($"Loaded flow network from {file.FullName}");
-                    Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
+                    Visualizer.arrangeNodesByCircle(pbDraw.ClientRectangle);
                     Visualizer.ZoomAll(pbDraw.ClientRectangle);
                     Invalidate();
                 }
