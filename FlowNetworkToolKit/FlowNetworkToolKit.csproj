@@ -228,5 +228,8 @@
   <ItemGroup>
     <None Include="Resources\clock-select.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifier-zoom-fit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

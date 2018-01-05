@@ -20,11 +20,14 @@ namespace FlowNetworkToolKit.Forms
 {
     public partial class FMain : Form
     {
+        private Point LastMousePos = new Point();
+
+
         public FMain()
         {
             InitializeComponent();
             Log.Init();
-            canvas.MouseWheel += canvas_MouseWheel;
+            pbDraw.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
         }
 
@@ -58,6 +61,7 @@ namespace FlowNetworkToolKit.Forms
             }
             Runtime.loadedAlghoritms = list;
             mnAlghoritmList.SelectedIndex = 0;
+            Invalidate();
         }
 
         private void mnToggleLogWindow_Click(object sender, EventArgs e)
@@ -78,7 +82,7 @@ namespace FlowNetworkToolKit.Forms
                 Log.Write(except.Message, Log.ERROR);
                 return;
             }
-            Refresh();
+            Invalidate();
         }
 
         private void mnAlgorithmInfo_Click(object sender, EventArgs e)
@@ -112,7 +116,7 @@ namespace FlowNetworkToolKit.Forms
             g.Target = 5;
             Runtime.currentGraph = g;
 
-            canvas.Invalidate();
+            Invalidate();
         }
 
         private void runWithoutVisualizationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,8 +140,6 @@ namespace FlowNetworkToolKit.Forms
         private void mnOpen_Click(object sender, EventArgs e)
         {
             Invalidate();
-            Refresh();
-            Update();
         }
 
 
@@ -146,7 +148,7 @@ namespace FlowNetworkToolKit.Forms
         {
             if (Visualizer.SetScale(Math.Round(Visualizer.Scale + (e.Delta / 120 * 0.05), 2)))
             {
-                canvas.Invalidate();
+               pbDraw.Invalidate();
             }
             
         }
@@ -163,7 +165,9 @@ namespace FlowNetworkToolKit.Forms
                 {
                     Runtime.currentGraph = fn;
                     Log.Write($"Loaded flow network from {file.FullName}");
-         
+                    Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
+                    Visualizer.ZoomAll(pbDraw.ClientRectangle);
+                    Invalidate();
                 }
                 else
                 {
@@ -175,8 +179,8 @@ namespace FlowNetworkToolKit.Forms
 
         private void FMain_Resize(object sender, EventArgs e)
         {
-            //OnPaint();
             Invalidate();
+            pbDraw.Invalidate();
         }
 
         private void OnAlgorithmFinished(BaseMaxFlowAlgorithm algorithm)
@@ -190,19 +194,28 @@ namespace FlowNetworkToolKit.Forms
             Form.ShowDialog();
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e)
+        public new void Invalidate()
         {
-            Log.Write("Repaint canvas...");
+            checkPlaceHolder();
+            base.Invalidate();
+        }
+
+        private void checkPlaceHolder()
+        {
             if (Runtime.currentGraph == null)
             {
                 pnPlaceHolder.Visible = true;
+                mnZoomAll.Visible = false;
+                tsVisStatus.Visible = false;
                 slGraphInfo.Text = $"-";
             }
             else
             {
                 pnPlaceHolder.Visible = false;
+                mnZoomAll.Visible = true;
+                tsVisStatus.Visible = true;
                 slGraphInfo.Text = $"Nodes: {Runtime.currentGraph.NodeCount} Edges: {Runtime.currentGraph.EdgeCount}";
-                Visualizer.Visualise(e.Graphics, ClientRectangle);
+                
             }
 
             if (Runtime.currentAlghoritm != null)
@@ -220,9 +233,47 @@ namespace FlowNetworkToolKit.Forms
             }
         }
 
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            tsVisStatus.Text = $"Scale: {Visualizer.Scale} Offset: {Visualizer.Offset.X}, {Visualizer.Offset.Y}";
+            if (Runtime.currentGraph != null)
+            {
+                Visualizer.Visualise(e.Graphics, pbDraw.ClientRectangle);
+            }
+        }
+
         private void FMain_Paint(object sender, PaintEventArgs e)
         {
-            Log.Write("Repainting...");
+        }
+
+        private void pbDraw_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                changeCanvasOffset(e);
+                return;
+            }
+
+            LastMousePos = new Point();
+        }
+
+
+        private void changeCanvasOffset(MouseEventArgs e)
+        {
+            if (LastMousePos != new Point())
+            {
+                var newX = Visualizer.Offset.X + (e.Location.X - LastMousePos.X);
+                var newY = Visualizer.Offset.Y + (e.Location.Y - LastMousePos.Y);
+                Visualizer.SetOffset(new Point(newX, newY));
+                pbDraw.Invalidate();
+            }
+            LastMousePos = e.Location;
+        }
+
+        private void mnZoomAll_Click(object sender, EventArgs e)
+        {
+            Visualizer.ZoomAll(pbDraw.ClientRectangle);
+            pbDraw.Invalidate();
         }
     }
 }
