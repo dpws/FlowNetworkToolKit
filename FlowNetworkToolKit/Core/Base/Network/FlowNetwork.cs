@@ -87,7 +87,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public FlowNetwork(List<FlowEdge> edges, Dictionary<int, FlowNode> nodes) : this()
         {
             foreach (var node in nodes.Values)
-                Nodes.Add(node.Index, node);
+                Nodes.Add(node.Index, new FlowNode(node));
             foreach (var edge in edges)
                 AddEdge(edge.From, edge.To, edge.Capacity, edge.Flow);
         }
@@ -176,7 +176,6 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public void PushFlow(int from, int to, double flow)
         {
-
             var ind = Edges.IndexOf(new FlowEdge(from, to, 0));
             if (ind == -1) ind = Edges.IndexOf(new FlowEdge(to, from, 0));
             Edges[ind].AddFlow(flow, to);
