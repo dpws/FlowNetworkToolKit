@@ -190,8 +190,10 @@ namespace FlowNetworkToolKit.Forms
 
         private void checkControlsAccesible()
         {
-            mnEditionEnabled.Enabled = Runtime.VisualisationEnabled;
-            mnCreationEnabled.Enabled = Runtime.VisualisationEnabled;
+            mnEditionEnabled.Enabled = mnCreationEnabled.Enabled = Runtime.VisualisationEnabled;
+            mnEditionEnabled.Checked = Runtime.EditionEnabled;
+            mnCreationEnabled.Checked = Runtime.CreationEnabled;
+
             if (Runtime.currentGraph == null)
             {
                 pnPlaceHolder.Visible = true;
@@ -422,7 +424,7 @@ namespace FlowNetworkToolKit.Forms
                 cmEdge.Show(Cursor.Position);
             }
 
-            if (e.Button == MouseButtons.Left)
+            if (Runtime.CreationEnabled && e.Button == MouseButtons.Left)
             {
                 if (RuntimeManipulations.ActiveNode == null)
                 {

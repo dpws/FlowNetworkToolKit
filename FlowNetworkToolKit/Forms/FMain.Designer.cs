@@ -473,11 +473,9 @@ namespace FlowNetworkToolKit.Forms
             // 
             // mnCreationEnabled
             // 
-            this.mnCreationEnabled.Checked = true;
             this.mnCreationEnabled.CheckOnClick = true;
-            this.mnCreationEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnCreationEnabled.Name = "mnCreationEnabled";
-            this.mnCreationEnabled.Size = new System.Drawing.Size(144, 22);
+            this.mnCreationEnabled.Size = new System.Drawing.Size(152, 22);
             this.mnCreationEnabled.Text = "Creation";
             this.mnCreationEnabled.CheckStateChanged += new System.EventHandler(this.mnCreationEnabled_CheckStateChanged);
             // 
