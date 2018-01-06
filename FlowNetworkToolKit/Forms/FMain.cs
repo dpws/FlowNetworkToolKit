@@ -200,7 +200,7 @@ namespace FlowNetworkToolKit.Forms
                 mnZoomAll.Visible = false;
                 tsVisStatus.Visible = false;
                 mnArrangement.Enabled = false;
-                slGraphInfo.Text = $"-";
+                slGraphInfo.Text = $"No flow network is loaded";
             }
             else
             {
@@ -252,6 +252,8 @@ namespace FlowNetworkToolKit.Forms
         private void pbDraw_MouseMove(object sender, MouseEventArgs e)
         {
             bool needInvalidate = false;
+            if (RuntimeManipulations.CreatingEdgeFromNode != -1)
+                needInvalidate = true;
             RuntimeManipulations.CanvasCursorPosition = e.Location;
             #region Pan
             if (e.Button == MouseButtons.Middle)
@@ -414,6 +416,7 @@ namespace FlowNetworkToolKit.Forms
                 cmNodeInfo.Text =
                     $"IN: {RuntimeManipulations.ActiveNode.InCapacity} OUT: {RuntimeManipulations.ActiveNode.OutCapacity}";
                 cmNodeSetTarget.Enabled = cmNodeSetSource.Enabled = RuntimeManipulations.ActiveNode.Index != Runtime.currentGraph.Source && RuntimeManipulations.ActiveNode.Index != Runtime.currentGraph.Target;
+                cmNodeAddEdge.Enabled = Runtime.CreationEnabled;
                 cmNode.Show(Cursor.Position);
             }
             if (RuntimeManipulations.ActiveEdge != null && e.Button == MouseButtons.Right)
@@ -424,12 +427,40 @@ namespace FlowNetworkToolKit.Forms
                 cmEdge.Show(Cursor.Position);
             }
 
-            if (Runtime.CreationEnabled && e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
-                if (RuntimeManipulations.ActiveNode == null)
+                if (Runtime.CreationEnabled)
                 {
-                    Runtime.currentGraph.AddNodeAtMouse(e);
+                    if (RuntimeManipulations.ActiveNode == null)
+                    {
+                        if (RuntimeManipulations.CreatingEdgeFromNode == -1)
+                        {
+                            Runtime.currentGraph.AddNodeAtMouse(e);
+                            Invalidate();
+                            pbDraw.Invalidate();
+                        }
+                        RuntimeManipulations.CreatingEdgeFromNode = -1;
+                    }
+                    else
+                    {
+                        if (RuntimeManipulations.CreatingEdgeFromNode != -1)
+                        {
+                            try
+                            {
+                                Runtime.currentGraph.AddEdge(RuntimeManipulations.CreatingEdgeFromNode,
+                                    RuntimeManipulations.ActiveNode.Index, 1);
+                                RuntimeManipulations.CreatingEdgeFromNode = -1;
+                                pbDraw.Invalidate();
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Write(ex.Message, Log.ERROR);
+                            }
+                        }
+                    }
                 }
+
+                
             }
         }
 
@@ -486,6 +517,11 @@ namespace FlowNetworkToolKit.Forms
                 else
                     mnEdgeCapacitySave.Enabled = false;
             }
+        }
+
+        private void cmNodeAddEdge_Click(object sender, EventArgs e)
+        {
+            RuntimeManipulations.CreatingEdgeFromNode = RuntimeManipulations.ActiveNode.Index;
         }
     }
 }

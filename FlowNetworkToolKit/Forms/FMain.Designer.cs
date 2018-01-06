@@ -85,6 +85,8 @@ namespace FlowNetworkToolKit.Forms
             this.mnRunVisualization = new System.Windows.Forms.ToolStripMenuItem();
             this.runWithoutVisualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.performanceTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmNodeAddEdge = new System.Windows.Forms.ToolStripMenuItem();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.pnPlaceHolder.SuspendLayout();
@@ -178,56 +180,58 @@ namespace FlowNetworkToolKit.Forms
             this.cmNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmNodeId,
             this.cmNodeInfo,
+            this.toolStripSeparator4,
+            this.cmNodeAddEdge,
             this.cmSeparator,
             this.cmNodeSetSource,
             this.cmNodeSetTarget,
             this.toolStripSeparator1,
             this.cmNodeDelete});
             this.cmNode.Name = "cmNode";
-            this.cmNode.Size = new System.Drawing.Size(138, 126);
+            this.cmNode.Size = new System.Drawing.Size(185, 176);
             // 
             // cmNodeId
             // 
             this.cmNodeId.Enabled = false;
             this.cmNodeId.Name = "cmNodeId";
-            this.cmNodeId.Size = new System.Drawing.Size(137, 22);
+            this.cmNodeId.Size = new System.Drawing.Size(184, 22);
             this.cmNodeId.Text = "NODE: 0";
             // 
             // cmNodeInfo
             // 
             this.cmNodeInfo.Enabled = false;
             this.cmNodeInfo.Name = "cmNodeInfo";
-            this.cmNodeInfo.Size = new System.Drawing.Size(137, 22);
+            this.cmNodeInfo.Size = new System.Drawing.Size(184, 22);
             this.cmNodeInfo.Text = "IN: 0 OUT: 0";
             // 
             // cmSeparator
             // 
             this.cmSeparator.Name = "cmSeparator";
-            this.cmSeparator.Size = new System.Drawing.Size(134, 6);
+            this.cmSeparator.Size = new System.Drawing.Size(181, 6);
             // 
             // cmNodeSetSource
             // 
             this.cmNodeSetSource.Name = "cmNodeSetSource";
-            this.cmNodeSetSource.Size = new System.Drawing.Size(137, 22);
+            this.cmNodeSetSource.Size = new System.Drawing.Size(184, 22);
             this.cmNodeSetSource.Text = "Set source";
             this.cmNodeSetSource.Click += new System.EventHandler(this.cmNodeSetSource_Click);
             // 
             // cmNodeSetTarget
             // 
             this.cmNodeSetTarget.Name = "cmNodeSetTarget";
-            this.cmNodeSetTarget.Size = new System.Drawing.Size(137, 22);
+            this.cmNodeSetTarget.Size = new System.Drawing.Size(184, 22);
             this.cmNodeSetTarget.Text = "Set target";
             this.cmNodeSetTarget.Click += new System.EventHandler(this.cmNodeSetTarget_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
             // cmNodeDelete
             // 
             this.cmNodeDelete.Name = "cmNodeDelete";
-            this.cmNodeDelete.Size = new System.Drawing.Size(137, 22);
+            this.cmNodeDelete.Size = new System.Drawing.Size(184, 22);
             this.cmNodeDelete.Text = "Delete node";
             this.cmNodeDelete.Click += new System.EventHandler(this.cmNodeDelete_Click);
             // 
@@ -457,7 +461,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnVisualisationEnabled.CheckOnClick = true;
             this.mnVisualisationEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnVisualisationEnabled.Name = "mnVisualisationEnabled";
-            this.mnVisualisationEnabled.Size = new System.Drawing.Size(144, 22);
+            this.mnVisualisationEnabled.Size = new System.Drawing.Size(152, 22);
             this.mnVisualisationEnabled.Text = "Visualization";
             this.mnVisualisationEnabled.CheckStateChanged += new System.EventHandler(this.mnVisualisationEnabled_CheckStateChanged);
             // 
@@ -467,7 +471,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnEditionEnabled.CheckOnClick = true;
             this.mnEditionEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnEditionEnabled.Name = "mnEditionEnabled";
-            this.mnEditionEnabled.Size = new System.Drawing.Size(144, 22);
+            this.mnEditionEnabled.Size = new System.Drawing.Size(152, 22);
             this.mnEditionEnabled.Text = "Edition";
             this.mnEditionEnabled.CheckStateChanged += new System.EventHandler(this.mnEditionEnabled_CheckStateChanged);
             // 
@@ -486,7 +490,7 @@ namespace FlowNetworkToolKit.Forms
             this.byCircleFormToolStripMenuItem});
             this.mnArrangement.Image = global::FlowNetworkToolKit.Properties.Resources.application_tile;
             this.mnArrangement.Name = "mnArrangement";
-            this.mnArrangement.Size = new System.Drawing.Size(144, 22);
+            this.mnArrangement.Size = new System.Drawing.Size(152, 22);
             this.mnArrangement.Text = "Arrangement";
             // 
             // byDistanceFromSourceToolStripMenuItem
@@ -592,6 +596,18 @@ namespace FlowNetworkToolKit.Forms
             this.performanceTestToolStripMenuItem.Text = "Performance test";
             this.performanceTestToolStripMenuItem.Click += new System.EventHandler(this.performanceTestToolStripMenuItem_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
+            // 
+            // cmNodeAddEdge
+            // 
+            this.cmNodeAddEdge.Name = "cmNodeAddEdge";
+            this.cmNodeAddEdge.Size = new System.Drawing.Size(184, 22);
+            this.cmNodeAddEdge.Text = "Add edge from node";
+            this.cmNodeAddEdge.Click += new System.EventHandler(this.cmNodeAddEdge_Click);
+            // 
             // FMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,6 +694,8 @@ namespace FlowNetworkToolKit.Forms
         private ToolStripStatusLabel tsInfoCount;
         private ToolStripStatusLabel tsWarningCount;
         private ToolStripStatusLabel tsErrorCount;
+        private ToolStripSeparator toolStripSeparator4;
+        private ToolStripMenuItem cmNodeAddEdge;
     }
 }
 

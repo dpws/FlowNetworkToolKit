@@ -111,8 +111,17 @@ namespace FlowNetworkToolKit.Core.Base.Network
             if (from == to)
                 throw new InvalidConfigurationException("'from' cant equals 'to'");
 
-            //if (capacity < Double.Epsilon)
-            //  throw new InvalidConfigurationException($"Capacity can't be less than {Double.Epsilon}");
+            if (capacity < 0)
+              throw new InvalidConfigurationException($"Capacity can't be less than 0");
+
+            FlowEdge sameEdge = null;
+            try
+            {
+                 sameEdge = Edges.Find((e) => (e.From == from && e.To == to) || (e.From == to && e.To == from));
+            } catch(Exception e) { }
+
+            if (sameEdge != null)
+                throw new InvalidConfigurationException($"Edge between {from} and {to} already exists");
 
             var edge = f == -1 ? new FlowEdge(from, to, capacity) : new FlowEdge(from, to, capacity, f);
             edge.OnFlowChanged += (sender, cap, flow) => OnEdgeFlowChanged?.Invoke(this, sender);

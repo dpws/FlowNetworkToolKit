@@ -23,6 +23,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static Point LastPanPosition = new Point();
         public static Point CanvasCursorPosition = new Point();
 
+        public static int CreatingEdgeFromNode = -1;
 
         public static FlowNode GetHoverNode(MouseEventArgs e)
         {

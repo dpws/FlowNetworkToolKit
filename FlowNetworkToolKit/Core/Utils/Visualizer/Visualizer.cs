@@ -122,6 +122,10 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             foreach (var node in fn.Nodes.Values)
             {
                 Point pos = TranslateAbsoluteToScreenPoint(node.Position.X, node.Position.Y);
+                if (RuntimeManipulations.CreatingEdgeFromNode == node.Index)
+                {
+                    drawEgde(g, pos, RuntimeManipulations.CanvasCursorPosition, new Pen(BaseColor, 2), false);
+                }
                 pos.X -= NodeDiameter / 2;
                 pos.Y -= NodeDiameter / 2;
                 var bgbrush = Brushes.White;
@@ -135,6 +139,9 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     bgbrush = TargetBrush;
                     ntext = "Target";
                 }
+
+                
+
                 g.FillEllipse(bgbrush, pos.X, pos.Y, NodeDiameter, NodeDiameter);
                 var nodeColor = BaseColor;
                 if (RuntimeManipulations.ActiveNode != null && RuntimeManipulations.ActiveNode.Equals(node))
@@ -159,12 +166,35 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     if(ntext.Length > 0)
                         g.DrawString(ntext, font, Brushes.Black, x + NodeDiameter, y);
                 }
-                    
+
+
             }
 
         }
 
-        
+        private static void drawEgde(Graphics g, Point from, Point to, Pen pen, bool excludeNodeDiameter = true)
+        {
+            int
+                arrowAngle = 30,
+                arrowSize = (int)Math.Round(12 * Scale),
+                arrowShift = 15;
+
+            var angle = Math.Atan2(from.X - to.X, from.Y - to.Y);
+            var arrowAngleRad = ((float)arrowAngle / 180) * Math.PI;
+            var arrowPivot = to;
+            if (excludeNodeDiameter)
+                arrowPivot = new Point((int)Math.Round(to.X + arrowShift * Math.Sin(angle)),
+                (int)Math.Round(to.Y + arrowShift * Math.Cos(angle)));
+
+            g.DrawLine(pen, from.X, from.Y, arrowPivot.X, arrowPivot.Y);
+
+            g.DrawLine(pen, arrowPivot.X, arrowPivot.Y,
+                (int)Math.Round(arrowPivot.X + arrowSize * Math.Sin(angle + arrowAngleRad)),
+                (int)Math.Round(arrowPivot.Y + arrowSize * Math.Cos(angle + arrowAngleRad)));
+            g.DrawLine(pen, arrowPivot.X, arrowPivot.Y,
+                (int)Math.Round(arrowPivot.X + arrowSize * Math.Sin(angle - arrowAngleRad)),
+                (int)Math.Round(arrowPivot.Y + arrowSize * Math.Cos(angle - arrowAngleRad)));
+        }
 
         public static void drawEdges(Graphics g, Rectangle ClientRectangle)
         {
@@ -193,25 +223,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 var posTo = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.To].Position.X,
                     fn.Nodes[edge.To].Position.Y);
 
-                g.DrawLine(pen, posFrom.X, posFrom.Y, posTo.X, posTo.Y);
-                var angle = Math.Atan2(posFrom.X - posTo.X, posFrom.Y - posTo.Y);
-
-                int
-                    arrowAngle = 30,
-                    arrowSize = (int)Math.Round(12 * Scale),
-                    arrowShift = 15;
-
-                var arrowAngleRad = ((float) arrowAngle / 180) * Math.PI;
-
-                var arrowPivot = new Point((int) Math.Round(posTo.X + arrowShift * Math.Sin(angle)),
-                    (int) Math.Round(posTo.Y + arrowShift * Math.Cos(angle)));
-
-                g.DrawLine(pen, arrowPivot.X, arrowPivot.Y,
-                    (int) Math.Round(arrowPivot.X + arrowSize * Math.Sin(angle + arrowAngleRad)),
-                    (int) Math.Round(arrowPivot.Y + arrowSize * Math.Cos(angle + arrowAngleRad)));
-                g.DrawLine(pen, arrowPivot.X, arrowPivot.Y,
-                    (int) Math.Round(arrowPivot.X + arrowSize * Math.Sin(angle - arrowAngleRad)),
-                    (int) Math.Round(arrowPivot.Y + arrowSize * Math.Cos(angle - arrowAngleRad)));
+                drawEgde(g, posFrom, posTo, pen);
 
             }
             foreach (var edge in fn.Edges)
