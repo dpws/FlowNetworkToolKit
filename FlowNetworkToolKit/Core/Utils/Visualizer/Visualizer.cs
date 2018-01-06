@@ -23,9 +23,15 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static Point Offset { private set; get; } = new Point(0, 0);
 
         public static Color BaseColor = Color.DarkCyan;
-        public static Color HoverColor = Color.DarkOrange;
-        public static Color HoverIncomingEdgeColor = Color.DarkRed;
-        public static Color HoverOutcomingEdgeColor = Color.Green;
+
+        public static Color HoverNodeColor = Color.DarkOrange;
+        public static Color HoverNodeIncomingEdgeColor = Color.DarkRed;
+        public static Color HoverNodeOutcomingEdgeColor = Color.Green;
+
+        public static Color HoverEdgeColor = Color.DarkOrange;
+        public static Color HoverEdgeFromNodeColor = Color.DarkRed;
+        public static Color HoverEdgeToNodeColor = Color.Green;
+
         public static Brush SourceBrush = Brushes.LightSteelBlue;
         public static Brush TargetBrush = Brushes.LightPink;
 
@@ -130,7 +136,16 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     ntext = "Target";
                 }
                 g.FillEllipse(bgbrush, pos.X, pos.Y, NodeDiameter, NodeDiameter);
-                g.DrawEllipse(new Pen(RuntimeManipulations.ActiveNode == node.Index ? HoverColor : BaseColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
+                var nodeColor = BaseColor;
+                if (RuntimeManipulations.ActiveNode != null && RuntimeManipulations.ActiveNode.Equals(node))
+                    nodeColor = HoverNodeColor;
+
+                if (node.Index == RuntimeManipulations.ActiveEdge?.From)
+                    nodeColor = HoverEdgeFromNodeColor;
+                if (node.Index == RuntimeManipulations.ActiveEdge?.To)
+                    nodeColor = HoverEdgeToNodeColor;
+
+                g.DrawEllipse(new Pen(nodeColor, 3), pos.X, pos.Y, NodeDiameter, NodeDiameter);
                 var s = $"{node.Index}";
                 int
                     len = s.Length,
@@ -158,16 +173,21 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             foreach (var edge in fn.Edges)
             {
                 pen.Color = BaseColor;
-                if (RuntimeManipulations.ActiveNode != -1)
+
+                if (edge.From == RuntimeManipulations.ActiveNode?.Index)
                 {
-                    if (edge.From == RuntimeManipulations.ActiveNode)
-                    {
-                        pen.Color = HoverOutcomingEdgeColor;
-                    } else if (edge.To == RuntimeManipulations.ActiveNode)
-                    {
-                        pen.Color = HoverIncomingEdgeColor;
-                    }
+                    pen.Color = HoverNodeOutcomingEdgeColor;
                 }
+                else if (edge.To == RuntimeManipulations.ActiveNode?.Index)
+                {
+                    pen.Color = HoverNodeIncomingEdgeColor;
+                }
+
+                if (RuntimeManipulations.ActiveEdge != null && RuntimeManipulations.ActiveEdge.Equals(edge))
+                {
+                    pen.Color = HoverEdgeColor;
+                }
+
                 var posFrom = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.From].Position.X,
                     fn.Nodes[edge.From].Position.Y);
                 var posTo = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.To].Position.X,

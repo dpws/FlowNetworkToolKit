@@ -135,8 +135,19 @@ namespace FlowNetworkToolKit.Core.Base.Network
             return $"Edges: {EdgeCount} Nodes: {NodeCount}";
         }
 
-        
 
+        public void DeleteNode(int node)
+        {
+            Nodes.Remove(node);
+            Edges.RemoveAll(e => e.From == node || e.To == node);
+            if (_source == node) _source = Nodes.First().Value.Index;
+            if (_target == node) _target = Nodes.Last().Value.Index;
+        }
+
+        public void DeleteEdge(int from, int to)
+        {
+            Edges.RemoveAll(e => e.From == from && e.To == to);
+        }
 
         public void PushFlow(int from, int to, double flow)
         {
@@ -244,7 +255,6 @@ namespace FlowNetworkToolKit.Core.Base.Network
                 id = int.Parse(xn.Attributes["id"].Value);
                 x = int.Parse(xn.Attributes["x"].Value);
                 y = int.Parse(xn.Attributes["y"].Value);
-                Log.Write($"{id}: {x},{y}");
                 Nodes[id].Position = new Point(x,y);
             }
         }

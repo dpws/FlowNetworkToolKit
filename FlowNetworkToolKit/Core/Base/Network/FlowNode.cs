@@ -27,6 +27,15 @@ namespace FlowNetworkToolKit.Core.Base.Network
             }
         }
 
+        public double InCapacity
+        {
+            get { return IncomingEdges.Sum(e => e.Capacity); }
+        }
+
+        public double OutCapacity
+        {
+            get { return OutcomingEdges.Sum(e => e.Capacity); }
+        }
 
         public FlowNode(int index)
         {

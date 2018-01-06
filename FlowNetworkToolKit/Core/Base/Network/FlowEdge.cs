@@ -101,6 +101,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public bool Equals(FlowEdge other)
         {
+            if (other == null) return false;
             return this.From == other.From && this.To == other.To;
         }
 

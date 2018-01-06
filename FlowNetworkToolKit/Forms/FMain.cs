@@ -278,27 +278,43 @@ namespace FlowNetworkToolKit.Forms
             #endregion
 
             #region Hover
-
+            
             if (Runtime.EditionEnabled)
             {
-                if (e.Button == MouseButtons.Left && RuntimeManipulations.ActiveNode != -1)
+                FlowNode hoverNode = null;
+                FlowEdge hoverEdge = null;
+                if (e.Button == MouseButtons.Left && RuntimeManipulations.ActiveNode != null)
                 {
-                    Runtime.currentGraph.Nodes[RuntimeManipulations.ActiveNode].Position =
+                    RuntimeManipulations.ActiveNode.Position =
                         Visualizer.TranslateScreenToAbsolutePoint(e.X, e.Y);
                     needInvalidate = true;
                 }
                 else
                 {
-                    int hoverNode = RuntimeManipulations.GetHoverNode(e);
-                    if (hoverNode != -1)
+                    hoverNode = RuntimeManipulations.GetHoverNode(e);
+                    if (hoverNode != null)
                     {
                         Cursor = Cursors.Hand;
                     }
                     else
                     {
-                        Cursor = Cursors.Default;
+                        
+                        hoverEdge = RuntimeManipulations.GetHoverEdge(e);
+                        if (hoverEdge != null)
+                        {
+                            Cursor = Cursors.Hand;
+                        }
+                        else
+                        {
+                            Cursor = Cursors.Default;
+                        }
+
                     }
                     if (RuntimeManipulations.SetActiveNode(hoverNode))
+                    {
+                        needInvalidate = true;
+                    }
+                    if (RuntimeManipulations.SetActiveEdge(hoverEdge))
                     {
                         needInvalidate = true;
                     }
@@ -402,6 +418,80 @@ namespace FlowNetworkToolKit.Forms
         {
             Runtime.EditionEnabled = mnEditionEnabled.Checked;
             Invalidate();
+        }
+
+        private void pbDraw_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (RuntimeManipulations.ActiveNode != null && e.Button == MouseButtons.Right)
+            {
+                cmNodeId.Text = $"NODE: {RuntimeManipulations.ActiveNode.Index}";
+                cmNodeInfo.Text =
+                    $"IN: {RuntimeManipulations.ActiveNode.InCapacity} OUT: {RuntimeManipulations.ActiveNode.OutCapacity}";
+                cmNodeSetTarget.Enabled = cmNodeSetSource.Enabled = RuntimeManipulations.ActiveNode.Index != Runtime.currentGraph.Source && RuntimeManipulations.ActiveNode.Index != Runtime.currentGraph.Target;
+                cmNode.Show(Cursor.Position);
+            }
+            if (RuntimeManipulations.ActiveEdge != null && e.Button == MouseButtons.Right)
+            {
+                mnEdgeCapacitySave.Enabled = false;
+                cmEdgeInfo.Text = $"{RuntimeManipulations.ActiveEdge.From} -> {RuntimeManipulations.ActiveEdge.To}";
+                cmEdgeCapacityTextBox.Text = RuntimeManipulations.ActiveEdge.Capacity.ToString();
+                cmEdge.Show(Cursor.Position);
+            }
+        }
+
+        private void cmNodeDelete_Click(object sender, EventArgs e)
+        {
+            Runtime.currentGraph.DeleteNode(RuntimeManipulations.ActiveNode.Index);
+            Invalidate();
+            pbDraw.Invalidate();
+        }
+
+        private void cmNodeSetSource_Click(object sender, EventArgs e)
+        {
+            Runtime.currentGraph.Source = RuntimeManipulations.ActiveNode.Index;
+        }
+
+        private void cmNodeSetTarget_Click(object sender, EventArgs e)
+        {
+            Runtime.currentGraph.Target = RuntimeManipulations.ActiveNode.Index;
+        }
+
+        private void cmEdgeDelete_Click(object sender, EventArgs e)
+        {
+            Runtime.currentGraph.DeleteEdge(RuntimeManipulations.ActiveEdge.From, RuntimeManipulations.ActiveEdge.To);
+            Invalidate();
+            pbDraw.Invalidate();
+        }
+
+        private void mnEdgeCapacitySave_Click(object sender, EventArgs e)
+        {
+            int capacity = 0;
+            if (!int.TryParse(cmEdgeCapacityTextBox.Text, out capacity))
+            {
+                cmEdgeCapacityTextBox.ForeColor = Color.LightPink;
+                return;
+            }
+            RuntimeManipulations.ActiveEdge.Capacity = capacity;
+            Invalidate();
+            pbDraw.Invalidate();
+        }
+
+        private void cmEdgeCapacityTextBox_TextChanged(object sender, EventArgs e)
+        {
+            double capacity = -1;
+            if (!double.TryParse(cmEdgeCapacityTextBox.Text, out capacity) || capacity < 0)
+            {
+                cmEdgeCapacityTextBox.BackColor = Color.LightPink;
+                mnEdgeCapacitySave.Enabled = false;
+            }
+            else
+            {
+                cmEdgeCapacityTextBox.BackColor = Color.White;
+                if(capacity != RuntimeManipulations.ActiveEdge.Capacity)
+                    mnEdgeCapacitySave.Enabled = true;
+                else
+                    mnEdgeCapacitySave.Enabled = false;
+            }
         }
     }
 }
