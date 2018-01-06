@@ -111,7 +111,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
             Elapsed = new TimeSpan(0);
             foreach (var edge in graph.Edges)
             {
-                edge.Flow = 0;
+                edge.SetFlow(0);
             }
         }
 

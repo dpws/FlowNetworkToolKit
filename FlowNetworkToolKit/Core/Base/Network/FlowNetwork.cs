@@ -131,7 +131,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
                 throw new InvalidConfigurationException($"Edge between {from} and {to} already exists");
 
             var edge = f == -1 ? new FlowEdge(from, to, capacity) : new FlowEdge(from, to, capacity, f);
-            edge.OnFlowChanged += (sender, cap, flow) => OnEdgeFlowChanged?.Invoke(this, sender);
+            edge.OnFlowChanged += (sender) => OnEdgeFlowChanged?.Invoke(this, sender);
             edge.OnLengthChanged += (sender, length) => OnEdgeLengthChanged?.Invoke(this, sender);
 
             Edges.Add(edge);

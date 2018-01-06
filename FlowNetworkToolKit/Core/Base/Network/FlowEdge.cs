@@ -26,22 +26,13 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public double ResidualCapacity => Capacity - Flow;
         public int Length { protected set; get; } = 0;
 
-        public double Flow
-        {
-            get => Flow;
-            set
-            {
-                if(Flow != value)
-                    OnFlowChanged?.Invoke(this);
-                Flow = value;
-            }
-        }
+        public double Flow { get; private set; } = 0;
 
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
         }
-        public FlowEdge(int from, int to, double capacity) : base()
+        public FlowEdge(int from, int to, double capacity) 
         {
             From = from;
             To = to;
@@ -49,7 +40,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
             Flow = 0;
         }
 
-        public FlowEdge(int from, int to, double capacity, double flow) : base()
+        public FlowEdge(int from, int to, double capacity, double flow)
         {
             From = from;
             To = to;
@@ -57,13 +48,14 @@ namespace FlowNetworkToolKit.Core.Base.Network
             Flow = flow;
         }
 
-        public FlowEdge(FlowEdge e) : base()
+        public FlowEdge(FlowEdge e) 
         {
             From = e.From;
             To = e.To;
             Capacity = e.Capacity;
             Flow = e.Flow;
         }
+
 
         public int Other(int node)
         {
@@ -99,8 +91,14 @@ namespace FlowNetworkToolKit.Core.Base.Network
             //    throw new InvalidFlowException($"New flow ({Flow + flow}) exceed capacity ({Capacity})");
             //if (Flow + deltaFLow < Double.Epsilon)
             //    throw new InvalidFlowException($"New flow ({Flow + flow}) less than ({Double.Epsilon})");
-
+            if(deltaFLow != 0) 
+                OnFlowChanged?.Invoke(this);
             Flow += deltaFLow;
+        }
+
+        public void SetFlow(double newFlow)
+        {
+            Flow = newFlow;
         }
 
         public override string ToString()

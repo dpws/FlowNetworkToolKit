@@ -319,8 +319,8 @@ namespace FlowNetworkToolKit.Forms
         {
             if (RuntimeManipulations.LastPanPosition != new Point())
             {
-                var newX = Visualizer.Offset.X + (e.Location.X - RuntimeManipulations.LastPanPosition.X);
-                var newY = Visualizer.Offset.Y + (e.Location.Y - RuntimeManipulations.LastPanPosition.Y);
+                var newX = Visualizer.Offset.X + (e.Location.X + RuntimeManipulations.LastPanPosition.X);
+                var newY = Visualizer.Offset.Y + (e.Location.Y + RuntimeManipulations.LastPanPosition.Y);
                 Visualizer.SetOffset(new Point(newX, newY));
                 pbDraw.Invalidate();
             }
