@@ -87,6 +87,8 @@ namespace FlowNetworkToolKit.Forms
             this.performanceTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.cmNodeAddEdge = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmEdgeInverse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.pnPlaceHolder.SuspendLayout();
@@ -188,7 +190,7 @@ namespace FlowNetworkToolKit.Forms
             this.toolStripSeparator1,
             this.cmNodeDelete});
             this.cmNode.Name = "cmNode";
-            this.cmNode.Size = new System.Drawing.Size(185, 176);
+            this.cmNode.Size = new System.Drawing.Size(185, 154);
             // 
             // cmNodeId
             // 
@@ -244,9 +246,11 @@ namespace FlowNetworkToolKit.Forms
             this.cmEdgeCapacityTextBox,
             this.mnEdgeCapacitySave,
             this.toolStripSeparator3,
+            this.cmEdgeInverse,
+            this.toolStripSeparator5,
             this.cmEdgeDelete});
             this.cmEdge.Name = "cmEdge";
-            this.cmEdge.Size = new System.Drawing.Size(161, 129);
+            this.cmEdge.Size = new System.Drawing.Size(161, 179);
             // 
             // cmEdgeInfo
             // 
@@ -608,6 +612,18 @@ namespace FlowNetworkToolKit.Forms
             this.cmNodeAddEdge.Text = "Add edge from node";
             this.cmNodeAddEdge.Click += new System.EventHandler(this.cmNodeAddEdge_Click);
             // 
+            // cmEdgeInverse
+            // 
+            this.cmEdgeInverse.Name = "cmEdgeInverse";
+            this.cmEdgeInverse.Size = new System.Drawing.Size(160, 22);
+            this.cmEdgeInverse.Text = "Inverse";
+            this.cmEdgeInverse.Click += new System.EventHandler(this.cmEdgeInverse_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(157, 6);
+            // 
             // FMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -696,6 +712,8 @@ namespace FlowNetworkToolKit.Forms
         private ToolStripStatusLabel tsErrorCount;
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripMenuItem cmNodeAddEdge;
+        private ToolStripMenuItem cmEdgeInverse;
+        private ToolStripSeparator toolStripSeparator5;
     }
 }
 

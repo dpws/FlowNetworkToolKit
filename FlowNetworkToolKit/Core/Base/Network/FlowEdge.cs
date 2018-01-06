@@ -97,7 +97,12 @@ namespace FlowNetworkToolKit.Core.Base.Network
             return $"{From} > {To} ({Capacity})";
         }
 
-       
+        public void SwitchFromTo()
+        {
+            var tmp = To;
+            To = From;
+            From = tmp;
+        }
 
         public bool Equals(FlowEdge other)
         {

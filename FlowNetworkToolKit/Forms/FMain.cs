@@ -523,5 +523,11 @@ namespace FlowNetworkToolKit.Forms
         {
             RuntimeManipulations.CreatingEdgeFromNode = RuntimeManipulations.ActiveNode.Index;
         }
+
+        private void cmEdgeInverse_Click(object sender, EventArgs e)
+        {
+            RuntimeManipulations.ActiveEdge.SwitchFromTo();
+            pbDraw.Invalidate();
+        }
     }
 }
