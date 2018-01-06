@@ -126,6 +126,12 @@
     <Compile Include="Forms\FAlgorithmInfo.Designer.cs">
       <DependentUpon>FAlgorithmInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FError.Designer.cs">
+      <DependentUpon>FError.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FLog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FAbout.resx">
       <DependentUpon>FAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FError.resx">
+      <DependentUpon>FError.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FLog.resx">
       <DependentUpon>FLog.cs</DependentUpon>
@@ -240,6 +249,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ruler--arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross-octagon-frame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exclamation-octagon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross-octagon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information-octagon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

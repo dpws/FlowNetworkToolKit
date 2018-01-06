@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,13 +11,26 @@ namespace FlowNetworkToolKit.Core.Utils.Logger
 {
     class Log
     {
+
+        #region Events
+
+        public delegate void MessageAdded(LogItem item);
+
+        public static event MessageAdded OnMessageAdded;
+
+        #endregion
+
         public const int INFO = 0;
         public const int WARNING = 1;
         public const int ERROR = 2;
 
         private static FLog Form;
-
         private static List<LogItem> log = new List<LogItem>();
+
+
+        public static int InfoCount = 0;
+        public static int WarningCount = 0;
+        public static int ErrorCount = 0;
 
         public static void Init()
         {
@@ -38,6 +52,15 @@ namespace FlowNetworkToolKit.Core.Utils.Logger
             }
             else
             {
+                switch (level)
+                {
+                    case INFO: InfoCount++;
+                        break;
+                    case WARNING: WarningCount++;
+                        break;
+                    case ERROR: ErrorCount++;
+                        break;
+                }
                 var item = new LogItem(DateTime.Now, level, message);
                 log.Add(item);
                 var text = item.ToString();
@@ -46,6 +69,7 @@ namespace FlowNetworkToolKit.Core.Utils.Logger
                 Form.logVisualizer.SelectionLength = text.Length;
                 Form.logVisualizer.SelectionColor = item.GetColor();
                 Form.logVisualizer.HideSelection = true;
+                OnMessageAdded?.Invoke(item);
             }
 
         }

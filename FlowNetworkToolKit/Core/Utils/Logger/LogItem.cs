@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FlowNetworkToolKit.Forms;
 
 namespace FlowNetworkToolKit.Core.Utils.Logger
 {
@@ -18,6 +19,10 @@ namespace FlowNetworkToolKit.Core.Utils.Logger
             Time = time;
             Level = level;
             Message = message;
+            if (level == Log.ERROR)
+            {
+                Runtime.ShowError(message);
+            }
         }
 
         public Color GetColor()

@@ -71,26 +71,35 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public void Run()
         {
-            Reset();
-            var errors = graph.Validate();
-            if (errors.Count > 0)
-                throw new FLowNetworkValidationException(errors);
-
-            OnBeforeInit?.Invoke(this);
-            if (graph == null)
+            try
             {
-                throw new InvalidConfigurationException("Can't run algorithm without graph.");
+                Reset();
+                var errors = graph.Validate();
+                if (errors.Count > 0)
+                    throw new FLowNetworkValidationException(errors);
+
+                OnBeforeInit?.Invoke(this);
+                if (graph == null)
+                {
+                    throw new InvalidConfigurationException("Can't run algorithm without graph.");
+                }
+                Init();
+                OnAfterInit?.Invoke(this);
+                var timer = new Stopwatch();
+                OnStart?.Invoke(this);
+                timer.Start();
+                Logic();
+                timer.Stop();
+                Elapsed = timer.Elapsed;
+                Log.Write(
+                    $"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
+                OnFinish?.Invoke(this);
             }
-            Init();
-            OnAfterInit?.Invoke(this);
-            var timer = new Stopwatch();
-            OnStart?.Invoke(this);
-            timer.Start();
-            Logic();
-            timer.Stop();
-            Elapsed = timer.Elapsed;
-            Log.Write($"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
-            OnFinish?.Invoke(this);
+            catch (Exception e)
+            {
+                Log.Write(e.Message, Log.ERROR);
+            }
+            
         }
 
         public void RunAsync()

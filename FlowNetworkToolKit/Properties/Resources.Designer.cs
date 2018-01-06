@@ -113,6 +113,36 @@ namespace FlowNetworkToolKit.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cross {
+            get {
+                object obj = ResourceManager.GetObject("cross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cross_octagon {
+            get {
+                object obj = ResourceManager.GetObject("cross-octagon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cross_octagon_frame {
+            get {
+                object obj = ResourceManager.GetObject("cross-octagon-frame", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap disk_return_black {
             get {
                 object obj = ResourceManager.GetObject("disk-return-black", resourceCulture);
@@ -126,6 +156,16 @@ namespace FlowNetworkToolKit.Properties {
         internal static System.Drawing.Bitmap door_open_out {
             get {
                 object obj = ResourceManager.GetObject("door-open-out", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap exclamation_octagon {
+            get {
+                object obj = ResourceManager.GetObject("exclamation-octagon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +206,16 @@ namespace FlowNetworkToolKit.Properties {
         internal static System.Drawing.Bitmap information {
             get {
                 object obj = ResourceManager.GetObject("information", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap information_octagon {
+            get {
+                object obj = ResourceManager.GetObject("information-octagon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

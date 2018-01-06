@@ -26,6 +26,12 @@ namespace FlowNetworkToolKit.Forms
         public FMain()
         {
             InitializeComponent();
+            Log.OnMessageAdded += item =>
+            {
+                tsInfoCount.Text = Log.InfoCount.ToString();
+                tsWarningCount.Text = Log.WarningCount.ToString();
+                tsErrorCount.Text = Log.ErrorCount.ToString();
+            }; 
             Log.Init();
             pbDraw.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
@@ -42,10 +48,6 @@ namespace FlowNetworkToolKit.Forms
                 Application.Exit();
         }
 
-        private void mnReloadAlgorithms_Click(object sender, EventArgs e)
-        {
-            loadAlgorithms();
-        }
 
         private void loadAlgorithms()
         {
@@ -100,25 +102,7 @@ namespace FlowNetworkToolKit.Forms
         {
 
         }
-        private void mnGenerate_Click(object sender, EventArgs e)
-        {
-            FlowNetwork g = new FlowNetwork();
-            g.AddEdge(0, 1, 10);
-            g.AddEdge(0, 2, 10);
-            g.AddEdge(1, 2, 2);
-            g.AddEdge(1, 3, 4);
-            g.AddEdge(1, 4, 8);
-            g.AddEdge(2, 4, 9);
-            g.AddEdge(4, 5, 10);
-            g.AddEdge(4, 3, 6);
-            g.AddEdge(3, 5, 10);
-            g.Source = 0;
-            g.Target = 5;
-            Runtime.currentGraph = g;
-            Visualizer.arrangeNodesByDistance(pbDraw.ClientRectangle);
-            Visualizer.ZoomFit(pbDraw.ClientRectangle);
-            Invalidate();
-        }
+       
 
         private void runWithoutVisualizationToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -436,6 +420,14 @@ namespace FlowNetworkToolKit.Forms
                 cmEdgeInfo.Text = $"{RuntimeManipulations.ActiveEdge.From} -> {RuntimeManipulations.ActiveEdge.To}";
                 cmEdgeCapacityTextBox.Text = RuntimeManipulations.ActiveEdge.Capacity.ToString();
                 cmEdge.Show(Cursor.Position);
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                if (RuntimeManipulations.ActiveNode == null)
+                {
+                    Runtime.currentGraph.AddNodeAtMouse(e);
+                }
             }
         }
 

@@ -35,9 +35,9 @@
             // pnControls
             // 
             this.pnControls.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnControls.Location = new System.Drawing.Point(0, 387);
+            this.pnControls.Location = new System.Drawing.Point(0, 410);
             this.pnControls.Name = "pnControls";
-            this.pnControls.Size = new System.Drawing.Size(871, 57);
+            this.pnControls.Size = new System.Drawing.Size(871, 34);
             this.pnControls.TabIndex = 1;
             // 
             // logVisualizer
@@ -45,7 +45,8 @@
             this.logVisualizer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logVisualizer.Location = new System.Drawing.Point(0, 0);
             this.logVisualizer.Name = "logVisualizer";
-            this.logVisualizer.Size = new System.Drawing.Size(871, 387);
+            this.logVisualizer.ReadOnly = true;
+            this.logVisualizer.Size = new System.Drawing.Size(871, 410);
             this.logVisualizer.TabIndex = 2;
             this.logVisualizer.Text = "";
             // 

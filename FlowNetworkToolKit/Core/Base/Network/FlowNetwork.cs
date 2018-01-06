@@ -5,14 +5,16 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using FlowNetworkToolKit.Core.Base.Exceptions;
 using FlowNetworkToolKit.Core.Utils.Logger;
+using FlowNetworkToolKit.Core.Utils.Visualizer;
 
 namespace FlowNetworkToolKit.Core.Base.Network
 {
-    public class FlowNetwork: ISerializable
+    public class FlowNetwork
     {
 
         #region Events
@@ -34,12 +36,6 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public List<FlowEdge> Edges { get; protected set; } = new List<FlowEdge>();
 
         public Dictionary<int, FlowNode> Nodes { get; protected set; } = new Dictionary<int, FlowNode>();
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("source", _source);
-            info.AddValue("target", _target);
-        }
 
         public int NodeCount
         {
@@ -88,10 +84,26 @@ namespace FlowNetworkToolKit.Core.Base.Network
                 AddEdge(edge.From, edge.To, edge.Capacity, edge.Flow);
         }
 
-        public FlowNetwork(FlowNetwork graph) : this(graph.Edges)
+        public FlowNetwork(List<FlowEdge> edges, Dictionary<int, FlowNode> nodes) : this()
+        {
+            foreach (var node in nodes.Values)
+                Nodes.Add(node.Index, node);
+            foreach (var edge in edges)
+                AddEdge(edge.From, edge.To, edge.Capacity, edge.Flow);
+        }
+
+        public FlowNetwork(FlowNetwork graph) : this(graph.Edges, graph.Nodes)
         {
             Source = graph.Source;
             Target = graph.Target;
+        }
+
+        public void AddNodeAtMouse(MouseEventArgs e) 
+        {
+            var nextIndex = Nodes.Keys.Max() + 1;
+            var node = new FlowNode(nextIndex);
+            node.Position = Visualizer.TranslateScreenToAbsolutePoint(e.Location);
+            Nodes.Add(node.Index, node);
         }
 
         public void AddEdge(int from, int to, double capacity, double f = -1)
@@ -126,6 +138,10 @@ namespace FlowNetworkToolKit.Core.Base.Network
                 errors.Add("Source isn't set");
             if (Target < 0)
                 errors.Add("Target isn't set");
+
+            var distances = ComputeDistances();
+            if(distances[Target] == -1)
+                errors.Add("Target isn't reachable");
 
             return errors;
         }
