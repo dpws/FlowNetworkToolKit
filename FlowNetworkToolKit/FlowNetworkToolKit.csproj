@@ -112,6 +112,8 @@
     <Compile Include="Core\Utils\Logger\Log.cs" />
     <Compile Include="Core\Utils\Logger\LogItem.cs" />
     <Compile Include="Core\Utils\PerformanceCounter.cs" />
+    <Compile Include="Core\Utils\Visualizer\Animation.cs" />
+    <Compile Include="Core\Utils\Visualizer\Animator.cs" />
     <Compile Include="Core\Utils\Visualizer\RuntimeManipulations.cs" />
     <Compile Include="Core\Utils\Visualizer\Visualizer.cs" />
     <Compile Include="Forms\FAbout.cs">

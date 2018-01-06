@@ -22,7 +22,6 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public TimeSpan Elapsed { get; protected set; }
         public int Ticks { get; private set; } = 0;
-        private FlowNetwork originalGraph;
         protected FlowNetwork graph;
 
         public double MaxFlow { get; protected set; } = Double.Epsilon;
@@ -62,7 +61,6 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public virtual void SetGraph(FlowNetwork g)
         {
             graph = new FlowNetwork(g);
-            originalGraph = new FlowNetwork(g);
         }
 
         protected abstract void Init();
@@ -77,12 +75,11 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
                 var errors = graph.Validate();
                 if (errors.Count > 0)
                     throw new FLowNetworkValidationException(errors);
-
-                OnBeforeInit?.Invoke(this);
                 if (graph == null)
                 {
                     throw new InvalidConfigurationException("Can't run algorithm without graph.");
                 }
+                OnBeforeInit?.Invoke(this);
                 Init();
                 OnAfterInit?.Invoke(this);
                 var timer = new Stopwatch();
@@ -91,8 +88,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
                 Logic();
                 timer.Stop();
                 Elapsed = timer.Elapsed;
-                Log.Write(
-                    $"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
+                Log.Write($"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
                 OnFinish?.Invoke(this);
             }
             catch (Exception e)
@@ -113,7 +109,10 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
             MaxFlow = Double.Epsilon;
             Ticks = 0;
             Elapsed = new TimeSpan(0);
-            graph = new FlowNetwork(originalGraph);
+            foreach (var edge in graph.Edges)
+            {
+                edge.Flow = 0;
+            }
         }
 
         #region Information

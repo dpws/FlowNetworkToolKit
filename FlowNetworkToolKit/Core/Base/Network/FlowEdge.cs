@@ -13,7 +13,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
     {
         #region Events
 
-        public delegate void FlowChanged(FlowEdge sender, double capacity, double flow);
+        public delegate void FlowChanged(FlowEdge sender);
         public delegate void LengthChanged(FlowEdge sender, int length);
 
         public event FlowChanged OnFlowChanged;
@@ -25,7 +25,17 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public double Capacity;
         public double ResidualCapacity => Capacity - Flow;
         public int Length { protected set; get; } = 0;
-        public double Flow = 0;
+
+        public double Flow
+        {
+            get => Flow;
+            set
+            {
+                if(Flow != value)
+                    OnFlowChanged?.Invoke(this);
+                Flow = value;
+            }
+        }
 
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -36,6 +46,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
             From = from;
             To = to;
             Capacity = capacity;
+            Flow = 0;
         }
 
         public FlowEdge(int from, int to, double capacity, double flow) : base()

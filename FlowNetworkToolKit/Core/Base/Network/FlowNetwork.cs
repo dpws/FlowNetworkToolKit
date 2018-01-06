@@ -23,11 +23,13 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public delegate void EdgeAdded(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeFlowChanged(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeLengthChanged(FlowNetwork sender, FlowEdge edge);
+        public delegate void SeekEdge(FlowNetwork sender, FlowEdge edge);
 
         public event FlowNetworkCreated OnCreate;
         public event EdgeAdded OnAddEdge;
         public event EdgeFlowChanged OnEdgeFlowChanged;
         public event EdgeLengthChanged OnEdgeLengthChanged;
+        public event SeekEdge OnSeekEdge;
 
         #endregion
         private int _source = -1;
@@ -45,6 +47,11 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public int EdgeCount
         {
             get { return Edges.Count; }
+        }
+
+        public void LooakAtEdge(FlowEdge edge)
+        {
+            OnSeekEdge?.Invoke(this, edge);
         }
 
         public int Source
