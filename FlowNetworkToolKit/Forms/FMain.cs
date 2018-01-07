@@ -127,7 +127,28 @@ namespace FlowNetworkToolKit.Forms
 
         }
 
+        private void mnRunVisualization_Click(object sender, EventArgs e)
+        {
+            if (Runtime.currentAlghoritm == null)
+            {
+                Log.Write("Can't determine selected algorithm.");
+                return;
+            }
+            if (Runtime.currentGraph == null)
+            {
+                Log.Write("Please, load graph first.");
+                return;
+            }
+            if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
+            {
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                algorithm.OnEdgeFlowChanged += (flowAlgorithm, network, edge) => Log.Write($"{edge} flow changed"); 
+                algorithm.OnFinish += OnAlgorithmFinished;
+                algorithm.SetGraph(Runtime.currentGraph);
+                algorithm.RunAsync();
 
+            }
+        }
 
 
         private void canvas_MouseWheel(object sender, MouseEventArgs e)
@@ -547,5 +568,7 @@ namespace FlowNetworkToolKit.Forms
             Invalidate();
             pbDraw.Invalidate();
         }
+
+        
     }
 }

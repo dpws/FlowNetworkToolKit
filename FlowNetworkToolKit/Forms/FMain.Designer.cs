@@ -369,6 +369,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnRunVisualization.Name = "mnRunVisualization";
             this.mnRunVisualization.Size = new System.Drawing.Size(284, 22);
             this.mnRunVisualization.Text = "Run and visualize";
+            this.mnRunVisualization.Click += new System.EventHandler(this.mnRunVisualization_Click);
             // 
             // runWithoutVisualizationToolStripMenuItem
             // 

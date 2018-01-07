@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,15 +10,17 @@ using FlowNetworkToolKit.Core.Base.Exceptions;
 
 namespace FlowNetworkToolKit.Core.Base.Network
 {
-    public class FlowEdge : IEquatable<FlowEdge>, ISerializable
+    public class FlowEdge : IEquatable<FlowEdge>
     {
         #region Events
 
         public delegate void FlowChanged(FlowEdge sender);
         public delegate void LengthChanged(FlowEdge sender, int length);
+        public delegate void EdgeScanned(FlowEdge sender);
 
         public event FlowChanged OnFlowChanged;
         public event LengthChanged OnLengthChanged;
+        public event EdgeScanned OnEdgeScanned;
 
         #endregion
         public int From;
@@ -28,10 +31,6 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public double Flow { get; private set; } = 0;
 
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-        }
         public FlowEdge(int from, int to, double capacity) 
         {
             From = from;
@@ -56,6 +55,10 @@ namespace FlowNetworkToolKit.Core.Base.Network
             Flow = e.Flow;
         }
 
+        public void RaiseScan()
+        {
+            OnEdgeScanned?.Invoke(this);
+        }
 
         public int Other(int node)
         {
@@ -103,7 +106,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public override string ToString()
         {
-            return $"{From} > {To} ({Capacity})";
+            return $"{From} -> {To} ({Capacity})";
         }
 
         public void SwitchFromTo()

@@ -34,12 +34,16 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public delegate void Finish(BaseMaxFlowAlgorithm sender);
         public delegate void BeforeInit(BaseMaxFlowAlgorithm sender);
         public delegate void AfterInit(BaseMaxFlowAlgorithm sender);
+        public delegate void EdgeScanned(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
+        public delegate void EdgeFlowChanged(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
 
         public event TicksChanged OnTick;
         public event Start OnStart;
         public event Finish OnFinish;
         public event BeforeInit OnBeforeInit;
         public event AfterInit OnAfterInit;
+        public event EdgeScanned OnEdgeScanned;
+        public event EdgeFlowChanged OnEdgeFlowChanged;
 
         #endregion
 
@@ -61,6 +65,8 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public virtual void SetGraph(FlowNetwork g)
         {
             graph = new FlowNetwork(g);
+            graph.OnEdgeFlowChanged += (sender, edge) => OnEdgeFlowChanged?.Invoke(this, sender, edge);
+            graph.OnEdgeScanned += (sender, edge) => OnEdgeScanned?.Invoke(this, sender, edge);
         }
 
         protected abstract void Init();
