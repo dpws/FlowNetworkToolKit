@@ -23,11 +23,15 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public delegate void EdgeAdded(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeFlowChanged(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeLengthChanged(FlowNetwork sender, FlowEdge edge);
+        public delegate void EdgeMarked(FlowNetwork sender, FlowEdge edge);
+        public delegate void EdgeUnmarked(FlowNetwork sender, FlowEdge edge);
 
         public event FlowNetworkCreated OnCreate;
         public event EdgeAdded OnAddEdge;
         public event EdgeFlowChanged OnEdgeFlowChanged;
         public event EdgeLengthChanged OnEdgeLengthChanged;
+        public event EdgeMarked OnEdgeMarked;
+        public event EdgeUnmarked OnEdgeUnmarked;
 
         #endregion
         private int _source = -1;
@@ -46,6 +50,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
         {
             get { return Edges.Count; }
         }
+
 
         public int Source
         {
@@ -100,7 +105,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public void AddNodeAtMouse(MouseEventArgs e) 
         {
-            var nextIndex = Nodes.Keys.Max() + 1;
+            var nextIndex = Nodes.Count > 0 ? Nodes.Keys.Max() + 1 : 0;
             var node = new FlowNode(nextIndex);
             node.Position = Visualizer.TranslateScreenToAbsolutePoint(e.Location);
             Nodes.Add(node.Index, node);
@@ -124,8 +129,10 @@ namespace FlowNetworkToolKit.Core.Base.Network
                 throw new InvalidConfigurationException($"Edge between {from} and {to} already exists");
 
             var edge = f == -1 ? new FlowEdge(from, to, capacity) : new FlowEdge(from, to, capacity, f);
-            edge.OnFlowChanged += (sender, cap, flow) => OnEdgeFlowChanged?.Invoke(this, sender);
+            edge.OnFlowChanged += (sender) => OnEdgeFlowChanged?.Invoke(this, sender);
             edge.OnLengthChanged += (sender, length) => OnEdgeLengthChanged?.Invoke(this, sender);
+            edge.OnEdgeMarked += (sender) => OnEdgeMarked?.Invoke(this, sender);
+            edge.OnEdgeUnmarked += (sender) => OnEdgeUnmarked?.Invoke(this, sender);
 
             Edges.Add(edge);
             if (!Nodes.ContainsKey(edge.From))

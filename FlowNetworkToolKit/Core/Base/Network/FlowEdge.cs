@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using FlowNetworkToolKit.Core.Base.Exceptions;
+using FlowNetworkToolKit.Core.Utils.Logger;
 
 namespace FlowNetworkToolKit.Core.Base.Network
 {
-    public class FlowEdge : IEquatable<FlowEdge>, ISerializable
+    public class FlowEdge : IEquatable<FlowEdge>
     {
         #region Events
 
-        public delegate void FlowChanged(FlowEdge sender, double capacity, double flow);
+        public delegate void FlowChanged(FlowEdge sender);
         public delegate void LengthChanged(FlowEdge sender, int length);
+        public delegate void EdgeMarked(FlowEdge sender);
+        public delegate void EdgeUnmarked(FlowEdge sender);
 
         public event FlowChanged OnFlowChanged;
         public event LengthChanged OnLengthChanged;
+        public event EdgeMarked OnEdgeMarked;
+        public event EdgeUnmarked OnEdgeUnmarked;
 
         #endregion
         public int From;
@@ -25,20 +31,18 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public double Capacity;
         public double ResidualCapacity => Capacity - Flow;
         public int Length { protected set; get; } = 0;
-        public double Flow = 0;
 
+        public double Flow { get; private set; } = 0;
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-        }
-        public FlowEdge(int from, int to, double capacity) : base()
+        public FlowEdge(int from, int to, double capacity) 
         {
             From = from;
             To = to;
             Capacity = capacity;
+            Flow = 0;
         }
 
-        public FlowEdge(int from, int to, double capacity, double flow) : base()
+        public FlowEdge(int from, int to, double capacity, double flow)
         {
             From = from;
             To = to;
@@ -46,12 +50,22 @@ namespace FlowNetworkToolKit.Core.Base.Network
             Flow = flow;
         }
 
-        public FlowEdge(FlowEdge e) : base()
+        public FlowEdge(FlowEdge e) 
         {
             From = e.From;
             To = e.To;
             Capacity = e.Capacity;
             Flow = e.Flow;
+        }
+
+        public void Mark()
+        {
+            OnEdgeMarked?.Invoke(this);
+        }
+
+        public void Unmark()
+        {
+            OnEdgeUnmarked?.Invoke(this);
         }
 
         public int Other(int node)
@@ -88,13 +102,24 @@ namespace FlowNetworkToolKit.Core.Base.Network
             //    throw new InvalidFlowException($"New flow ({Flow + flow}) exceed capacity ({Capacity})");
             //if (Flow + deltaFLow < Double.Epsilon)
             //    throw new InvalidFlowException($"New flow ({Flow + flow}) less than ({Double.Epsilon})");
-
+            if(deltaFLow != 0) 
+                OnFlowChanged?.Invoke(this);
             Flow += deltaFLow;
+        }
+
+        public void SetFlow(double newFlow)
+        {
+            Flow = newFlow;
         }
 
         public override string ToString()
         {
-            return $"{From} > {To} ({Capacity})";
+            return $"{From} -> {To} ({Capacity})";
+        }
+
+        public string ToShortString()
+        {
+            return $"{From} -> {To}";
         }
 
         public void SwitchFromTo()

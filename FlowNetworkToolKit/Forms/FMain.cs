@@ -33,6 +33,8 @@ namespace FlowNetworkToolKit.Forms
                 tsErrorCount.Text = Log.ErrorCount.ToString();
             }; 
             Log.Init();
+            Visualizer.OnRedrawRequired += () => pbDraw.Invalidate();
+
             pbDraw.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
         }
@@ -127,7 +129,53 @@ namespace FlowNetworkToolKit.Forms
 
         }
 
+        private void mnRunVisualization_Click(object sender, EventArgs e)
+        {
+            if (Runtime.currentAlghoritm == null)
+            {
+                Log.Write("Can't determine selected algorithm.");
+                return;
+            }
+            if (Runtime.currentGraph == null)
+            {
+                Log.Write("Please, load graph first.");
+                return;
+            }
+            if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
+            {
+                //Clone selected algorithm. Won't write algorithm reset method
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                Animator algorithmAnimator = new Animator();
+                algorithmAnimator.OnAnimationTick += Visualizer.GetAnimation;
 
+                algorithmAnimator.OnAnimationStarted += animator =>
+                {
+                    mnStopAnimation.Visible = true;
+                };
+                algorithmAnimator.OnAnimationFinished += animator =>
+                {
+                    mnStopAnimation.Visible = false;
+                    OnAlgorithmFinished(algorithm);
+                }; 
+
+                algorithmAnimator.Run();
+
+                //Subscribe for events for visualization needs
+                algorithm.OnEdgeFlowChanged += algorithmAnimator.EdgeFlowChanged;
+                algorithm.OnEdgeMarked += algorithmAnimator.EdgeMarked;
+                algorithm.OnEdgeUnmarked += algorithmAnimator.EdgeUnmarked;
+
+                algorithm.OnFinish += flowAlgorithm =>
+                {
+                    algorithmAnimator.AlgoritmFInished = true;
+                    
+                };
+
+                algorithm.SetGraph(Runtime.currentGraph);
+                algorithm.RunAsync();
+
+            }
+        }
 
 
         private void canvas_MouseWheel(object sender, MouseEventArgs e)
@@ -215,7 +263,7 @@ namespace FlowNetworkToolKit.Forms
             if (Runtime.currentAlghoritm != null)
             {
                 mnAlgorithmInfo.Visible = true;
-                if (Runtime.currentGraph != null)
+                if (Runtime.currentGraph != null && Runtime.currentGraph.Source != -1 && Runtime.currentGraph.Target != -1)
                     mnRunAlghoritm.Visible = true;
                 else
                     mnRunAlghoritm.Visible = false;
@@ -319,8 +367,8 @@ namespace FlowNetworkToolKit.Forms
         {
             if (RuntimeManipulations.LastPanPosition != new Point())
             {
-                var newX = Visualizer.Offset.X + (e.Location.X - RuntimeManipulations.LastPanPosition.X);
-                var newY = Visualizer.Offset.Y + (e.Location.Y - RuntimeManipulations.LastPanPosition.Y);
+                var newX = Visualizer.Offset.X - (e.Location.X - RuntimeManipulations.LastPanPosition.X);
+                var newY = Visualizer.Offset.Y - (e.Location.Y - RuntimeManipulations.LastPanPosition.Y);
                 Visualizer.SetOffset(new Point(newX, newY));
                 pbDraw.Invalidate();
             }
@@ -474,11 +522,13 @@ namespace FlowNetworkToolKit.Forms
         private void cmNodeSetSource_Click(object sender, EventArgs e)
         {
             Runtime.currentGraph.Source = RuntimeManipulations.ActiveNode.Index;
+            Invalidate();
         }
 
         private void cmNodeSetTarget_Click(object sender, EventArgs e)
         {
             Runtime.currentGraph.Target = RuntimeManipulations.ActiveNode.Index;
+            Invalidate();
         }
 
         private void cmEdgeDelete_Click(object sender, EventArgs e)
@@ -528,6 +578,27 @@ namespace FlowNetworkToolKit.Forms
         {
             RuntimeManipulations.ActiveEdge.SwitchFromTo();
             pbDraw.Invalidate();
+        }
+
+        private void mnCreate_Click(object sender, EventArgs e)
+        {
+            if (Runtime.currentGraph != null)
+            {
+                if (MessageBox.Show("All unsaved changes in the current flow network will be lost", "Are you sure?",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
+            }
+            Runtime.currentGraph = new FlowNetwork();
+            Runtime.CreationEnabled = true;
+            Runtime.EditionEnabled = true;
+            Runtime.VisualisationEnabled = true;
+            Invalidate();
+            pbDraw.Invalidate();
+        }
+
+        private void mnStopAnimation_Click(object sender, EventArgs e)
+        {
+            Runtime.StopAnimation = true;
         }
     }
 }

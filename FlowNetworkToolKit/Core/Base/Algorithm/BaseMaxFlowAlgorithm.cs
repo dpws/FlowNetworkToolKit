@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Exceptions;
 using FlowNetworkToolKit.Core.Base.Network;
 using FlowNetworkToolKit.Core.Utils.Logger;
+using FlowNetworkToolKit.Core.Utils.Visualizer;
 
 namespace FlowNetworkToolKit.Core.Base.Algorithm
 {
@@ -22,7 +23,6 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public TimeSpan Elapsed { get; protected set; }
         public int Ticks { get; private set; } = 0;
-        private FlowNetwork originalGraph;
         protected FlowNetwork graph;
 
         public double MaxFlow { get; protected set; } = Double.Epsilon;
@@ -35,12 +35,18 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public delegate void Finish(BaseMaxFlowAlgorithm sender);
         public delegate void BeforeInit(BaseMaxFlowAlgorithm sender);
         public delegate void AfterInit(BaseMaxFlowAlgorithm sender);
+        public delegate void EdgeMarked(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
+        public delegate void EdgeUnmarked(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
+        public delegate void EdgeFlowChanged(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
 
         public event TicksChanged OnTick;
         public event Start OnStart;
         public event Finish OnFinish;
         public event BeforeInit OnBeforeInit;
         public event AfterInit OnAfterInit;
+        public event EdgeMarked OnEdgeMarked;
+        public event EdgeUnmarked OnEdgeUnmarked;
+        public event EdgeFlowChanged OnEdgeFlowChanged;
 
         #endregion
 
@@ -62,7 +68,9 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public virtual void SetGraph(FlowNetwork g)
         {
             graph = new FlowNetwork(g);
-            originalGraph = new FlowNetwork(g);
+            graph.OnEdgeFlowChanged += (sender, edge) => OnEdgeFlowChanged?.Invoke(this, sender, edge);
+            graph.OnEdgeMarked += (sender, edge) => OnEdgeMarked?.Invoke(this, sender, edge);
+            graph.OnEdgeUnmarked += (sender, edge) => OnEdgeUnmarked?.Invoke(this, sender, edge);
         }
 
         protected abstract void Init();
@@ -77,12 +85,11 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
                 var errors = graph.Validate();
                 if (errors.Count > 0)
                     throw new FLowNetworkValidationException(errors);
-
-                OnBeforeInit?.Invoke(this);
                 if (graph == null)
                 {
                     throw new InvalidConfigurationException("Can't run algorithm without graph.");
                 }
+                OnBeforeInit?.Invoke(this);
                 Init();
                 OnAfterInit?.Invoke(this);
                 var timer = new Stopwatch();
@@ -91,8 +98,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
                 Logic();
                 timer.Stop();
                 Elapsed = timer.Elapsed;
-                Log.Write(
-                    $"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
+                Log.Write($"Algorithm {Name}. Max flow: {MaxFlow}. From: {graph.Source}, To: {graph.Target}, Time: {Elapsed}. Ticks: {Ticks}");
                 OnFinish?.Invoke(this);
             }
             catch (Exception e)
@@ -110,10 +116,14 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public virtual void Reset()
         {
+            Visualizer.Reset();
             MaxFlow = Double.Epsilon;
             Ticks = 0;
             Elapsed = new TimeSpan(0);
-            graph = new FlowNetwork(originalGraph);
+            foreach (var edge in graph.Edges)
+            {
+                edge.SetFlow(0);
+            }
         }
 
         #region Information
