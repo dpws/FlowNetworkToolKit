@@ -1,10 +1,8 @@
-﻿using System;
+﻿using FlowNetworkToolKit.Core.Base.Algorithm;
+using FlowNetworkToolKit.Core.Base.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FlowNetworkToolKit.Core.Base.Algorithm;
-using FlowNetworkToolKit.Core.Base.Network;
 
 namespace FlowNetworkToolKit.Algorithms
 {
@@ -95,12 +93,12 @@ namespace FlowNetworkToolKit.Algorithms
 
         void Push(FlowEdge e, int from)
         {
-            var amt = Math.Min(excess[from], e.ResidualCapacityTo(e.Other(from))); 
-            if (height[from] == height[e.Other(from)] + 1 && amt > 0)
+            var f = Math.Min(excess[from], e.ResidualCapacityTo(e.Other(from))); 
+            if (height[from] == height[e.Other(from)] + 1 && f > 0)
             {
-                e.AddFlow(amt, e.Other(from));
-                excess[e.Other(from)] += amt;
-                excess[from] -= amt;
+                e.AddFlow(f, e.Other(from));
+                excess[e.Other(from)] += f;
+                excess[from] -= f;
                 Enq(e.Other(from));
             }
         }
@@ -110,7 +108,8 @@ namespace FlowNetworkToolKit.Algorithms
         //then any node u with 𝓁' < 𝓁(u) < | V | has been disconnected from t and can be relabeled to (| V | + 1) immediately.
         void Gap(int k)
         {
-            for (int v = 0; v < n; v++) if (height[v] >= k)
+            for (int v = 0; v < n; v++)
+                if (height[v] >= k)
                 {
                     count[height[v]]--;
                     height[v] = Math.Max(height[v], n);
