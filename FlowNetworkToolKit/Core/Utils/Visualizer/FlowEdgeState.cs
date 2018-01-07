@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,36 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 {
     public class FlowEdgeState
     {
-        public bool FlowChanged;
-        public double Flow;
-        public bool Marked;
+        public bool FlowChanged = false;
 
-        public FlowEdgeState(bool flowChanged = false, bool marked = false, double flow = 0f)
+        private double _flow = 0;
+        public double Flow
         {
-            FlowChanged = flowChanged;
-            Flow = flow;
-            Marked = marked;
+            get => _flow;
+            set
+            {
+                if(value - _flow != 0)
+                    DeltaFlow = value - _flow;
+                _flow = value;
+            }
         }
+
+        private double _deltaFlow = 0;
+
+        public double DeltaFlow
+        {
+            get => _deltaFlow;
+            private set
+            {
+                _deltaFlow = value;
+                Updated = DateTime.Now;
+            }
+        }
+
+
+        public bool Marked = false;
+
+        public DateTime Updated;
+
     }
 }

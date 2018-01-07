@@ -16,6 +16,8 @@ namespace FlowNetworkToolKit.Core
         public static List<AlgorithmInfo> loadedAlghoritms = new List<AlgorithmInfo>();
         public static AlgorithmInfo currentAlghoritm = null;
 
+        public static bool StopAnimation = false;
+
         private static FlowNetwork _currentGraph = null;
 
         public static FlowNetwork currentGraph

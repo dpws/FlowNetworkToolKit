@@ -147,8 +147,14 @@ namespace FlowNetworkToolKit.Forms
                 BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
                 Animator algorithmAnimator = new Animator();
                 algorithmAnimator.OnAnimationTick += Visualizer.GetAnimation;
+
+                algorithmAnimator.OnAnimationStarted += animator =>
+                {
+                    mnStopAnimation.Visible = true;
+                };
                 algorithmAnimator.OnAnimationFinished += animator =>
                 {
+                    mnStopAnimation.Visible = false;
                     OnAlgorithmFinished(algorithm);
                 }; 
 
@@ -361,8 +367,8 @@ namespace FlowNetworkToolKit.Forms
         {
             if (RuntimeManipulations.LastPanPosition != new Point())
             {
-                var newX = Visualizer.Offset.X + (e.Location.X + RuntimeManipulations.LastPanPosition.X);
-                var newY = Visualizer.Offset.Y + (e.Location.Y + RuntimeManipulations.LastPanPosition.Y);
+                var newX = Visualizer.Offset.X - (e.Location.X - RuntimeManipulations.LastPanPosition.X);
+                var newY = Visualizer.Offset.Y - (e.Location.Y - RuntimeManipulations.LastPanPosition.Y);
                 Visualizer.SetOffset(new Point(newX, newY));
                 pbDraw.Invalidate();
             }
@@ -590,6 +596,9 @@ namespace FlowNetworkToolKit.Forms
             pbDraw.Invalidate();
         }
 
-        
+        private void mnStopAnimation_Click(object sender, EventArgs e)
+        {
+            Runtime.StopAnimation = true;
+        }
     }
 }

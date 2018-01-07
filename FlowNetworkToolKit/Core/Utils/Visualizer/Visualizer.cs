@@ -36,13 +36,27 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static Color HoverEdgeColor = Color.DarkOrange;
         public static Color HoverEdgeFromNodeColor = Color.DarkRed;
         public static Color HoverEdgeToNodeColor = Color.Green;
-        public static Color EdgeScannedColor = Color.BlueViolet;
-        public static Color EdgeChangedColor = Color.DeepPink;
+
+
+        public static Color EdgeMarkedColor = Color.BlueViolet;
+        public static Color EdgeActiveChangedColor = Color.DeepPink;
+        public static Color EdgeChangedColor = Color.CornflowerBlue;
 
         public static Brush SourceBrush = Brushes.LightSteelBlue;
         public static Brush TargetBrush = Brushes.LightPink;
 
-        private static double maxScale = 10f, minScale = 0.3f;
+        public static Brush FlowBrush = Brushes.Black;
+        public static Brush FlowBackgroundBrush = Brushes.White;
+
+        public static Brush ChangedFlowBrush = Brushes.Red;
+        public static Brush ChangedFlowBackgroundBrush = Brushes.White;
+
+        public static Brush ChangedActiveFlowBrush = Brushes.Red;
+        public static Brush ChangedActiveFlowBackgroundBrush = Brushes.Pink;
+
+        public static TimeSpan ActiveChangeTime = TimeSpan.FromSeconds(1.5f);
+
+        private static double maxScale = 10f, minScale = .3f;
 
         private static Dictionary<string, FlowEdgeState> EdgeStates = new Dictionary<string, FlowEdgeState>();
 
@@ -254,21 +268,26 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     pen.Color = HoverNodeIncomingEdgeColor;
                 }
 
+                if (EdgeStates.ContainsKey(edge.ToShortString()) && EdgeStates[edge.ToShortString()].FlowChanged)
+                {
+                    if (DateTime.Now - EdgeStates[edge.ToShortString()].Updated < ActiveChangeTime)
+                    {
+                        pen.Color = EdgeActiveChangedColor;
+                    }
+                    else
+                    {
+                        pen.Color = EdgeChangedColor;
+                    }
+                }
+
                 if (RuntimeManipulations.ActiveEdge != null && RuntimeManipulations.ActiveEdge.Equals(edge))
                 {
                     pen.Color = HoverEdgeColor;
                 }
 
-                if (EdgeStates.ContainsKey(edge.ToShortString()))
+                if (EdgeStates.ContainsKey(edge.ToShortString()) && EdgeStates[edge.ToShortString()].Marked)
                 {
-                    if (EdgeStates[edge.ToShortString()].FlowChanged)
-                    {
-                        pen.Color = EdgeChangedColor;
-                    }
-                    if (EdgeStates[edge.ToShortString()].Marked)
-                    {
-                        pen.Color = EdgeChangedColor;
-                    }
+                    pen.Color = EdgeMarkedColor;
                 }
 
                 var posFrom = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.From].Position.X,
@@ -290,21 +309,33 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
                 using (var font = new Font(FontFamily.GenericSansSerif, 10))
                 {
-                    var weight = edge.Flow + "/" +(edge.Capacity - edge.Flow);
-                    var size = g.MeasureString(weight, font);
-                    w.X -=(int)(size.Width / 2f);
-                    w.Y -= (int)(size.Height / 2f);
-                    Brush textBrush = Brushes.Black;
-                    Brush textBackgorundBrush = Brushes.White;
+                    var weight = edge.Flow + "/" + edge.Capacity;
+                   
+                    Brush textBrush = FlowBrush;
+                    Brush textBackgorundBrush = FlowBackgroundBrush;
                     if (EdgeStates.ContainsKey(edge.ToShortString()))
                     {
                         if (EdgeStates[edge.ToShortString()].FlowChanged)
                         {
-                            textBrush = Brushes.Red;
-                            textBackgorundBrush = Brushes.LightPink;
-                            weight = EdgeStates[edge.ToShortString()].Flow + "/" + (edge.Capacity - edge.Flow);
+                            weight = $"{EdgeStates[edge.ToShortString()].Flow}/{edge.Capacity}";
+                            if (DateTime.Now - EdgeStates[edge.ToShortString()].Updated < ActiveChangeTime)
+                            {
+                                weight = $"{EdgeStates[edge.ToShortString()].Flow}/{edge.Capacity} ({(EdgeStates[edge.ToShortString()].DeltaFlow > 0 ? "+" : "")}{EdgeStates[edge.ToShortString()].DeltaFlow})";
+                                textBrush = ChangedActiveFlowBrush;
+                                textBackgorundBrush = ChangedActiveFlowBackgroundBrush;
+                            }
+                            else
+                            {
+                                textBrush = ChangedFlowBrush;
+                                textBackgorundBrush = ChangedFlowBackgroundBrush;
+                            }
+                            
+                            
                         }
                     }
+                    var size = g.MeasureString(weight, font);
+                    w.X -= (int)(size.Width / 2f);
+                    w.Y -= (int)(size.Height / 2f);
                     g.FillRectangle(textBackgorundBrush, new RectangleF(w.X, w.Y, size.Width, size.Height));
                     g.DrawString(weight, font, textBrush, w.X, w.Y);
                 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using FlowNetworkToolKit.Core.Base.Exceptions;
+using FlowNetworkToolKit.Core.Utils.Logger;
 
 namespace FlowNetworkToolKit.Core.Base.Network
 {

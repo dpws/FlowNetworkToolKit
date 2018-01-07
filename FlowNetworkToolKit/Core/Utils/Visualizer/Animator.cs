@@ -20,9 +20,11 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         public delegate void AnimationTick(Animator sender);
         public delegate void AnimationFinished(Animator sender);
+        public delegate void AnimationStarted(Animator sender);
 
         public event AnimationTick OnAnimationTick;
         public event AnimationFinished OnAnimationFinished;
+        public event AnimationStarted OnAnimationStarted;
 
         public Animation GetAnimation()
         {
@@ -34,12 +36,18 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             {
                 if (AlgoritmFInished)
                 {
-                    AnimationStepTimer.Enabled = false;
-                    OnAnimationFinished?.Invoke(this);
+                    Stop();
                 }
                 return null;
             }
 
+        }
+
+        private void Stop()
+        {
+            AnimationStepTimer.Enabled = false;
+            OnAnimationFinished?.Invoke(this);
+            Runtime.StopAnimation = false;
         }
 
         private void AddAnimation(Animation animation)
@@ -67,9 +75,15 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             AnimationStepTimer = new Timer { Interval = Delay};
             AnimationStepTimer.Tick += (sender, args) =>
             {
+                if (Runtime.StopAnimation)
+                {
+                    Stop();
+                    return;
+                }
                 OnAnimationTick?.Invoke(this);
             };
             AnimationStepTimer.Start();
+            OnAnimationStarted?.Invoke(this);
         }
 
         public void Reset()

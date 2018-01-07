@@ -83,12 +83,14 @@ namespace FlowNetworkToolKit.Algorithms
         {
             if (u == dest)
                 return f;
-            for (; ptr[u] < graph.Nodes[u].AllEdges.Count(); ++ptr[u])
+            for (; ptr[u] < graph.Nodes[u].AllEdges.Count; ++ptr[u])
             {
                 FlowEdge e = graph.Nodes[u].AllEdges[ptr[u]];
                 if (dist[e.Other(u)] == dist[u] + 1 && e.ResidualCapacityTo(e.Other(u)) > 0)
                 {
+                    e.Mark();
                     double df = DFS(ptr, dest, e.Other(u), Math.Min(f, e.ResidualCapacityTo(e.Other(u))));
+                    e.Unmark();
                     if (df > 0)
                     {
                         e.AddFlow(df, e.Other(u));
