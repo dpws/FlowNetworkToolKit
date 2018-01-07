@@ -16,11 +16,13 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public delegate void FlowChanged(FlowEdge sender);
         public delegate void LengthChanged(FlowEdge sender, int length);
-        public delegate void EdgeScanned(FlowEdge sender);
+        public delegate void EdgeMarked(FlowEdge sender);
+        public delegate void EdgeUnmarked(FlowEdge sender);
 
         public event FlowChanged OnFlowChanged;
         public event LengthChanged OnLengthChanged;
-        public event EdgeScanned OnEdgeScanned;
+        public event EdgeMarked OnEdgeMarked;
+        public event EdgeUnmarked OnEdgeUnmarked;
 
         #endregion
         public int From;
@@ -55,9 +57,14 @@ namespace FlowNetworkToolKit.Core.Base.Network
             Flow = e.Flow;
         }
 
-        public void RaiseScan()
+        public void Mark()
         {
-            OnEdgeScanned?.Invoke(this);
+            OnEdgeMarked?.Invoke(this);
+        }
+
+        public void Unmark()
+        {
+            OnEdgeUnmarked?.Invoke(this);
         }
 
         public int Other(int node)
@@ -107,6 +114,11 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public override string ToString()
         {
             return $"{From} -> {To} ({Capacity})";
+        }
+
+        public string ToShortString()
+        {
+            return $"{From} -> {To}";
         }
 
         public void SwitchFromTo()

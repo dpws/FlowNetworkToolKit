@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FlowNetworkToolKit.Core.Base.Network;
 using FlowNetworkToolKit.Core.Utils.Loader;
+using FlowNetworkToolKit.Core.Utils.Visualizer;
 using FlowNetworkToolKit.Forms;
 
 namespace FlowNetworkToolKit.Core
@@ -15,7 +16,22 @@ namespace FlowNetworkToolKit.Core
         public static List<AlgorithmInfo> loadedAlghoritms = new List<AlgorithmInfo>();
         public static AlgorithmInfo currentAlghoritm = null;
 
-        public static FlowNetwork currentGraph = null;
+        private static FlowNetwork _currentGraph = null;
+
+        public static FlowNetwork currentGraph
+        {
+            get => _currentGraph;
+            set
+            {
+                _currentGraph = value;
+                Visualizer.Reset();
+            }
+        }
+
+        static Runtime()
+        {
+            currentGraph = null;
+        }
 
         public static bool VisualisationEnabled = true;
         public static bool EditionEnabled = true;

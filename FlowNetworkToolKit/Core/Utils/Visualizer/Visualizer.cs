@@ -15,6 +15,11 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 {
     public static class Visualizer
     {
+
+        public delegate void RedrawRequired();
+
+        public static event RedrawRequired OnRedrawRequired;
+
         public static int CellSize = 15;
         public static int NodeDiameter = 24;
         public static int NodeMargin = 30;
@@ -31,11 +36,15 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
         public static Color HoverEdgeColor = Color.DarkOrange;
         public static Color HoverEdgeFromNodeColor = Color.DarkRed;
         public static Color HoverEdgeToNodeColor = Color.Green;
+        public static Color EdgeScannedColor = Color.BlueViolet;
+        public static Color EdgeChangedColor = Color.DeepPink;
 
         public static Brush SourceBrush = Brushes.LightSteelBlue;
         public static Brush TargetBrush = Brushes.LightPink;
 
         private static double maxScale = 10f, minScale = 0.3f;
+
+        private static Dictionary<string, FlowEdgeState> EdgeStates = new Dictionary<string, FlowEdgeState>();
 
         #region Setters
 
@@ -93,6 +102,38 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         }
 
+        public static void Reset()
+        {
+            EdgeStates = new Dictionary<string, FlowEdgeState>();
+            OnRedrawRequired?.Invoke();
+        }
+
+        public static void GetAnimation(Animator animator)
+        {
+            var animation = animator.GetAnimation();
+            if (animation == null) return;
+            switch (animation.Type)
+            {
+                case AnimationType.EdgeFlowChanged:
+                    if(!EdgeStates.ContainsKey(animation.Edge.ToShortString()))
+                        EdgeStates[animation.Edge.ToShortString()] = new FlowEdgeState();
+                    EdgeStates[animation.Edge.ToShortString()].FlowChanged = true;
+                    EdgeStates[animation.Edge.ToShortString()].Flow = animation.Edge.Flow;
+                    break;
+                case AnimationType.EdgeMarked:
+                    if (!EdgeStates.ContainsKey(animation.Edge.ToShortString()))
+                        EdgeStates[animation.Edge.ToShortString()] = new FlowEdgeState();
+                    EdgeStates[animation.Edge.ToShortString()].Marked = true;
+                    break;
+                case AnimationType.EdgeUnmarked:
+                    if (!EdgeStates.ContainsKey(animation.Edge.ToShortString()))
+                        EdgeStates[animation.Edge.ToShortString()] = new FlowEdgeState();
+                    EdgeStates[animation.Edge.ToShortString()].Marked = false;
+                    break;
+            }
+
+            OnRedrawRequired?.Invoke();
+        }
 
         #region Drawing
 
@@ -218,6 +259,18 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     pen.Color = HoverEdgeColor;
                 }
 
+                if (EdgeStates.ContainsKey(edge.ToShortString()))
+                {
+                    if (EdgeStates[edge.ToShortString()].FlowChanged)
+                    {
+                        pen.Color = EdgeChangedColor;
+                    }
+                    if (EdgeStates[edge.ToShortString()].Marked)
+                    {
+                        pen.Color = EdgeChangedColor;
+                    }
+                }
+
                 var posFrom = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.From].Position.X,
                     fn.Nodes[edge.From].Position.Y);
                 var posTo = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.To].Position.X,
@@ -241,8 +294,19 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     var size = g.MeasureString(weight, font);
                     w.X -=(int)(size.Width / 2f);
                     w.Y -= (int)(size.Height / 2f);
-                    g.FillRectangle(Brushes.White, new RectangleF(w.X, w.Y, size.Width, size.Height));
-                    g.DrawString(weight, font, Brushes.Black, w.X, w.Y);
+                    Brush textBrush = Brushes.Black;
+                    Brush textBackgorundBrush = Brushes.White;
+                    if (EdgeStates.ContainsKey(edge.ToShortString()))
+                    {
+                        if (EdgeStates[edge.ToShortString()].FlowChanged)
+                        {
+                            textBrush = Brushes.Red;
+                            textBackgorundBrush = Brushes.LightPink;
+                            weight = EdgeStates[edge.ToShortString()].Flow + "/" + (edge.Capacity - edge.Flow);
+                        }
+                    }
+                    g.FillRectangle(textBackgorundBrush, new RectangleF(w.X, w.Y, size.Width, size.Height));
+                    g.DrawString(weight, font, textBrush, w.X, w.Y);
                 }
             
             

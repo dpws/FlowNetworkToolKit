@@ -23,13 +23,15 @@ namespace FlowNetworkToolKit.Core.Base.Network
         public delegate void EdgeAdded(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeFlowChanged(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeLengthChanged(FlowNetwork sender, FlowEdge edge);
-        public delegate void EdgeScanned(FlowNetwork sender, FlowEdge edge);
+        public delegate void EdgeMarked(FlowNetwork sender, FlowEdge edge);
+        public delegate void EdgeUnmarked(FlowNetwork sender, FlowEdge edge);
 
         public event FlowNetworkCreated OnCreate;
         public event EdgeAdded OnAddEdge;
         public event EdgeFlowChanged OnEdgeFlowChanged;
         public event EdgeLengthChanged OnEdgeLengthChanged;
-        public event EdgeScanned OnEdgeScanned;
+        public event EdgeMarked OnEdgeMarked;
+        public event EdgeUnmarked OnEdgeUnmarked;
 
         #endregion
         private int _source = -1;
@@ -129,7 +131,8 @@ namespace FlowNetworkToolKit.Core.Base.Network
             var edge = f == -1 ? new FlowEdge(from, to, capacity) : new FlowEdge(from, to, capacity, f);
             edge.OnFlowChanged += (sender) => OnEdgeFlowChanged?.Invoke(this, sender);
             edge.OnLengthChanged += (sender, length) => OnEdgeLengthChanged?.Invoke(this, sender);
-            edge.OnEdgeScanned += (sender) => OnEdgeScanned?.Invoke(this, sender);
+            edge.OnEdgeMarked += (sender) => OnEdgeMarked?.Invoke(this, sender);
+            edge.OnEdgeUnmarked += (sender) => OnEdgeUnmarked?.Invoke(this, sender);
 
             Edges.Add(edge);
             if (!Nodes.ContainsKey(edge.From))

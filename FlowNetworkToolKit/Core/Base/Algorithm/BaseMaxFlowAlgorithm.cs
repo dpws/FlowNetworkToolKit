@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Exceptions;
 using FlowNetworkToolKit.Core.Base.Network;
 using FlowNetworkToolKit.Core.Utils.Logger;
+using FlowNetworkToolKit.Core.Utils.Visualizer;
 
 namespace FlowNetworkToolKit.Core.Base.Algorithm
 {
@@ -34,7 +35,8 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public delegate void Finish(BaseMaxFlowAlgorithm sender);
         public delegate void BeforeInit(BaseMaxFlowAlgorithm sender);
         public delegate void AfterInit(BaseMaxFlowAlgorithm sender);
-        public delegate void EdgeScanned(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
+        public delegate void EdgeMarked(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
+        public delegate void EdgeUnmarked(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
         public delegate void EdgeFlowChanged(BaseMaxFlowAlgorithm sender, FlowNetwork network, FlowEdge edge);
 
         public event TicksChanged OnTick;
@@ -42,7 +44,8 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         public event Finish OnFinish;
         public event BeforeInit OnBeforeInit;
         public event AfterInit OnAfterInit;
-        public event EdgeScanned OnEdgeScanned;
+        public event EdgeMarked OnEdgeMarked;
+        public event EdgeUnmarked OnEdgeUnmarked;
         public event EdgeFlowChanged OnEdgeFlowChanged;
 
         #endregion
@@ -66,7 +69,8 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
         {
             graph = new FlowNetwork(g);
             graph.OnEdgeFlowChanged += (sender, edge) => OnEdgeFlowChanged?.Invoke(this, sender, edge);
-            graph.OnEdgeScanned += (sender, edge) => OnEdgeScanned?.Invoke(this, sender, edge);
+            graph.OnEdgeMarked += (sender, edge) => OnEdgeMarked?.Invoke(this, sender, edge);
+            graph.OnEdgeUnmarked += (sender, edge) => OnEdgeUnmarked?.Invoke(this, sender, edge);
         }
 
         protected abstract void Init();
@@ -112,6 +116,7 @@ namespace FlowNetworkToolKit.Core.Base.Algorithm
 
         public virtual void Reset()
         {
+            Visualizer.Reset();
             MaxFlow = Double.Epsilon;
             Ticks = 0;
             Elapsed = new TimeSpan(0);

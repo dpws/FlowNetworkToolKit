@@ -33,6 +33,8 @@ namespace FlowNetworkToolKit.Forms
                 tsErrorCount.Text = Log.ErrorCount.ToString();
             }; 
             Log.Init();
+            Visualizer.OnRedrawRequired += () => pbDraw.Invalidate();
+
             pbDraw.MouseWheel += canvas_MouseWheel;
             loadAlgorithms();
         }
@@ -141,9 +143,28 @@ namespace FlowNetworkToolKit.Forms
             }
             if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
             {
+                //Clone selected algorithm. Won't write algorithm reset method
                 BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
-                algorithm.OnEdgeFlowChanged += (flowAlgorithm, network, edge) => Log.Write($"{edge} flow changed"); 
-                algorithm.OnFinish += OnAlgorithmFinished;
+                Animator algorithmAnimator = new Animator();
+                algorithmAnimator.OnAnimationTick += Visualizer.GetAnimation;
+                algorithmAnimator.OnAnimationFinished += animator =>
+                {
+                    OnAlgorithmFinished(algorithm);
+                }; 
+
+                algorithmAnimator.Run();
+
+                //Subscribe for events for visualization needs
+                algorithm.OnEdgeFlowChanged += algorithmAnimator.EdgeFlowChanged;
+                algorithm.OnEdgeMarked += algorithmAnimator.EdgeMarked;
+                algorithm.OnEdgeUnmarked += algorithmAnimator.EdgeUnmarked;
+
+                algorithm.OnFinish += flowAlgorithm =>
+                {
+                    algorithmAnimator.AlgoritmFInished = true;
+                    
+                };
+
                 algorithm.SetGraph(Runtime.currentGraph);
                 algorithm.RunAsync();
 
