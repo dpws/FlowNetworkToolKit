@@ -34,36 +34,10 @@ namespace FlowNetworkToolKit.Forms
             this.ssStatus = new System.Windows.Forms.StatusStrip();
             this.slGraphInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsVisStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mainMenu = new System.Windows.Forms.MenuStrip();
-            this.mnAlghoritmList = new System.Windows.Forms.ToolStripComboBox();
-            this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
-            this.dlgImportFile = new System.Windows.Forms.OpenFileDialog();
-            this.pnPlaceHolder = new System.Windows.Forms.Panel();
-            this.dlgSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.cmNode = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmNodeId = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmNodeInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.cmNodeSetSource = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmNodeSetTarget = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmNodeDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmEdge = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmEdgeInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmEdgeCapacityTextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.mnEdgeCapacitySave = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmEdgeDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.btnImport = new System.Windows.Forms.Button();
-            this.btnOpen = new System.Windows.Forms.Button();
-            this.btnCreate = new System.Windows.Forms.Button();
-            this.pbDraw = new System.Windows.Forms.PictureBox();
             this.tsInfoCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsWarningCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsErrorCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,16 +53,42 @@ namespace FlowNetworkToolKit.Forms
             this.byCircleFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnZoomAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnAlghoritmList = new System.Windows.Forms.ToolStripComboBox();
             this.mnToggleLogWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAlgorithmInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.mnRunAlghoritm = new System.Windows.Forms.ToolStripMenuItem();
             this.mnRunVisualization = new System.Windows.Forms.ToolStripMenuItem();
             this.runWithoutVisualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.performanceTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
+            this.dlgImportFile = new System.Windows.Forms.OpenFileDialog();
+            this.pnPlaceHolder = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnCreate = new System.Windows.Forms.Button();
+            this.dlgSaveFile = new System.Windows.Forms.SaveFileDialog();
+            this.cmNode = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmNodeId = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmNodeInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.cmNodeAddEdge = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.cmNodeSetSource = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmNodeSetTarget = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmNodeDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmEdge = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmEdgeInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmEdgeCapacityTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.mnEdgeCapacitySave = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.cmEdgeInverse = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmEdgeDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.pbDraw = new System.Windows.Forms.PictureBox();
             this.ssStatus.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.pnPlaceHolder.SuspendLayout();
@@ -125,242 +125,6 @@ namespace FlowNetworkToolKit.Forms
             this.tsVisStatus.Text = "tsVisStatus";
             this.tsVisStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // mainMenu
-            // 
-            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.visualizationToolStripMenuItem,
-            this.mnAbout,
-            this.mnZoomAll,
-            this.mnAlghoritmList,
-            this.mnToggleLogWindow,
-            this.mnAlgorithmInfo,
-            this.mnRunAlghoritm});
-            this.mainMenu.Location = new System.Drawing.Point(0, 0);
-            this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(1064, 27);
-            this.mainMenu.TabIndex = 1;
-            this.mainMenu.Text = "menuStrip1";
-            // 
-            // mnAlghoritmList
-            // 
-            this.mnAlghoritmList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mnAlghoritmList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mnAlghoritmList.Name = "mnAlghoritmList";
-            this.mnAlghoritmList.Size = new System.Drawing.Size(200, 23);
-            this.mnAlghoritmList.SelectedIndexChanged += new System.EventHandler(this.mnAlghoritmList_SelectedIndexChanged);
-            // 
-            // dlgOpenFile
-            // 
-            this.dlgOpenFile.Filter = "FlowNetwork xml|*.xml";
-            // 
-            // dlgImportFile
-            // 
-            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
-            this.dlgImportFile.FilterIndex = 2;
-            // 
-            // pnPlaceHolder
-            // 
-            this.pnPlaceHolder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.pnPlaceHolder.Controls.Add(this.btnExit);
-            this.pnPlaceHolder.Controls.Add(this.btnImport);
-            this.pnPlaceHolder.Controls.Add(this.btnOpen);
-            this.pnPlaceHolder.Controls.Add(this.btnCreate);
-            this.pnPlaceHolder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnPlaceHolder.Location = new System.Drawing.Point(0, 27);
-            this.pnPlaceHolder.Name = "pnPlaceHolder";
-            this.pnPlaceHolder.Size = new System.Drawing.Size(1064, 586);
-            this.pnPlaceHolder.TabIndex = 2;
-            // 
-            // dlgSaveFile
-            // 
-            this.dlgSaveFile.DefaultExt = "xml";
-            this.dlgSaveFile.Filter = "FlowNetwork xml|*.xml";
-            // 
-            // cmNode
-            // 
-            this.cmNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmNodeId,
-            this.cmNodeInfo,
-            this.toolStripSeparator4,
-            this.cmNodeAddEdge,
-            this.cmSeparator,
-            this.cmNodeSetSource,
-            this.cmNodeSetTarget,
-            this.toolStripSeparator1,
-            this.cmNodeDelete});
-            this.cmNode.Name = "cmNode";
-            this.cmNode.Size = new System.Drawing.Size(185, 154);
-            // 
-            // cmNodeId
-            // 
-            this.cmNodeId.Enabled = false;
-            this.cmNodeId.Name = "cmNodeId";
-            this.cmNodeId.Size = new System.Drawing.Size(184, 22);
-            this.cmNodeId.Text = "NODE: 0";
-            // 
-            // cmNodeInfo
-            // 
-            this.cmNodeInfo.Enabled = false;
-            this.cmNodeInfo.Name = "cmNodeInfo";
-            this.cmNodeInfo.Size = new System.Drawing.Size(184, 22);
-            this.cmNodeInfo.Text = "IN: 0 OUT: 0";
-            // 
-            // cmSeparator
-            // 
-            this.cmSeparator.Name = "cmSeparator";
-            this.cmSeparator.Size = new System.Drawing.Size(181, 6);
-            // 
-            // cmNodeSetSource
-            // 
-            this.cmNodeSetSource.Name = "cmNodeSetSource";
-            this.cmNodeSetSource.Size = new System.Drawing.Size(184, 22);
-            this.cmNodeSetSource.Text = "Set source";
-            this.cmNodeSetSource.Click += new System.EventHandler(this.cmNodeSetSource_Click);
-            // 
-            // cmNodeSetTarget
-            // 
-            this.cmNodeSetTarget.Name = "cmNodeSetTarget";
-            this.cmNodeSetTarget.Size = new System.Drawing.Size(184, 22);
-            this.cmNodeSetTarget.Text = "Set target";
-            this.cmNodeSetTarget.Click += new System.EventHandler(this.cmNodeSetTarget_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
-            // 
-            // cmNodeDelete
-            // 
-            this.cmNodeDelete.Name = "cmNodeDelete";
-            this.cmNodeDelete.Size = new System.Drawing.Size(184, 22);
-            this.cmNodeDelete.Text = "Delete node";
-            this.cmNodeDelete.Click += new System.EventHandler(this.cmNodeDelete_Click);
-            // 
-            // cmEdge
-            // 
-            this.cmEdge.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmEdgeInfo,
-            this.toolStripSeparator2,
-            this.toolStripMenuItem1,
-            this.cmEdgeCapacityTextBox,
-            this.mnEdgeCapacitySave,
-            this.toolStripSeparator3,
-            this.cmEdgeInverse,
-            this.toolStripSeparator5,
-            this.cmEdgeDelete});
-            this.cmEdge.Name = "cmEdge";
-            this.cmEdge.Size = new System.Drawing.Size(161, 179);
-            // 
-            // cmEdgeInfo
-            // 
-            this.cmEdgeInfo.Enabled = false;
-            this.cmEdgeInfo.Name = "cmEdgeInfo";
-            this.cmEdgeInfo.Size = new System.Drawing.Size(160, 22);
-            this.cmEdgeInfo.Text = "0 -> 0";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Enabled = false;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
-            this.toolStripMenuItem1.Text = "Capacity:";
-            // 
-            // cmEdgeCapacityTextBox
-            // 
-            this.cmEdgeCapacityTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cmEdgeCapacityTextBox.Name = "cmEdgeCapacityTextBox";
-            this.cmEdgeCapacityTextBox.Size = new System.Drawing.Size(100, 23);
-            this.cmEdgeCapacityTextBox.Text = "0";
-            this.cmEdgeCapacityTextBox.TextChanged += new System.EventHandler(this.cmEdgeCapacityTextBox_TextChanged);
-            // 
-            // mnEdgeCapacitySave
-            // 
-            this.mnEdgeCapacitySave.Name = "mnEdgeCapacitySave";
-            this.mnEdgeCapacitySave.Size = new System.Drawing.Size(160, 22);
-            this.mnEdgeCapacitySave.Text = "Save capacity";
-            this.mnEdgeCapacitySave.Click += new System.EventHandler(this.mnEdgeCapacitySave_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(157, 6);
-            // 
-            // cmEdgeDelete
-            // 
-            this.cmEdgeDelete.Name = "cmEdgeDelete";
-            this.cmEdgeDelete.Size = new System.Drawing.Size(160, 22);
-            this.cmEdgeDelete.Text = "Delete edge";
-            this.cmEdgeDelete.Click += new System.EventHandler(this.cmEdgeDelete_Click);
-            // 
-            // btnExit
-            // 
-            this.btnExit.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnExit.Image = global::FlowNetworkToolKit.Properties.Resources.door_open_out;
-            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExit.Location = new System.Drawing.Point(0, 69);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(1064, 23);
-            this.btnExit.TabIndex = 4;
-            this.btnExit.Text = "Close Graph ToolKit";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.mnExit_Click);
-            // 
-            // btnImport
-            // 
-            this.btnImport.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnImport.Image = global::FlowNetworkToolKit.Properties.Resources.receipt_import;
-            this.btnImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnImport.Location = new System.Drawing.Point(0, 46);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(1064, 23);
-            this.btnImport.TabIndex = 2;
-            this.btnImport.Text = "Import graph";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
-            // 
-            // btnOpen
-            // 
-            this.btnOpen.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnOpen.Image = global::FlowNetworkToolKit.Properties.Resources.folder_horizontal_open;
-            this.btnOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOpen.Location = new System.Drawing.Point(0, 23);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(1064, 23);
-            this.btnOpen.TabIndex = 1;
-            this.btnOpen.Text = "Open graph";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.mnOpen_Click);
-            // 
-            // btnCreate
-            // 
-            this.btnCreate.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCreate.Image = global::FlowNetworkToolKit.Properties.Resources.plus;
-            this.btnCreate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCreate.Location = new System.Drawing.Point(0, 0);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(1064, 23);
-            this.btnCreate.TabIndex = 0;
-            this.btnCreate.Text = "Create new graph";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            // 
-            // pbDraw
-            // 
-            this.pbDraw.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbDraw.Location = new System.Drawing.Point(0, 27);
-            this.pbDraw.Name = "pbDraw";
-            this.pbDraw.Size = new System.Drawing.Size(1064, 586);
-            this.pbDraw.TabIndex = 3;
-            this.pbDraw.TabStop = false;
-            this.pbDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
-            this.pbDraw.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseClick);
-            this.pbDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseMove);
-            // 
             // tsInfoCount
             // 
             this.tsInfoCount.ForeColor = System.Drawing.Color.RoyalBlue;
@@ -388,6 +152,23 @@ namespace FlowNetworkToolKit.Forms
             this.tsErrorCount.Size = new System.Drawing.Size(29, 17);
             this.tsErrorCount.Text = "0";
             // 
+            // mainMenu
+            // 
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.visualizationToolStripMenuItem,
+            this.mnAbout,
+            this.mnZoomAll,
+            this.mnAlghoritmList,
+            this.mnToggleLogWindow,
+            this.mnAlgorithmInfo,
+            this.mnRunAlghoritm});
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(1064, 27);
+            this.mainMenu.TabIndex = 1;
+            this.mainMenu.Text = "menuStrip1";
+            // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -409,6 +190,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnCreate.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.mnCreate.Size = new System.Drawing.Size(210, 22);
             this.mnCreate.Text = "Create new graph";
+            this.mnCreate.Click += new System.EventHandler(this.mnCreate_Click);
             // 
             // mnOpen
             // 
@@ -465,7 +247,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnVisualisationEnabled.CheckOnClick = true;
             this.mnVisualisationEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnVisualisationEnabled.Name = "mnVisualisationEnabled";
-            this.mnVisualisationEnabled.Size = new System.Drawing.Size(152, 22);
+            this.mnVisualisationEnabled.Size = new System.Drawing.Size(144, 22);
             this.mnVisualisationEnabled.Text = "Visualization";
             this.mnVisualisationEnabled.CheckStateChanged += new System.EventHandler(this.mnVisualisationEnabled_CheckStateChanged);
             // 
@@ -475,7 +257,7 @@ namespace FlowNetworkToolKit.Forms
             this.mnEditionEnabled.CheckOnClick = true;
             this.mnEditionEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnEditionEnabled.Name = "mnEditionEnabled";
-            this.mnEditionEnabled.Size = new System.Drawing.Size(152, 22);
+            this.mnEditionEnabled.Size = new System.Drawing.Size(144, 22);
             this.mnEditionEnabled.Text = "Edition";
             this.mnEditionEnabled.CheckStateChanged += new System.EventHandler(this.mnEditionEnabled_CheckStateChanged);
             // 
@@ -483,7 +265,7 @@ namespace FlowNetworkToolKit.Forms
             // 
             this.mnCreationEnabled.CheckOnClick = true;
             this.mnCreationEnabled.Name = "mnCreationEnabled";
-            this.mnCreationEnabled.Size = new System.Drawing.Size(152, 22);
+            this.mnCreationEnabled.Size = new System.Drawing.Size(144, 22);
             this.mnCreationEnabled.Text = "Creation";
             this.mnCreationEnabled.CheckStateChanged += new System.EventHandler(this.mnCreationEnabled_CheckStateChanged);
             // 
@@ -494,7 +276,7 @@ namespace FlowNetworkToolKit.Forms
             this.byCircleFormToolStripMenuItem});
             this.mnArrangement.Image = global::FlowNetworkToolKit.Properties.Resources.application_tile;
             this.mnArrangement.Name = "mnArrangement";
-            this.mnArrangement.Size = new System.Drawing.Size(152, 22);
+            this.mnArrangement.Size = new System.Drawing.Size(144, 22);
             this.mnArrangement.Text = "Arrangement";
             // 
             // byDistanceFromSourceToolStripMenuItem
@@ -535,6 +317,14 @@ namespace FlowNetworkToolKit.Forms
             this.mnZoomAll.Text = "zoomAll";
             this.mnZoomAll.ToolTipText = "Zoom fit";
             this.mnZoomAll.Click += new System.EventHandler(this.mnZoomAll_Click);
+            // 
+            // mnAlghoritmList
+            // 
+            this.mnAlghoritmList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mnAlghoritmList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mnAlghoritmList.Name = "mnAlghoritmList";
+            this.mnAlghoritmList.Size = new System.Drawing.Size(200, 23);
+            this.mnAlghoritmList.SelectedIndexChanged += new System.EventHandler(this.mnAlghoritmList_SelectedIndexChanged);
             // 
             // mnToggleLogWindow
             // 
@@ -600,6 +390,114 @@ namespace FlowNetworkToolKit.Forms
             this.performanceTestToolStripMenuItem.Text = "Performance test";
             this.performanceTestToolStripMenuItem.Click += new System.EventHandler(this.performanceTestToolStripMenuItem_Click);
             // 
+            // dlgOpenFile
+            // 
+            this.dlgOpenFile.Filter = "FlowNetwork xml|*.xml";
+            // 
+            // dlgImportFile
+            // 
+            this.dlgImportFile.Filter = "FlowNetwork|*.csv;*.fn;*.dimacs";
+            this.dlgImportFile.FilterIndex = 2;
+            // 
+            // pnPlaceHolder
+            // 
+            this.pnPlaceHolder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pnPlaceHolder.Controls.Add(this.btnExit);
+            this.pnPlaceHolder.Controls.Add(this.btnImport);
+            this.pnPlaceHolder.Controls.Add(this.btnOpen);
+            this.pnPlaceHolder.Controls.Add(this.btnCreate);
+            this.pnPlaceHolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnPlaceHolder.Location = new System.Drawing.Point(0, 27);
+            this.pnPlaceHolder.Name = "pnPlaceHolder";
+            this.pnPlaceHolder.Size = new System.Drawing.Size(1064, 586);
+            this.pnPlaceHolder.TabIndex = 2;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnExit.Image = global::FlowNetworkToolKit.Properties.Resources.door_open_out;
+            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExit.Location = new System.Drawing.Point(0, 69);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(1064, 23);
+            this.btnExit.TabIndex = 4;
+            this.btnExit.Text = "Close Graph ToolKit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.mnExit_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnImport.Image = global::FlowNetworkToolKit.Properties.Resources.receipt_import;
+            this.btnImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImport.Location = new System.Drawing.Point(0, 46);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(1064, 23);
+            this.btnImport.TabIndex = 2;
+            this.btnImport.Text = "Import graph";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnOpen.Image = global::FlowNetworkToolKit.Properties.Resources.folder_horizontal_open;
+            this.btnOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpen.Location = new System.Drawing.Point(0, 23);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(1064, 23);
+            this.btnOpen.TabIndex = 1;
+            this.btnOpen.Text = "Open graph";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.mnOpen_Click);
+            // 
+            // btnCreate
+            // 
+            this.btnCreate.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCreate.Image = global::FlowNetworkToolKit.Properties.Resources.plus;
+            this.btnCreate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCreate.Location = new System.Drawing.Point(0, 0);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(1064, 23);
+            this.btnCreate.TabIndex = 0;
+            this.btnCreate.Text = "Create new graph";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.mnCreate_Click);
+            // 
+            // dlgSaveFile
+            // 
+            this.dlgSaveFile.DefaultExt = "xml";
+            this.dlgSaveFile.Filter = "FlowNetwork xml|*.xml";
+            // 
+            // cmNode
+            // 
+            this.cmNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmNodeId,
+            this.cmNodeInfo,
+            this.toolStripSeparator4,
+            this.cmNodeAddEdge,
+            this.cmSeparator,
+            this.cmNodeSetSource,
+            this.cmNodeSetTarget,
+            this.toolStripSeparator1,
+            this.cmNodeDelete});
+            this.cmNode.Name = "cmNode";
+            this.cmNode.Size = new System.Drawing.Size(185, 154);
+            // 
+            // cmNodeId
+            // 
+            this.cmNodeId.Enabled = false;
+            this.cmNodeId.Name = "cmNodeId";
+            this.cmNodeId.Size = new System.Drawing.Size(184, 22);
+            this.cmNodeId.Text = "NODE: 0";
+            // 
+            // cmNodeInfo
+            // 
+            this.cmNodeInfo.Enabled = false;
+            this.cmNodeInfo.Name = "cmNodeInfo";
+            this.cmNodeInfo.Size = new System.Drawing.Size(184, 22);
+            this.cmNodeInfo.Text = "IN: 0 OUT: 0";
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -612,6 +510,91 @@ namespace FlowNetworkToolKit.Forms
             this.cmNodeAddEdge.Text = "Add edge from node";
             this.cmNodeAddEdge.Click += new System.EventHandler(this.cmNodeAddEdge_Click);
             // 
+            // cmSeparator
+            // 
+            this.cmSeparator.Name = "cmSeparator";
+            this.cmSeparator.Size = new System.Drawing.Size(181, 6);
+            // 
+            // cmNodeSetSource
+            // 
+            this.cmNodeSetSource.Name = "cmNodeSetSource";
+            this.cmNodeSetSource.Size = new System.Drawing.Size(184, 22);
+            this.cmNodeSetSource.Text = "Set source";
+            this.cmNodeSetSource.Click += new System.EventHandler(this.cmNodeSetSource_Click);
+            // 
+            // cmNodeSetTarget
+            // 
+            this.cmNodeSetTarget.Name = "cmNodeSetTarget";
+            this.cmNodeSetTarget.Size = new System.Drawing.Size(184, 22);
+            this.cmNodeSetTarget.Text = "Set target";
+            this.cmNodeSetTarget.Click += new System.EventHandler(this.cmNodeSetTarget_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
+            // 
+            // cmNodeDelete
+            // 
+            this.cmNodeDelete.Name = "cmNodeDelete";
+            this.cmNodeDelete.Size = new System.Drawing.Size(184, 22);
+            this.cmNodeDelete.Text = "Delete node";
+            this.cmNodeDelete.Click += new System.EventHandler(this.cmNodeDelete_Click);
+            // 
+            // cmEdge
+            // 
+            this.cmEdge.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmEdgeInfo,
+            this.toolStripSeparator2,
+            this.toolStripMenuItem1,
+            this.cmEdgeCapacityTextBox,
+            this.mnEdgeCapacitySave,
+            this.toolStripSeparator3,
+            this.cmEdgeInverse,
+            this.toolStripSeparator5,
+            this.cmEdgeDelete});
+            this.cmEdge.Name = "cmEdge";
+            this.cmEdge.Size = new System.Drawing.Size(161, 157);
+            // 
+            // cmEdgeInfo
+            // 
+            this.cmEdgeInfo.Enabled = false;
+            this.cmEdgeInfo.Name = "cmEdgeInfo";
+            this.cmEdgeInfo.Size = new System.Drawing.Size(160, 22);
+            this.cmEdgeInfo.Text = "0 -> 0";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Enabled = false;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItem1.Text = "Capacity:";
+            // 
+            // cmEdgeCapacityTextBox
+            // 
+            this.cmEdgeCapacityTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cmEdgeCapacityTextBox.Name = "cmEdgeCapacityTextBox";
+            this.cmEdgeCapacityTextBox.Size = new System.Drawing.Size(100, 23);
+            this.cmEdgeCapacityTextBox.Text = "0";
+            this.cmEdgeCapacityTextBox.TextChanged += new System.EventHandler(this.cmEdgeCapacityTextBox_TextChanged);
+            // 
+            // mnEdgeCapacitySave
+            // 
+            this.mnEdgeCapacitySave.Name = "mnEdgeCapacitySave";
+            this.mnEdgeCapacitySave.Size = new System.Drawing.Size(160, 22);
+            this.mnEdgeCapacitySave.Text = "Save capacity";
+            this.mnEdgeCapacitySave.Click += new System.EventHandler(this.mnEdgeCapacitySave_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(157, 6);
+            // 
             // cmEdgeInverse
             // 
             this.cmEdgeInverse.Name = "cmEdgeInverse";
@@ -623,6 +606,25 @@ namespace FlowNetworkToolKit.Forms
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(157, 6);
+            // 
+            // cmEdgeDelete
+            // 
+            this.cmEdgeDelete.Name = "cmEdgeDelete";
+            this.cmEdgeDelete.Size = new System.Drawing.Size(160, 22);
+            this.cmEdgeDelete.Text = "Delete edge";
+            this.cmEdgeDelete.Click += new System.EventHandler(this.cmEdgeDelete_Click);
+            // 
+            // pbDraw
+            // 
+            this.pbDraw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbDraw.Location = new System.Drawing.Point(0, 27);
+            this.pbDraw.Name = "pbDraw";
+            this.pbDraw.Size = new System.Drawing.Size(1064, 586);
+            this.pbDraw.TabIndex = 3;
+            this.pbDraw.TabStop = false;
+            this.pbDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            this.pbDraw.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseClick);
+            this.pbDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDraw_MouseMove);
             // 
             // FMain
             // 

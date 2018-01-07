@@ -107,7 +107,7 @@ namespace FlowNetworkToolKit.Core.Base.Network
 
         public void AddNodeAtMouse(MouseEventArgs e) 
         {
-            var nextIndex = Nodes.Keys.Max() + 1;
+            var nextIndex = Nodes.Count > 0 ? Nodes.Keys.Max() + 1 : 0;
             var node = new FlowNode(nextIndex);
             node.Position = Visualizer.TranslateScreenToAbsolutePoint(e.Location);
             Nodes.Add(node.Index, node);

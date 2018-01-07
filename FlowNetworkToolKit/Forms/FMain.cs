@@ -215,7 +215,7 @@ namespace FlowNetworkToolKit.Forms
             if (Runtime.currentAlghoritm != null)
             {
                 mnAlgorithmInfo.Visible = true;
-                if (Runtime.currentGraph != null)
+                if (Runtime.currentGraph != null && Runtime.currentGraph.Source != -1 && Runtime.currentGraph.Target != -1)
                     mnRunAlghoritm.Visible = true;
                 else
                     mnRunAlghoritm.Visible = false;
@@ -474,11 +474,13 @@ namespace FlowNetworkToolKit.Forms
         private void cmNodeSetSource_Click(object sender, EventArgs e)
         {
             Runtime.currentGraph.Source = RuntimeManipulations.ActiveNode.Index;
+            Invalidate();
         }
 
         private void cmNodeSetTarget_Click(object sender, EventArgs e)
         {
             Runtime.currentGraph.Target = RuntimeManipulations.ActiveNode.Index;
+            Invalidate();
         }
 
         private void cmEdgeDelete_Click(object sender, EventArgs e)
@@ -527,6 +529,22 @@ namespace FlowNetworkToolKit.Forms
         private void cmEdgeInverse_Click(object sender, EventArgs e)
         {
             RuntimeManipulations.ActiveEdge.SwitchFromTo();
+            pbDraw.Invalidate();
+        }
+
+        private void mnCreate_Click(object sender, EventArgs e)
+        {
+            if (Runtime.currentGraph != null)
+            {
+                if (MessageBox.Show("All unsaved changes in the current flow network will be lost", "Are you sure?",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
+            }
+            Runtime.currentGraph = new FlowNetwork();
+            Runtime.CreationEnabled = true;
+            Runtime.EditionEnabled = true;
+            Runtime.VisualisationEnabled = true;
+            Invalidate();
             pbDraw.Invalidate();
         }
     }
