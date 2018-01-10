@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FlowNetworkToolKit.Algorithms.EdmondsKarp">
+    <Position X="4.75" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAABAgAAQAAAAAAAAAAAACACAAAAAAA=</HashCode>
+      <FileName>Algorithms\EdmondsKarp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Algorithms.Dinic">
+    <Position X="7" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAABBQAAAAAAAAAAAACACAAAAAAA=</HashCode>
+      <FileName>Algorithms\Dinic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Algorithms.HLPR">
+    <Position X="9.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAIAAAAAQAACAAQABAAAQAAAAAAAAAAAESAiIAEACAA=</HashCode>
+      <FileName>Algorithms\HLPR.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.TicksChanged" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.Start" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.Finish" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.BeforeInit" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.AfterInit" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.EdgeMarked" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.EdgeUnmarked" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm.EdgeFlowChanged" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAQoAACAgBAAAMAACAAQACQAACQIACCACAAIBRBM=</HashCode>
+      <FileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
