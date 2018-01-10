@@ -29,7 +29,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 //Проверка соответствия типа анимации классу переданого объекта
                 if (!(obj is FlowEdge))
                     throw new InvalidConfigurationException("This types requires FLowEdge object");
-                Edge = (FlowEdge) obj;
+                Edge = new FlowEdge((FlowEdge) obj);
             }
         }
 
