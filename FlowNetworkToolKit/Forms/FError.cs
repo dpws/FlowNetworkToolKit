@@ -39,9 +39,5 @@ namespace FlowNetworkToolKit.Forms
             Dispose();
         }
 
-        private void FError_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            
-        }
     }
 }

@@ -39,11 +39,11 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
 
         public static Color EdgeMarkedColor = Color.BlueViolet;
-        public static Color EdgeActiveChangedColor = Color.DeepPink;
-        public static Color EdgeChangedColor = Color.CornflowerBlue;
+        public static Color EdgeActiveChangedColor = Color.DarkRed;
+        public static Color EdgeChangedColor = Color.IndianRed;
 
         public static Brush SourceBrush = Brushes.LightSteelBlue;
-        public static Brush TargetBrush = Brushes.LightPink;
+        public static Brush TargetBrush = Brushes.DarkSeaGreen;
 
         public static Brush FlowBrush = Brushes.Black;
         public static Brush FlowBackgroundBrush = Brushes.White;
@@ -109,7 +109,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             }
 
             SetOffset(new Point((int) minX - padding, (int) minY - padding));
-            var scaleX = (ClientRectangle.Width) / (maxX - Offset.X + padding *2);
+            var scaleX = (ClientRectangle.Width) / (maxX - Offset.X + padding * 2);
             var scaleY = (ClientRectangle.Height) / (maxY - Offset.Y + padding * 2);
 
             SetScale(scaleX < scaleY ? scaleX : scaleY);
@@ -258,7 +258,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             foreach (var edge in fn.Edges)
             {
                 pen.Color = BaseColor;
-
+                pen.Width = 2;
                 if (edge.From == RuntimeManipulations.ActiveNode?.Index)
                 {
                     pen.Color = HoverNodeOutcomingEdgeColor;
@@ -273,6 +273,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     if (DateTime.Now - EdgeStates[edge.ToShortString()].Updated < ActiveChangeTime)
                     {
                         pen.Color = EdgeActiveChangedColor;
+                        pen.Width = 4;
                     }
                     else
                     {
@@ -283,11 +284,13 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 if (RuntimeManipulations.ActiveEdge != null && RuntimeManipulations.ActiveEdge.Equals(edge))
                 {
                     pen.Color = HoverEdgeColor;
+                    
                 }
 
                 if (EdgeStates.ContainsKey(edge.ToShortString()) && EdgeStates[edge.ToShortString()].Marked)
                 {
                     pen.Color = EdgeMarkedColor;
+                    pen.Width = 4;
                 }
 
                 var posFrom = TranslateAbsoluteToScreenPoint(fn.Nodes[edge.From].Position.X,
@@ -310,9 +313,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                 using (var font = new Font(FontFamily.GenericSansSerif, 10))
                 {
                     var weight = edge.Flow + "/" + edge.Capacity;
-                   
-                    Brush textBrush = FlowBrush;
-                    Brush textBackgorundBrush = FlowBackgroundBrush;
+
+                    Brush textBrush = FlowBrush;Brush textBackgorundBrush = FlowBackgroundBrush;
                     if (EdgeStates.ContainsKey(edge.ToShortString()))
                     {
                         if (EdgeStates[edge.ToShortString()].FlowChanged)
@@ -329,8 +331,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                                 textBrush = ChangedFlowBrush;
                                 textBackgorundBrush = ChangedFlowBackgroundBrush;
                             }
-                            
-                            
+
+
                         }
                     }
                     var size = g.MeasureString(weight, font);
@@ -339,8 +341,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     g.FillRectangle(textBackgorundBrush, new RectangleF(w.X, w.Y, size.Width, size.Height));
                     g.DrawString(weight, font, textBrush, w.X, w.Y);
                 }
-            
-            
+
+
             }
             pen.Dispose();
         }
@@ -399,7 +401,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
                     levelCounter[d] = 0;
                 }
 
-                node.Position = new Point(d * spacing, levelCounter[d] * spacing + levelOffsets[d]);
+                node.Position = new Point(d * spacing , levelCounter[d] * spacing + levelOffsets[d]);
                 levelCounter[d]++;
             }
             Log.Write("All nodes are arranged by distance");
@@ -411,9 +413,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         public static Point TranslateScreenToAbsolutePoint(int x, int y)
         {
-            int newX, newY;
-            newX = (int)Math.Round(x / Scale + Offset.X);
-            newY = (int)Math.Round(y / Scale + Offset.Y);
+            var newX = (int)Math.Round(x / Scale + Offset.X);
+            var newY = (int)Math.Round(y / Scale + Offset.Y);
             return new Point(newX, newY);
         }
 
@@ -424,9 +425,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 
         public static Point TranslateAbsoluteToScreenPoint(int x, int y)
         {
-            int newX, newY;
-            newX = (int)Math.Round((x - Offset.X) * Scale);
-            newY = (int)Math.Round((y - Offset.Y) * Scale);            
+            var newX = (int)Math.Round((x - Offset.X) * Scale);
+            var newY = (int)Math.Round((y - Offset.Y) * Scale);            
             return new Point(newX, newY);
         }
 

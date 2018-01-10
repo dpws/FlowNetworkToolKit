@@ -87,7 +87,6 @@
             this.ShowInTaskbar = false;
             this.Text = "FError";
             this.TopMost = true;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FError_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

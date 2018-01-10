@@ -14,7 +14,7 @@ namespace FlowNetworkToolKit.Core
     public static class Runtime
     {
         public static List<AlgorithmInfo> loadedAlghoritms = new List<AlgorithmInfo>();
-        public static AlgorithmInfo currentAlghoritm = null;
+        public static AlgorithmInfo currentAlgorithm = null;
 
         public static bool StopAnimation = false;
 
