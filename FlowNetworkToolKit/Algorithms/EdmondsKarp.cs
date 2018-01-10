@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Base.Network;
 
@@ -10,6 +7,8 @@ namespace FlowNetworkToolKit.Algorithms
 {
     class EdmondsKarp : BaseMaxFlowAlgorithm
     {
+        private bool[] marked;
+        private FlowEdge[] edgeTo;
 
         public EdmondsKarp()
         {
@@ -18,15 +17,9 @@ namespace FlowNetworkToolKit.Algorithms
             Description =
                 @"Алгоритм Эдмондса—Карпа — это вариант алгоритма Форда—Фалкерсона, при котором на каждом шаге выбирают кратчайший дополняющий путь из источника в сток в остаточной сети (полагая, что каждое ребро имеет единичную длину). Кратчайший путь находится поиском в ширину.";
         }
-
-        private bool[] _marked;
-
-        private FlowEdge[] _edgeTo;
-
-
         protected override void Init()
         {
-            //if (!IsReacheable(graph.Source, graph.Target)) throw new ArgumentException("Initial flow is infeasible");
+
         }
 
         protected override void Logic()
@@ -36,24 +29,24 @@ namespace FlowNetworkToolKit.Algorithms
 
         public void SearchMaxFlow()
         {
-            MaxFlow = Excess(graph.Target);
+            //пока существует увеличивающий путь из источника в сток
             while (HasAugmentingPath(graph.Source, graph.Target))
             {
 
                 Tick();
- 
-                var bottle = Double.PositiveInfinity;
 
-                // compute bottleneck capacity;
-                for (var v = graph.Target; v != graph.Source; v = _edgeTo[v].Other(v))
+                var bottle = Double.PositiveInfinity; // пропускная способность пути
+
+                // вычисление пропускной способности пути
+                for (var u = graph.Target; u != graph.Source; u = edgeTo[u].Other(u))
                 {
-                    bottle = Math.Min(bottle, _edgeTo[v].ResidualCapacityTo(v));
+                    bottle = Math.Min(bottle, edgeTo[u].ResidualCapacityTo(u));
                 }
 
-                // augment flow
-                for (var v = graph.Target; v != graph.Source; v = _edgeTo[v].Other(v))
+                // увеличение потока на кратчайшем пути из источника в сток
+                for (var u = graph.Target; u != graph.Source; u = edgeTo[u].Other(u))
                 {
-                    _edgeTo[v].AddFlow(bottle, v);
+                    edgeTo[u].AddFlow(bottle, u);
                 }
 
                 MaxFlow += bottle;
@@ -61,84 +54,38 @@ namespace FlowNetworkToolKit.Algorithms
 
         }
 
-        private double Excess(int v)
-        {
-            var excess = 0.0;
-            foreach (var e in graph.Nodes[v].AllEdges)
-            {
-                if (v == e.From) excess -= e.Flow;
-                else excess += e.Flow;
-            }
-            return excess;
-        }
-
-        private bool IsReacheable(int s, int t)
-        {
-
-            if (Math.Abs(MaxFlow + Excess(s)) > Double.Epsilon)
-            {
-                // System.err.println("Excess at source = " + Excess(G, s));
-                // System.err.println("Mas flow = " + Value);
-                return false;
-            }
-
-            if (Math.Abs(MaxFlow - Excess(t)) > Double.Epsilon)
-            {
-                //System.err.println("Excess at sink   = " + excess(G, t));
-                //System.err.println("Max flow         = " + value);
-                return false;
-            }
-
-            for (int v = 0; v < graph.NodeCount; v++)
-            {
-                if (v == s || v == t) continue;
-
-                if (Math.Abs(Excess(v)) > Double.Epsilon)
-                {
-                    //System.err.println("Net flow out of " + v + " doesn't equal zero");
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public bool InCut(int v)
-        {
-            return _marked[v];
-        }
-
         private bool HasAugmentingPath(int s, int t)
         {
-            _edgeTo = new FlowEdge[graph.NodeCount];
-            _marked = new bool[graph.NodeCount];
-
+            edgeTo = new FlowEdge[graph.NodeCount];
+            marked = new bool[graph.NodeCount];
+            //создаем очередь обрабатываемых узлов
             var queue = new Queue<int>();
+            //начинаем работу с узла-источника
             queue.Enqueue(s);
-            _marked[s] = true;
-            while (queue.Count > 0 && !_marked[t])
+            marked[s] = true;
+            while (queue.Count > 0 && !marked[t])
             {
-                var v = queue.Dequeue();
-
-                foreach (var e in graph.Nodes[v].AllEdges)
+                //достаем из очереди следующий узел для обработки
+                var u = queue.Dequeue();
+                //просматриаем все инцидентные узлу ребра
+                foreach (var e in graph.Nodes[u].AllEdges)
                 {
-                    var w = e.Other(v);
-
-                    if (e.ResidualCapacityTo(w) > 0)
+                    var v = e.Other(u);
+                    //проверяем, что ребро является допустимым и узел w не был посещен ранее
+                    if (e.ResidualCapacityTo(v) > 0 && !marked[v])
                     {
-                        if (!_marked[w])
-                        {
-                            _edgeTo[w] = e;
-                            _marked[w] = true;
-                            queue.Enqueue(w);
-                        }
+                        //сохраняем информацию, о том через какое ребро был посещен узел v
+                        edgeTo[v] = e;
+                        //помечаем узел, как почещенный
+                        marked[v] = true;
+                        //добавляем узел в очередь обрабатываемых узлов
+                        queue.Enqueue(v);
                     }
                 }
             }
-
-            return _marked[t];
+            //если узел-сток был посещен - увеличивающий был найден
+            return marked[t];
         }
-
 
     }
 }

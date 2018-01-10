@@ -1,0 +1,11 @@
+COMMENT : Weighted directed graph
+TYPE : Flow network
+SOURCE : 1
+TARGET : 3
+DIMENSION : 5
+EDGE_DATA_FORMAT : EDGE_LIST
+1 5 7
+5 2 7
+2 3 5
+2 4 2
+4 3 1

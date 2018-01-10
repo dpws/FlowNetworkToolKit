@@ -1,32 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Algorithm;
-using FlowNetworkToolKit.Core.Base.Network;
 
 namespace FlowNetworkToolKit.Algorithms
 {
     class Dinic : BaseMaxFlowAlgorithm
     {
         private int[] dist;
+
         public Dinic()
         {
             Name = "Dinic*";
-            Url = "";
-            Description =
-                @"";
-        }
-
-        public override string GetStats()
-        {
-            return "Some statisctics";
+            Url = "...";
+            Description = @"...";
         }
 
         protected override void Init()
         {
-           
+            dist = new int[graph.NodeCount];
         }
 
         protected override void Logic()
@@ -37,68 +28,88 @@ namespace FlowNetworkToolKit.Algorithms
         public void SearchMaxFlow()
         {
             double flow = 0;
-            dist = new int[graph.NodeCount];
+            //пока допустимо построение новой слоистой сети
             while (BFS(graph.Source, graph.Target))
             {
-                int[] ptr = new int[graph.NodeCount];
                 while (true)
                 {
-                    double df = DFS(ptr, graph.Target, graph.Source, Double.MaxValue);
-                    if (df == 0)
+                    //поиск увеличивающего пути в слоистой сети, увеличение потока вдоль сети
+                    double aug_flow = DFS(graph.Target, graph.Source, Double.MaxValue);
+                    //если увеличивающий путь не найден, выходим из цикла и перестраиваем слоистую сеть
+                    if (aug_flow == 0)
                         break;
-                    flow += df;
+                    //увеличиваем значение максимального потока
+                    flow += aug_flow;
                 }
             }
             MaxFlow = flow;
         }
 
-        private bool BFS(int s, int t) //BFS - finding nodes distances from source
+        private bool BFS(int s, int t) 
         {
             for (int i = 0; i < dist.Length; i++)
             {
                 dist[i] = -1;
             }
-            dist[s] = 0; //source layer (lvl) is 0
-
+            //источник находится в слое 0
+            dist[s] = 0;
+            //создаем очередь обрабатываемых узлов
             var queue = new Queue<int>();
+            //начинаем работу с узла-источника
             queue.Enqueue(s);
             while (queue.Count > 0)
-            {
-                var v = queue.Dequeue();
-
-                foreach (var e in graph.Nodes[v].AllEdges)
+            {                
+                //достаем из очереди следующий узел для обработки
+                var u = queue.Dequeue();
+                //просматриаем все инцидентные узлу ребра
+                foreach (var e in graph.Nodes[u].AllEdges)
                 {
-                    var w = e.Other(v);
-                    if (e.ResidualCapacityTo(w) > 0 && dist[w] < 0)
+                    var v = e.Other(u);
+                    //проверяем, что ребро является допустимым и узел v не приписан ни одному слою
+                    if (e.ResidualCapacityTo(v) > 0 && dist[v] < 0)
                     {
-                        dist[w] = dist[v] + 1;
-                        queue.Enqueue(w);
+                        //проставляем узлу v метку расстояния
+                        dist[v] = dist[u] + 1;
+                        //добавляем узел в очередь обрабатываемых узлов
+                        queue.Enqueue(v);
                     }
                 }
             }
+            //если узел-сток имеет метку расстояния - увеличивающий путь был найден
             return dist[t] > 0;
         }
 
-        private double DFS(int[] ptr, int dest, int u, double f)
+        private double DFS(int dest, int u, double f)
         {
+            //если достигнут сток возвращаем значение найденного блокирующего потока
             if (u == dest)
                 return f;
-            for (; ptr[u] < graph.Nodes[u].AllEdges.Count; ++ptr[u])
+            //просматриаем все инцидентные узлу ребра
+            foreach (var e in graph.Nodes[u].AllEdges)
             {
-                FlowEdge e = graph.Nodes[u].AllEdges[ptr[u]];
+                //если ребро является допустимым (входит в остаточную сеть)
                 if (dist[e.Other(u)] == dist[u] + 1 && e.ResidualCapacityTo(e.Other(u)) > 0)
                 {
-                    e.Mark();
-                    double df = DFS(ptr, dest, e.Other(u), Math.Min(f, e.ResidualCapacityTo(e.Other(u))));
+                    //вызов события отрисовки OnEdgeMarked
+                    e.Mark(); 
+                    //рекурсивно ищем путь до стока, параллельно рассчитывая пропускную способность пути delta
+                    double delta = DFS(dest, e.Other(u), Math.Min(f, e.ResidualCapacityTo(e.Other(u))));
+                    //вызов события отрисовки OnEdgeUnmarked
                     e.Unmark();
-                    if (df > 0)
+                    //если найден путь, по которому можно пропустить положительный поток
+                    if (delta > 0)
                     {
-                        e.AddFlow(df, e.Other(u));
-                        return df;
+                        //увеличиваем поток в ребре 
+                        e.AddFlow(delta, e.Other(u));
+                        //рекурсивно возвращаем пропускную способность пути
+                        return delta;
                     }
                 }
             }
+            //если увеличивающий путь не был найден возвращаем 0
             return 0;
         }
     }
 }
+
+
