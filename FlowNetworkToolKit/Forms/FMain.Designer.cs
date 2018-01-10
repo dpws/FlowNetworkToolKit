@@ -485,7 +485,6 @@ namespace FlowNetworkToolKit.Forms
             this.visualizationToolStripMenuItem.Name = "visualizationToolStripMenuItem";
             this.visualizationToolStripMenuItem.Size = new System.Drawing.Size(101, 23);
             this.visualizationToolStripMenuItem.Text = "Visualization";
-            this.visualizationToolStripMenuItem.Click += new System.EventHandler(this.visualizationToolStripMenuItem_Click);
             // 
             // mnVisualisationEnabled
             // 

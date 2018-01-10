@@ -79,7 +79,7 @@ namespace FlowNetworkToolKit.Forms
             {
                 AlgorithmInfo algo = Runtime.loadedAlghoritms.First(t => t.Index == mnAlghoritmList.SelectedIndex);
                 Log.Write($"Selected alghoritm: {algo.Name} ({algo.ClassName})");
-                Runtime.currentAlghoritm = algo;
+                Runtime.currentAlgorithm = algo;
             }
             catch (InvalidOperationException except)
             {
@@ -91,24 +91,19 @@ namespace FlowNetworkToolKit.Forms
 
         private void mnAlgorithmInfo_Click(object sender, EventArgs e)
         {
-            if (Runtime.currentAlghoritm == null)
+            if (Runtime.currentAlgorithm == null)
             {
                 Log.Write("Can't show algorithm, info. Can't determine selected algorithm.", Log.WARNING);
                 return;
             }
-            var aboutAlgorithmForm = new FAlgorithmInfo(Runtime.currentAlghoritm);
+            var aboutAlgorithmForm = new FAlgorithmInfo(Runtime.currentAlgorithm);
             aboutAlgorithmForm.ShowDialog();
-        }
-
-        private void visualizationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
        
 
         private void runWithoutVisualizationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Runtime.currentAlghoritm == null)
+            if (Runtime.currentAlgorithm == null)
             {
                 Log.Write("Can't determine selected algorithm.");
                 return;
@@ -118,9 +113,9 @@ namespace FlowNetworkToolKit.Forms
                 Log.Write("Please, load graph first.");
                 return;
             }
-            if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
+            if (Runtime.currentAlgorithm.Instance is BaseMaxFlowAlgorithm)
             {
-                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlgorithm.Instance.Clone();
                 algorithm.OnFinish += OnAlgorithmFinished;
                 algorithm.SetGraph(Runtime.currentGraph);
                 algorithm.RunAsync();
@@ -131,7 +126,7 @@ namespace FlowNetworkToolKit.Forms
 
         private void mnRunVisualization_Click(object sender, EventArgs e)
         {
-            if (Runtime.currentAlghoritm == null)
+            if (Runtime.currentAlgorithm == null)
             {
                 Log.Write("Can't determine selected algorithm.");
                 return;
@@ -141,10 +136,10 @@ namespace FlowNetworkToolKit.Forms
                 Log.Write("Please, load graph first.");
                 return;
             }
-            if (Runtime.currentAlghoritm.Instance is BaseMaxFlowAlgorithm)
+            if (Runtime.currentAlgorithm.Instance is BaseMaxFlowAlgorithm)
             {
                 //Clone selected algorithm. Won't write algorithm reset method
-                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlghoritm.Instance.Clone();
+                BaseMaxFlowAlgorithm algorithm = Runtime.currentAlgorithm.Instance.Clone();
                 Animator algorithmAnimator = new Animator();
                 algorithmAnimator.OnAnimationTick += Visualizer.GetAnimation;
 
@@ -167,7 +162,7 @@ namespace FlowNetworkToolKit.Forms
 
                 algorithm.OnFinish += flowAlgorithm =>
                 {
-                    algorithmAnimator.AlgoritmFInished = true;
+                    algorithmAnimator.AlgorithmFinished = true;
                     
                 };
 
@@ -260,7 +255,7 @@ namespace FlowNetworkToolKit.Forms
                 
             }
 
-            if (Runtime.currentAlghoritm != null)
+            if (Runtime.currentAlgorithm != null)
             {
                 mnAlgorithmInfo.Visible = true;
                 if (Runtime.currentGraph != null && Runtime.currentGraph.Source != -1 && Runtime.currentGraph.Target != -1)

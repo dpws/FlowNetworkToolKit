@@ -12,8 +12,8 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 {
     public class Animator
     {
-        public int Delay = 300; //Delay between animation steps in ms
-        public bool AlgoritmFInished = false;
+        public int Delay = 50; //Delay between animation steps in ms
+        public bool AlgorithmFinished = false;
         private Timer AnimationStepTimer;
 
         private Queue<Animation> Animations = new Queue<Animation>();
@@ -34,7 +34,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
             }
             else
             {
-                if (AlgoritmFInished)
+                if (AlgorithmFinished)
                 {
                     Stop();
                 }
