@@ -181,7 +181,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="AlgorithmDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
+    <None Include="HelpersDiagram.cd" />
     <None Include="Interface diagram.cd" />
     <None Include="NetworkDiagram.cd" />
     <None Include="Properties\Settings.settings">

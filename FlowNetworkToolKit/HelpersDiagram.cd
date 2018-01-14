@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FlowNetworkToolKit.Core.Utils.Importer.Importer">
+    <Position X="3" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAIAAAAAAAAAAAAAAACAAAAAAAABA=</HashCode>
+      <FileName>Core\Utils\Importer\Importer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Loader.AlgorithmInfo">
+    <Position X="3" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAAAAAAAAAAQAAAAAAAAASAEAAAAAAAA=</HashCode>
+      <FileName>Core\Utils\Loader\AlgorithmInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Loader.AlgorithmLoader">
+    <Position X="3" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAA=</HashCode>
+      <FileName>Core\Utils\Loader\AlgorithmLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Logger.Log">
+    <Position X="8" Y="0.75" Width="2" />
+    <NestedTypes>
+      <Delegate Name="FlowNetworkToolKit.Core.Utils.Logger.Log.MessageAdded" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Utils\Logger\Log.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CEAAAAABABAAAAAIAAAAGAAQAAAAgEAAAAACBAEAAAA=</HashCode>
+      <FileName>Core\Utils\Logger\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.RuntimeManipulations">
+    <Position X="5.5" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CIAAgQAgAAAAAAAAACAAAAACAAAAAAgAAAAAAAAAABA=</HashCode>
+      <FileName>Core\Utils\Visualizer\RuntimeManipulations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Runtime">
+    <Position X="5.5" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAIAAQAAAAAAQgAAACAACAAAAAAggAAAQABAA=</HashCode>
+      <FileName>Core\Runtime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="FlowNetworkToolKit.Core.Utils.Logger.LogItem">
+    <Position X="8" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAACBAAAAIAAAAQA=</HashCode>
+      <FileName>Core\Utils\Logger\LogItem.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
