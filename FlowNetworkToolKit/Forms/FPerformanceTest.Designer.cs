@@ -31,16 +31,17 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cblAlgorithms = new System.Windows.Forms.CheckedListBox();
             this.dgTestResults = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnRun = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.udRunsCount = new System.Windows.Forms.NumericUpDown();
             this.algorithm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxflow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.runs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mintime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxtime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.avgtime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.udRunsCount = new System.Windows.Forms.NumericUpDown();
+            this.btnGetStats = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -99,8 +100,45 @@
             this.dgTestResults.Size = new System.Drawing.Size(813, 435);
             this.dgTestResults.TabIndex = 0;
             // 
+            // algorithm
+            // 
+            this.algorithm.HeaderText = "Algorithm";
+            this.algorithm.Name = "algorithm";
+            this.algorithm.ReadOnly = true;
+            // 
+            // maxflow
+            // 
+            this.maxflow.HeaderText = "Max Flow";
+            this.maxflow.Name = "maxflow";
+            this.maxflow.ReadOnly = true;
+            // 
+            // runs
+            // 
+            this.runs.HeaderText = "Runs";
+            this.runs.Name = "runs";
+            this.runs.ReadOnly = true;
+            // 
+            // mintime
+            // 
+            this.mintime.HeaderText = "Minimum time";
+            this.mintime.Name = "mintime";
+            this.mintime.ReadOnly = true;
+            // 
+            // maxtime
+            // 
+            this.maxtime.HeaderText = "Maximum time";
+            this.maxtime.Name = "maxtime";
+            this.maxtime.ReadOnly = true;
+            // 
+            // avgtime
+            // 
+            this.avgtime.HeaderText = "Average time";
+            this.avgtime.Name = "avgtime";
+            this.avgtime.ReadOnly = true;
+            // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnGetStats);
             this.panel1.Controls.Add(this.btnRun);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.udRunsCount);
@@ -158,41 +196,15 @@
             0,
             0});
             // 
-            // algorithm
+            // btnGetStats
             // 
-            this.algorithm.HeaderText = "Algorithm";
-            this.algorithm.Name = "algorithm";
-            this.algorithm.ReadOnly = true;
-            // 
-            // maxflow
-            // 
-            this.maxflow.HeaderText = "Max Flow";
-            this.maxflow.Name = "maxflow";
-            this.maxflow.ReadOnly = true;
-            // 
-            // runs
-            // 
-            this.runs.HeaderText = "Runs";
-            this.runs.Name = "runs";
-            this.runs.ReadOnly = true;
-            // 
-            // mintime
-            // 
-            this.mintime.HeaderText = "Minimum time";
-            this.mintime.Name = "mintime";
-            this.mintime.ReadOnly = true;
-            // 
-            // maxtime
-            // 
-            this.maxtime.HeaderText = "Maximum time";
-            this.maxtime.Name = "maxtime";
-            this.maxtime.ReadOnly = true;
-            // 
-            // avgtime
-            // 
-            this.avgtime.HeaderText = "Average time";
-            this.avgtime.Name = "avgtime";
-            this.avgtime.ReadOnly = true;
+            this.btnGetStats.Location = new System.Drawing.Point(783, 12);
+            this.btnGetStats.Name = "btnGetStats";
+            this.btnGetStats.Size = new System.Drawing.Size(75, 23);
+            this.btnGetStats.TabIndex = 10;
+            this.btnGetStats.Text = "...";
+            this.btnGetStats.UseVisualStyleBackColor = true;
+            this.btnGetStats.Click += new System.EventHandler(this.btnGetStats_Click);
             // 
             // FPerformanceTest
             // 
@@ -233,5 +245,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mintime;
         private System.Windows.Forms.DataGridViewTextBoxColumn maxtime;
         private System.Windows.Forms.DataGridViewTextBoxColumn avgtime;
+        private System.Windows.Forms.Button btnGetStats;
     }
 }

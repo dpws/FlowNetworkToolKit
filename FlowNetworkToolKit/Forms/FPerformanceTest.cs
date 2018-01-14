@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Windows.Forms;
 using FlowNetworkToolKit.Core;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Utils;
+using FlowNetworkToolKit.Core.Utils.Logger;
 
 namespace FlowNetworkToolKit.Forms
 {
@@ -64,6 +66,24 @@ namespace FlowNetworkToolKit.Forms
                         item.Value.Max, item.Value.Avg);
                 }
             }
+        }
+
+        private void btnGetStats_Click(object sender, EventArgs e)
+        {
+            var rootDir = new DirectoryInfo("E:\\wash\\test_sets");
+            foreach (var workDir in rootDir.GetDirectories())
+            {
+                Log.Write($"Processing {workDir.Name}");
+                foreach (var setDir in workDir.GetDirectories())
+                {
+                    Log.Write($"    Processing {setDir.Name}");
+                    foreach (var networkFile in setDir.GetFiles())
+                    {
+                        Log.Write($"        Processing {networkFile.Name}");
+                    }
+                }
+            }
+
         }
     }
 }
