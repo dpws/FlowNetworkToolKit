@@ -182,7 +182,7 @@ namespace FlowNetworkToolKit.Forms
             }
         }
 
-
+        
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dlgImportFile.ShowDialog() == DialogResult.OK)
@@ -222,7 +222,7 @@ namespace FlowNetworkToolKit.Forms
         {
             if (Runtime.currentGraph == null) return;
             var Form = new FPerformanceTest();
-            Form.ShowDialog();
+            Form.Show();
         }
 
         public new void Invalidate()
