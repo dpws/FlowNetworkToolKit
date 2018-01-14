@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FlowNetworkToolKit.Algorithms
 {
-    class HLPR : BaseMaxFlowAlgorithm
+    class HLPR_gap : BaseMaxFlowAlgorithm
     {
         //The highest-label push–relabel algorithm[11] organizes all nodes into buckets indexed by their labels. 
         //The algorithm always selects an active node with the largest label to discharge.
@@ -17,9 +17,9 @@ namespace FlowNetworkToolKit.Algorithms
         List<List<int>> Bucket = new List<List<int>>(); //buckets
         int b;
 
-        public HLPR()
+        public HLPR_gap()
         {
-            Name = "HLPR";
+            Name = "HLPR_gap";
             Url = "";
             Description = @"";
         }
@@ -183,18 +183,18 @@ namespace FlowNetworkToolKit.Algorithms
             //если избыток в узле все еще положителен
             if (excess[v] > 0)
             {
-                ////если текущий узел последний на данной высоте
-                //if (count[height[v]] == 1)
-                //{
-                //    //перестанавливаем метки узлов, расположенных выше 
-                //    //текущей высоты до максимального значения
-                //    Gap(height[v]);
-                //}
-                //else
-                //{
+                //если текущий узел последний на данной высоте
+                if (count[height[v]] == 1)
+                {
+                    //перестанавливаем метки узлов, расположенных выше 
+                    //текущей высоты до максимального значения
+                    Gap(height[v]);
+                }
+                else
+                {
                     //поднимаем вершину
                     Relabel(v);
-                //}
+                }
             }
         }
 

@@ -10,7 +10,7 @@ namespace FlowNetworkToolKit.Algorithms
 
         public Dinic()
         {
-            Name = "Dinic*";
+            Name = "Dinic";
             Url = "...";
             Description = @"...";
         }
