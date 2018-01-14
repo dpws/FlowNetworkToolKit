@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<flow-network>
+  <source>0</source>
+  <target>7</target>
+  <edges>
+    <edge from="0" to="1" capacity="7" />
+    <edge from="0" to="2" capacity="10" />
+    <edge from="1" to="3" capacity="6" />
+    <edge from="1" to="4" capacity="5" />
+    <edge from="2" to="5" capacity="10" />
+    <edge from="3" to="6" capacity="6" />
+    <edge from="5" to="4" capacity="5" />
+    <edge from="4" to="7" capacity="5" />
+    <edge from="6" to="7" capacity="6" />
+  </edges>
+  <node-positions>
+    <node id="0" x="0" y="120" />
+    <node id="1" x="136" y="120" />
+    <node id="2" x="89" y="217" />
+    <node id="3" x="218" y="25" />
+    <node id="4" x="265" y="121" />
+    <node id="5" x="215" y="216" />
+    <node id="6" x="332" y="25" />
+    <node id="7" x="401" y="119" />
+  </node-positions>
+</flow-network>

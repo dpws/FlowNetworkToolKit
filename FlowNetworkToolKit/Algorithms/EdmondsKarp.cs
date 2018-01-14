@@ -47,6 +47,7 @@ namespace FlowNetworkToolKit.Algorithms
                 for (var u = graph.Target; u != graph.Source; u = edgeTo[u].Other(u))
                 {
                     edgeTo[u].AddFlow(bottle, u);
+                    Console.WriteLine("pushflow " + edgeTo[u].ToString()+" flow "+ bottle);
                 }
 
                 MaxFlow += bottle;
@@ -74,12 +75,15 @@ namespace FlowNetworkToolKit.Algorithms
                     //проверяем, что ребро является допустимым и узел w не был посещен ранее
                     if (e.ResidualCapacityTo(v) > 0 && !marked[v])
                     {
+                        Console.WriteLine("touch " + e.ToString());
+                        Console.WriteLine("mark " + v);
                         //сохраняем информацию, о том через какое ребро был посещен узел v
                         edgeTo[v] = e;
                         //помечаем узел, как почещенный
                         marked[v] = true;
                         //добавляем узел в очередь обрабатываемых узлов
                         queue.Enqueue(v);
+                       
                     }
                 }
             }
