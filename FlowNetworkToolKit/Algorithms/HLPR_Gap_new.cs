@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FlowNetworkToolKit.Algorithms
 {
-    class HLPR : BaseMaxFlowAlgorithm
+    class HLPR_Gap_new : BaseMaxFlowAlgorithm
     {
         //The highest-label push–relabel algorithm[11] organizes all nodes into buckets indexed by their labels. 
         //The algorithm always selects an active node with the largest label to discharge.
@@ -17,9 +17,9 @@ namespace FlowNetworkToolKit.Algorithms
         Dictionary<int,List<int>> Bucket = new Dictionary<int,List<int>>(); //buckets
         int b;
 
-        public HLPR()
+        public HLPR_Gap_new()
         {
-            Name = "HLPR";
+            Name = "HLPR_Gap_new";
             Url = "";
             Description = @"";
         }
@@ -63,6 +63,9 @@ namespace FlowNetworkToolKit.Algorithms
                 Enq(e.Other(graph.Source));
             }
             height[graph.Source] = graph.NodeCount;
+            //if (!count.ContainsKey(graph.NodeCount))
+                count.Add(graph.NodeCount, 1);
+
             //все узлы находятся на высоте 0
             count.Add(0, graph.NodeCount);
             //count[0] = graph.NodeCount;
@@ -136,14 +139,14 @@ namespace FlowNetworkToolKit.Algorithms
         private void Gap(int k)
         {
             //просматриваем все узлы
-            for (int v = 0; v < graph.NodeCount; v++)
+            for (int v = 1; v < graph.NodeCount; v++)
                 //если узел выше промежутка 
                 if (height[v] >= k)
                 {
                     //уменьшаем количество узлов в старой высоте
                     count[height[v]]--;
                     //обновляем метку высоты
-                    height[v] = Math.Max(height[v], graph.NodeCount);
+                    height[v] = Math.Max(height[v], graph.NodeCount+1);
                     //увеличиваем количество узлов в новой высоте
                     if (!count.ContainsKey(height[v]))
                         count.Add(height[v], 0);
@@ -155,6 +158,7 @@ namespace FlowNetworkToolKit.Algorithms
 
         private void Relabel(int v)
         {
+            var oldheight = height[v];
             //уменьшаем количество вершин в текущей высоте
             count[height[v]]--;
             //устанавливаем максимально возможную высоту
@@ -177,6 +181,8 @@ namespace FlowNetworkToolKit.Algorithms
             count[height[v]]++;
             //добавляем в Bucket поднятый узел
             Enq(v);
+            if (count[oldheight] == 0)
+                Gap(oldheight);
         }
 
         private void Discharge(int v)
@@ -201,11 +207,11 @@ namespace FlowNetworkToolKit.Algorithms
                 ////если текущий узел последний на данной высоте
                 //if (count[height[v]] == 1)
                 //{
-                //    //перестанавливаем метки узлов, расположенных выше 
-                //    //текущей высоты до максимального значения
-                //    Gap(height[v]);
+                    //перестанавливаем метки узлов, расположенных выше 
+                    //текущей высоты до максимального значения
+                    //Gap(height[v]);
                 //}
-                //else
+               // else
                 //{
                     //поднимаем вершину
                     Relabel(v);
