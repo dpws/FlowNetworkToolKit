@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Visualizer">
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Visualizer" Collapsed="true">
     <Position X="3" Y="2" Width="3" />
     <NestedTypes>
       <Delegate Name="FlowNetworkToolKit.Core.Utils.Visualizer.Visualizer.RedrawRequired" Collapsed="true">
@@ -14,14 +14,14 @@
       <FileName>Core\Utils\Visualizer\Visualizer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.FlowEdgeState">
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.FlowEdgeState" Collapsed="true">
     <Position X="8.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAQQAAAAAIAAQA=</HashCode>
       <FileName>Core\Utils\Visualizer\FlowEdgeState.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animator">
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animator" Collapsed="true">
     <Position X="6.25" Y="2" Width="2.25" />
     <NestedTypes>
       <Delegate Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animator.AnimationTick" Collapsed="true">
@@ -45,15 +45,15 @@
       <FileName>Core\Utils\Visualizer\Animator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animation">
-    <Position X="6.25" Y="6.75" Width="2.25" />
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animation" Collapsed="true">
+    <Position X="6.25" Y="2.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQAAAAAAAAA=</HashCode>
       <FileName>Core\Utils\Visualizer\Animation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="FlowNetworkToolKit.Core.Utils.Visualizer.AnimationType">
-    <Position X="6.25" Y="8.75" Width="2.25" />
+  <Enum Name="FlowNetworkToolKit.Core.Utils.Visualizer.AnimationType" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Core\Utils\Visualizer\Animation.cs</FileName>

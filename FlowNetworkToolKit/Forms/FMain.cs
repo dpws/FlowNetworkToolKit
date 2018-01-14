@@ -595,5 +595,10 @@ namespace FlowNetworkToolKit.Forms
         {
             Runtime.StopAnimation = true;
         }
+
+        private void mnRunAlghoritm_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

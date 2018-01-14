@@ -10,7 +10,7 @@ namespace FlowNetworkToolKit.Algorithms
 
         public Dinic()
         {
-            Name = "Dinic*";
+            Name = "Dinic";
             Url = "...";
             Description = @"...";
         }
@@ -68,10 +68,15 @@ namespace FlowNetworkToolKit.Algorithms
                     //проверяем, что ребро является допустимым и узел v не приписан ни одному слою
                     if (e.ResidualCapacityTo(v) > 0 && dist[v] < 0)
                     {
+                        e.Mark();
                         //проставляем узлу v метку расстояния
+                        Console.WriteLine("touch " + e.ToString());
+                        
                         dist[v] = dist[u] + 1;
+                        Console.WriteLine("dist " + v + " = " + dist[v]);
                         //добавляем узел в очередь обрабатываемых узлов
                         queue.Enqueue(v);
+                        e.Unmark();
                     }
                 }
             }
@@ -91,7 +96,9 @@ namespace FlowNetworkToolKit.Algorithms
                 if (dist[e.Other(u)] == dist[u] + 1 && e.ResidualCapacityTo(e.Other(u)) > 0)
                 {
                     //вызов события отрисовки OnEdgeMarked
-                    e.Mark(); 
+                    e.Mark();
+                    Console.WriteLine("touch " + e.ToString());
+
                     //рекурсивно ищем путь до стока, параллельно рассчитывая пропускную способность пути delta
                     double delta = DFS(dest, e.Other(u), Math.Min(f, e.ResidualCapacityTo(e.Other(u))));
                     //вызов события отрисовки OnEdgeUnmarked
@@ -101,6 +108,7 @@ namespace FlowNetworkToolKit.Algorithms
                     {
                         //увеличиваем поток в ребре 
                         e.AddFlow(delta, e.Other(u));
+                        Console.WriteLine("pushflow " + e.ToString()+ " "+ delta);
                         //рекурсивно возвращаем пропускную способность пути
                         return delta;
                     }

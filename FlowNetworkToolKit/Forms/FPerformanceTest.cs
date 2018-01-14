@@ -23,7 +23,10 @@ namespace FlowNetworkToolKit.Forms
             cblAlgorithms.Items.Clear();
             foreach (var algo in Runtime.loadedAlghoritms)
             {
-                cblAlgorithms.Items.Add(algo.Name, true);
+                if (String.Equals(algo.Name, "Dinic")|| String.Equals(algo.Name, "EdmondsKarp")|| String.Equals(algo.Name, "HLPR") || String.Equals(algo.Name, "HLPR_gap"))
+                    cblAlgorithms.Items.Add(algo.Name, true);
+                else
+                    cblAlgorithms.Items.Add(algo.Name, false);
             }
         }
 
@@ -62,8 +65,8 @@ namespace FlowNetworkToolKit.Forms
             {
                 foreach (var item in tester.items)
                 {
-                    dgTestResults.Rows.Add(item.Value.Name, item.Value.MaxFlow, item.Value.Runs, item.Value.Min,
-                        item.Value.Max, item.Value.Avg);
+                    dgTestResults.Rows.Add(item.Value.Name, item.Value.MaxFlow, item.Value.Runs, item.Value.Min.TotalSeconds,
+                        item.Value.Max.TotalSeconds, item.Value.Avg.TotalSeconds);
                 }
             }
         }

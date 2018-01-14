@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FlowNetworkToolKit.Algorithms.Dinic" Collapsed="true">
+    <Position X="21.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAABBQAAAAAAAAAAAACACAAAAAAA=</HashCode>
+      <FileName>Algorithms\Dinic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Algorithms.EdmondsKarp" Collapsed="true">
+    <Position X="23.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAABAgAAQAAAAAAAAAAAACACAAAAAAA=</HashCode>
+      <FileName>Algorithms\EdmondsKarp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Algorithms.HLPR" Collapsed="true">
+    <Position X="25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIAAAAAQAACAAQABAAAQAAAAAAAAAAAASAiIAAICAA=</HashCode>
+      <FileName>Algorithms\HLPR.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Algorithm.BaseMaxFlowAlgorithm" Collapsed="true">
+    <Position X="23.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQoAACAgBAAAMAACAAQACQAACQIACCACAAIBRBM=</HashCode>
+      <FileName>Core\Base\Algorithm\BaseMaxFlowAlgorithm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Exceptions.FLowNetworkValidationException" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Base\Exceptions\FlowNetworkValidationException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Exceptions.InvalidConfigurationException" Collapsed="true">
+    <Position X="26.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Base\Exceptions\InvalidConfigurationException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Exceptions.InvalidFlowException" Collapsed="true">
+    <Position X="26.5" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Base\Exceptions\InvalidFlowException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Network.FlowEdge" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAAAEAAACAARAAEgAAAgABCASIIQIAQAACIAAAAAIA=</HashCode>
+      <FileName>Core\Base\Network\FlowEdge.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Network.FlowNetwork" Collapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIggABAAmSAAAAECAAQACAUQSAEAAACABAAAAAEAAE=</HashCode>
+      <FileName>Core\Base\Network\FlowNetwork.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Base.Network.FlowNode" Collapsed="true">
+    <Position X="19.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAhCAAAAAAgAAAAAABAAAECAAAAAAA=</HashCode>
+      <FileName>Core\Base\Network\FlowNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Runtime" Collapsed="true">
+    <Position X="17.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAIAAQAAAAAAQgAAACAACAAAAAAggAAAQABAA=</HashCode>
+      <FileName>Core\Runtime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Importer.Importer" Collapsed="true">
+    <Position X="17" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAIAAAAAAAAAAAAAAACAAAAAAAABA=</HashCode>
+      <FileName>Core\Utils\Importer\Importer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.ListExtensions.ListExtensions" Collapsed="true">
+    <Position X="26.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Core\Utils\ListExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Loader.AlgorithmInfo" Collapsed="true">
+    <Position X="19.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAAAAAAAAAAQAAAAAAAAASAEAAAAAAAA=</HashCode>
+      <FileName>Core\Utils\Loader\AlgorithmInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Loader.AlgorithmLoader" Collapsed="true">
+    <Position X="17" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAA=</HashCode>
+      <FileName>Core\Utils\Loader\AlgorithmLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Logger.Log" Collapsed="true">
+    <Position X="17" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAAAABABAAAAAIAAAAGAAQAAAAgEAAAAACBAEAAAA=</HashCode>
+      <FileName>Core\Utils\Logger\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.PerformanceCounter" Collapsed="true">
+    <Position X="19.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Utils\PerformanceCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animation" Collapsed="true">
+    <Position X="23" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Core\Utils\Visualizer\Animation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Animator" Collapsed="true">
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAEAABABEAAAAAEAgAQAAAIAAAAIAQAAAAACAI=</HashCode>
+      <FileName>Core\Utils\Visualizer\Animator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.FlowEdgeState" Collapsed="true">
+    <Position X="23" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAQQAAAAAIAAQA=</HashCode>
+      <FileName>Core\Utils\Visualizer\FlowEdgeState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.RuntimeManipulations" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CIAAgQAgAAAAAAAAACAAAAACAAAAAAgAAAAAAAAAABA=</HashCode>
+      <FileName>Core\Utils\Visualizer\RuntimeManipulations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Core.Utils.Visualizer.Visualizer" Collapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAABgiAwIACBAEggAYEQjAAo0KAAAQBACARIgQAgAA=</HashCode>
+      <FileName>Core\Utils\Visualizer\Visualizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Forms.FAbout" Collapsed="true">
+    <Position X="15.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\FAbout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Forms.FAlgorithmInfo" Collapsed="true">
+    <Position X="15.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAICAAAAAAAAiAIAACAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Forms\FAlgorithmInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Forms.FError" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAACAAAACABABQAAEAICAAAAAAAA=</HashCode>
+      <FileName>Forms\FError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Forms.FLog" Collapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACCAAAAAAAACAAAACAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Forms\FLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Forms.FMain" Collapsed="true">
+    <Position X="15.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BchhAL9/mChAMAMDQAWATQFyoChCEBAYoMAEOAEgMSM=</HashCode>
+      <FileName>Forms\FMain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Forms.FPerformanceTest" Collapsed="true">
+    <Position X="15.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAARgCAAABAAABCAAAACEAAAAQAAAACAAUIAhBA=</HashCode>
+      <FileName>Forms\FPerformanceTest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Program" Collapsed="true">
+    <Position X="14" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlowNetworkToolKit.Properties.Resources" Collapsed="true">
+    <Position X="26.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIQAERoEFAAAAAAZEAAAAwSAMKAAAAEICAgAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="FlowNetworkToolKit.Core.Utils.Logger.LogItem" Collapsed="true">
+    <Position X="18.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAACBAAAAIAAAAQA=</HashCode>
+      <FileName>Core\Utils\Logger\LogItem.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FlowNetworkToolKit.Core.Utils.AlgorithmPerformance" Collapsed="true">
+    <Position X="19.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAAAAABAAEAAAEAAAAAQAAAAAAAAAAAAAIAIAAAA=</HashCode>
+      <FileName>Core\Utils\PerformanceCounter.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="FlowNetworkToolKit.Core.Utils.Visualizer.AnimationType" Collapsed="true">
+    <Position X="23" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Core\Utils\Visualizer\Animation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
