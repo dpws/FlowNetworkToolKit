@@ -13,7 +13,6 @@ namespace FlowNetworkToolKit.Core.Base.Network
     {
 
         #region Events
-
         public delegate void FlowNetworkCreated(FlowNetwork sender);
         public delegate void EdgeAdded(FlowNetwork sender, FlowEdge edge);
         public delegate void EdgeFlowChanged(FlowNetwork sender, FlowEdge edge);

@@ -2,10 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Utils.Logger;
 
@@ -13,9 +10,7 @@ namespace FlowNetworkToolKit.Core.Utils.Loader
 {
     class AlgorithmLoader
     {
-        public AlgorithmLoader()
-        {
-        }
+       
         public List<AlgorithmInfo> LoadFromSource(DirectoryInfo directory)
         {
             var list = new List<AlgorithmInfo>();
@@ -86,8 +81,6 @@ namespace FlowNetworkToolKit.Core.Utils.Loader
             cp.TreatWarningsAsErrors = false;
 
             cp.ReferencedAssemblies.Add("System.Core.dll");
-            //cp.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GraphToolKit.Core.dll"));
-            //cp.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GraphToolKit.Alghoritms.dll"));
 
 
             var cr = provider.CompileAssemblyFromFile(cp, sourceFile.FullName);
