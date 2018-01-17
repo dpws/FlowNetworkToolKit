@@ -93,7 +93,7 @@
     <Compile Include="Algorithms\EdmondsKarp.cs" />
     <Compile Include="Algorithms\GoldbergRao.cs" />
     <Compile Include="Algorithms\GoldbergTarjan.cs" />
-    <Compile Include="Algorithms\HLPR_Gap_new.cs" />
+    <Compile Include="Algorithms\HLPR_G.cs" />
     <Compile Include="Algorithms\HLPR.cs" />
     <Compile Include="Algorithms\HLPR_gap.cs" />
     <Compile Include="Algorithms\RelabelToFront.cs" />
@@ -183,6 +183,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="AlgorithmDiagram.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="HelpersDiagram.cd" />
     <None Include="Interface diagram.cd" />
     <None Include="NetworkDiagram.cd" />

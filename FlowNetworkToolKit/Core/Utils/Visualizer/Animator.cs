@@ -12,7 +12,7 @@ namespace FlowNetworkToolKit.Core.Utils.Visualizer
 {
     public class Animator
     {
-        public int Delay = 50; //Delay between animation steps in ms
+        public int Delay = 5; //Delay between animation steps in ms
         public bool AlgorithmFinished = false;
         private Timer AnimationStepTimer;
 

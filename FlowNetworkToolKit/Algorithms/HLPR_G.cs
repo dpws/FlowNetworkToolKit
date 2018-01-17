@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FlowNetworkToolKit.Algorithms
 {
-    class HLPR_Gap_new : BaseMaxFlowAlgorithm
+    class HLPR_G : BaseMaxFlowAlgorithm
     {
         //The highest-label push–relabel algorithm[11] organizes all nodes into buckets indexed by their labels. 
         //The algorithm always selects an active node with the largest label to discharge.
@@ -16,19 +16,16 @@ namespace FlowNetworkToolKit.Algorithms
         bool[] active;
         Dictionary<int,List<int>> Bucket = new Dictionary<int,List<int>>(); //buckets
         int b;
-
-        public HLPR_Gap_new()
+        public HLPR_G()
         {
-            Name = "HLPR_Gap_new";
+            Name = "HLPR_G";
             Url = "";
             Description = @"";
         }
-
         protected override void Init()
         {
             excess = new double[graph.NodeCount];
             height = new int[graph.NodeCount+2];
-           
             active = new bool[graph.NodeCount];
             Bucket = new Dictionary<int, List<int>>();
             count = new Dictionary<int, int>();
@@ -41,8 +38,6 @@ namespace FlowNetworkToolKit.Algorithms
                 
             }
             height[graph.NodeCount] = 0;
-
-            
             b = 0;
         }
 
@@ -68,9 +63,6 @@ namespace FlowNetworkToolKit.Algorithms
 
             //все узлы находятся на высоте 0
             count.Add(0, graph.NodeCount);
-            //count[0] = graph.NodeCount;
-            //добавляем источник в Bucket
-            //Enq(graph.Source);
             //помечаем узел стока активным
             active[graph.Target] = true;
             //пока текущая рабочая высота неотрицательна (Bucket содержит активные узлы)
@@ -122,8 +114,6 @@ namespace FlowNetworkToolKit.Algorithms
             {
                 //проталкиваем поток в ребро
                 e.AddFlow(f, e.Other(from));
-                Console.WriteLine("pushflow " + e.ToString());
-                Console.WriteLine("hf " + f);
                 //обновляем избыток в узлах ребра
                 excess[e.Other(from)] += f;
                 excess[from] -= f;
@@ -165,16 +155,11 @@ namespace FlowNetworkToolKit.Algorithms
             height[v] = int.MaxValue;//graph.NodeCount;
             //просматриваем все инцидентные v ребра
             foreach (var e in graph.Nodes[v].AllEdges)
-            {
                 //если ребро допустимо
                 if (e.ResidualCapacityTo(e.Other(v)) > 0)
-                {
                     //обновляем метку высоты v
                     height[v] = Math.Min(height[v], height[e.Other(v)] + 1);
-
-                }
-            }
-            Console.WriteLine("relabel " + v +" h=" + height[v]);
+          //  Console.WriteLine("relabel " + v +" h=" + height[v]);
             //увеличиваем количество вершин в новой высоте
             if (!count.ContainsKey(height[v]))
                 count.Add(height[v], 0);
@@ -192,31 +177,14 @@ namespace FlowNetworkToolKit.Algorithms
             {
                 //если избыток в узле положителен
                 if (excess[v] > 0)
-                {
                     //проталкиваем поток
                     Push(e, v);
-                }
                 else
-                {
                     break;
-                }
             }
             //если избыток в узле все еще положителен
             if (excess[v] > 0)
-            {
-                ////если текущий узел последний на данной высоте
-                //if (count[height[v]] == 1)
-                //{
-                    //перестанавливаем метки узлов, расположенных выше 
-                    //текущей высоты до максимального значения
-                    //Gap(height[v]);
-                //}
-               // else
-                //{
-                    //поднимаем вершину
-                    Relabel(v);
-                //}
-            }
+                Relabel(v);
         }
 
     }

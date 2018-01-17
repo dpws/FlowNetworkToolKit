@@ -12,7 +12,7 @@ namespace FlowNetworkToolKit.Algorithms
 
         public EdmondsKarp()
         {
-            Name = "EdmondsKarp";
+            Name = "EK";
             Url = "https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%AD%D0%B4%D0%BC%D0%BE%D0%BD%D0%B4%D1%81%D0%B0_%E2%80%94_%D0%9A%D0%B0%D1%80%D0%BF%D0%B0";
             Description =
                 @"Алгоритм Эдмондса—Карпа — это вариант алгоритма Форда—Фалкерсона, при котором на каждом шаге выбирают кратчайший дополняющий путь из источника в сток в остаточной сети (полагая, что каждое ребро имеет единичную длину). Кратчайший путь находится поиском в ширину.";
@@ -47,7 +47,7 @@ namespace FlowNetworkToolKit.Algorithms
                 for (var u = graph.Target; u != graph.Source; u = edgeTo[u].Other(u))
                 {
                     edgeTo[u].AddFlow(bottle, u);
-                    Console.WriteLine("pushflow " + edgeTo[u].ToString()+" flow "+ bottle);
+                    //Console.WriteLine("pushflow " + edgeTo[u].ToString()+" flow "+ bottle);
                 }
 
                 MaxFlow += bottle;
@@ -75,8 +75,8 @@ namespace FlowNetworkToolKit.Algorithms
                     //проверяем, что ребро является допустимым и узел w не был посещен ранее
                     if (e.ResidualCapacityTo(v) > 0 && !marked[v])
                     {
-                        Console.WriteLine("touch " + e.ToString());
-                        Console.WriteLine("mark " + v);
+                       // Console.WriteLine("touch " + e.ToString());
+                        //Console.WriteLine("mark " + v);
                         //сохраняем информацию, о том через какое ребро был посещен узел v
                         edgeTo[v] = e;
                         //помечаем узел, как почещенный

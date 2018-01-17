@@ -53,7 +53,6 @@ namespace FlowNetworkToolKit.Algorithms
 
         public void SearchMaxFlow()
         {
-            //Bucket.Add(0, new List<int>());
             //увеличиваем избыток в источнике
             foreach (var e in graph.Nodes[graph.Source].AllEdges) 
             {
@@ -65,9 +64,6 @@ namespace FlowNetworkToolKit.Algorithms
             height[graph.Source] = graph.NodeCount;
             //все узлы находятся на высоте 0
             count.Add(0, graph.NodeCount);
-            //count[0] = graph.NodeCount;
-            //добавляем источник в Bucket
-            //Enq(graph.Source);
             //помечаем узел стока активным
             active[graph.Target] = true;
             //пока текущая рабочая высота неотрицательна (Bucket содержит активные узлы)
@@ -119,8 +115,6 @@ namespace FlowNetworkToolKit.Algorithms
             {
                 //проталкиваем поток в ребро
                 e.AddFlow(f, e.Other(from));
-                Console.WriteLine("pushflow " + e.ToString());
-                Console.WriteLine("hf " + f);
                 //обновляем избыток в узлах ребра
                 excess[e.Other(from)] += f;
                 excess[from] -= f;
@@ -128,29 +122,6 @@ namespace FlowNetworkToolKit.Algorithms
                 if(e.Other(from)!=graph.Source)
                     Enq(e.Other(from));
             }
-        }
-
-        //The gap heuristic detects gaps in the labeling function 
-        //If there is a label 0 < 𝓁' < | V | for which there is no node u such that 𝓁(u) = 𝓁', 
-        //then any node u with 𝓁' < 𝓁(u) < | V | has been disconnected from t and can be relabeled to (| V | + 1) immediately.
-        private void Gap(int k)
-        {
-            //просматриваем все узлы
-            for (int v = 0; v < graph.NodeCount; v++)
-                //если узел выше промежутка 
-                if (height[v] >= k)
-                {
-                    //уменьшаем количество узлов в старой высоте
-                    count[height[v]]--;
-                    //обновляем метку высоты
-                    height[v] = Math.Max(height[v], graph.NodeCount);
-                    //увеличиваем количество узлов в новой высоте
-                    if (!count.ContainsKey(height[v]))
-                        count.Add(height[v], 0);
-                    count[height[v]]++;
-                    //добавляем в Bucket узел
-                    Enq(v);
-                }
         }
 
         private void Relabel(int v)
@@ -170,7 +141,6 @@ namespace FlowNetworkToolKit.Algorithms
 
                 }
             }
-            Console.WriteLine("relabel " + v +" h=" + height[v]);
             //увеличиваем количество вершин в новой высоте
             if (!count.ContainsKey(height[v]))
                 count.Add(height[v], 0);
@@ -186,31 +156,15 @@ namespace FlowNetworkToolKit.Algorithms
             {
                 //если избыток в узле положителен
                 if (excess[v] > 0)
-                {
                     //проталкиваем поток
                     Push(e, v);
-                }
                 else
-                {
                     break;
-                }
             }
             //если избыток в узле все еще положителен
             if (excess[v] > 0)
-            {
-                ////если текущий узел последний на данной высоте
-                //if (count[height[v]] == 1)
-                //{
-                //    //перестанавливаем метки узлов, расположенных выше 
-                //    //текущей высоты до максимального значения
-                //    Gap(height[v]);
-                //}
-                //else
-                //{
                     //поднимаем вершину
                     Relabel(v);
-                //}
-            }
         }
 
     }

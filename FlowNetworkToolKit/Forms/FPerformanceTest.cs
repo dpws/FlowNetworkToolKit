@@ -26,7 +26,7 @@ namespace FlowNetworkToolKit.Forms
             cblAlgorithms.Items.Clear();
             foreach (var algo in Runtime.loadedAlghoritms)
             {
-                if (String.Equals(algo.Name, "Dinic")|| String.Equals(algo.Name, "EdmondsKarp")|| String.Equals(algo.Name, "HLPR") || String.Equals(algo.Name, "HLPR_gap"))
+                if (String.Equals(algo.Name, "Dinic")|| String.Equals(algo.Name, "EdmondsKarp")|| String.Equals(algo.Name, "HLPR") || String.Equals(algo.Name, "HLPR_gap_new"))
                     cblAlgorithms.Items.Add(algo.Name, true);
                 else
                     cblAlgorithms.Items.Add(algo.Name, false);
@@ -76,9 +76,9 @@ namespace FlowNetworkToolKit.Forms
 
         private void btnGetStats_Click(object sender, EventArgs e)
         {
-            //var thread = new Thread(RunMultipleTests);
-            //thread.Start();
-            RunMultipleTests();
+            var thread = new Thread(RunMultipleTests);
+            thread.Start();
+            //RunMultipleTests();
         }
 
         private void RunMultipleTests()
@@ -92,7 +92,6 @@ namespace FlowNetworkToolKit.Forms
                 {
                     Log.Write($"    Processing {setDir.Name}");
                     var statFile = new FileInfo(Path.Combine(setDir.FullName, "stats.csv"));
-                    if (setDir.GetFiles().Contains(statFile)) continue;
                     var counters = new Dictionary<int, PerformanceCounter>();
                     foreach (var networkFile in setDir.GetFiles())
                     {
@@ -117,7 +116,9 @@ namespace FlowNetworkToolKit.Forms
                             if (cblAlgorithms.CheckedIndices != null)
                                 foreach (var item in cblAlgorithms.CheckedIndices)
                                 {
+                                
                                     BaseMaxFlowAlgorithm algo = Runtime.loadedAlghoritms[(int)item].Instance;
+                                    if (count >= 500 && algo.GetName() == "Dinic") continue;
                                     for (int i = 0; i < udRunsCount.Value; i++)
                                     {
                                         BaseMaxFlowAlgorithm a = algo.Clone() as BaseMaxFlowAlgorithm;
@@ -150,7 +151,7 @@ namespace FlowNetworkToolKit.Forms
                         foreach (var item in counter.Value.items)
                         {
                             if (!headerSetted)
-                                header += $"NodeCount;{item.Value.Name} - Min;{item.Value.Name} - Max;{item.Value.Name} - Avg;;";
+                                header += $"узлы;{item.Value.Name}_Min;{item.Value.Name}_Max;{item.Value.Name}_Avg;;";
 
                             if (!lines.ContainsKey(counter.Key))
                                 lines[counter.Key] = "";
@@ -166,7 +167,6 @@ namespace FlowNetworkToolKit.Forms
                         }
                     }
                     Log.Write($"        Saved: {statFile.FullName}");
-                    return;
                 }
             }
             MessageBox.Show("Done");

@@ -70,10 +70,10 @@ namespace FlowNetworkToolKit.Algorithms
                     {
                         e.Mark();
                         //проставляем узлу v метку расстояния
-                        Console.WriteLine("touch " + e.ToString());
+                        //Console.WriteLine("touch " + e.ToString());
                         
                         dist[v] = dist[u] + 1;
-                        Console.WriteLine("dist " + v + " = " + dist[v]);
+                        //Console.WriteLine("dist " + v + " = " + dist[v]);
                         //добавляем узел в очередь обрабатываемых узлов
                         queue.Enqueue(v);
                         e.Unmark();
@@ -97,7 +97,7 @@ namespace FlowNetworkToolKit.Algorithms
                 {
                     //вызов события отрисовки OnEdgeMarked
                     e.Mark();
-                    Console.WriteLine("touch " + e.ToString());
+                    //Console.WriteLine("touch " + e.ToString());
 
                     //рекурсивно ищем путь до стока, параллельно рассчитывая пропускную способность пути delta
                     double delta = DFS(dest, e.Other(u), Math.Min(f, e.ResidualCapacityTo(e.Other(u))));
@@ -108,7 +108,7 @@ namespace FlowNetworkToolKit.Algorithms
                     {
                         //увеличиваем поток в ребре 
                         e.AddFlow(delta, e.Other(u));
-                        Console.WriteLine("pushflow " + e.ToString()+ " "+ delta);
+                       // Console.WriteLine("pushflow " + e.ToString()+ " "+ delta);
                         //рекурсивно возвращаем пропускную способность пути
                         return delta;
                     }

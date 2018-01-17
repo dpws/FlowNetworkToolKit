@@ -38,10 +38,10 @@
             this.maxtime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.avgtime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnGetStats = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.udRunsCount = new System.Windows.Forms.NumericUpDown();
-            this.btnGetStats = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -148,6 +148,16 @@
             this.panel1.Size = new System.Drawing.Size(989, 47);
             this.panel1.TabIndex = 7;
             // 
+            // btnGetStats
+            // 
+            this.btnGetStats.Location = new System.Drawing.Point(783, 12);
+            this.btnGetStats.Name = "btnGetStats";
+            this.btnGetStats.Size = new System.Drawing.Size(75, 23);
+            this.btnGetStats.TabIndex = 10;
+            this.btnGetStats.Text = "...";
+            this.btnGetStats.UseVisualStyleBackColor = true;
+            this.btnGetStats.Click += new System.EventHandler(this.btnGetStats_Click);
+            // 
             // btnRun
             // 
             this.btnRun.Image = global::FlowNetworkToolKit.Properties.Resources.control_skip;
@@ -195,16 +205,6 @@
             0,
             0,
             0});
-            // 
-            // btnGetStats
-            // 
-            this.btnGetStats.Location = new System.Drawing.Point(783, 12);
-            this.btnGetStats.Name = "btnGetStats";
-            this.btnGetStats.Size = new System.Drawing.Size(75, 23);
-            this.btnGetStats.TabIndex = 10;
-            this.btnGetStats.Text = "...";
-            this.btnGetStats.UseVisualStyleBackColor = true;
-            this.btnGetStats.Click += new System.EventHandler(this.btnGetStats_Click);
             // 
             // FPerformanceTest
             // 

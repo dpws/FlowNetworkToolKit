@@ -109,8 +109,8 @@ namespace FlowNetworkToolKit.Algorithms
             {
                 //проталкиваем поток в ребро
                 e.AddFlow(f, e.Other(from));
-                Console.WriteLine("pushflow " + e.ToString());
-                Console.WriteLine("hf " + f);
+                //Console.WriteLine("pushflow " + e.ToString());
+                //Console.WriteLine("hf " + f);
                 //обновляем избыток в узлах ребра
                 excess[e.Other(from)] += f;
                 excess[from] -= f;
@@ -157,7 +157,7 @@ namespace FlowNetworkToolKit.Algorithms
 
                 }
             }
-            Console.WriteLine("relabel " + v +" h=" + height[v]);
+           // Console.WriteLine("relabel " + v +" h=" + height[v]);
             //увеличиваем количество вершин в новой высоте
             count[height[v]]++;
             //добавляем в Bucket поднятый узел
