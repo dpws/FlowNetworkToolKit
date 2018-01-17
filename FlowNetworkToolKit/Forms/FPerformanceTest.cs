@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FlowNetworkToolKit.Core;
 using FlowNetworkToolKit.Core.Base.Algorithm;
 using FlowNetworkToolKit.Core.Utils;
 using FlowNetworkToolKit.Core.Utils.Importer;
 using FlowNetworkToolKit.Core.Utils.Logger;
-using FlowNetworkToolKit.Core.Utils.Visualizer;
 
 namespace FlowNetworkToolKit.Forms
 {
@@ -26,10 +20,7 @@ namespace FlowNetworkToolKit.Forms
             cblAlgorithms.Items.Clear();
             foreach (var algo in Runtime.loadedAlghoritms)
             {
-                if (String.Equals(algo.Name, "Dinic")|| String.Equals(algo.Name, "EdmondsKarp")|| String.Equals(algo.Name, "HLPR") || String.Equals(algo.Name, "HLPR_gap_new"))
-                    cblAlgorithms.Items.Add(algo.Name, true);
-                else
-                    cblAlgorithms.Items.Add(algo.Name, false);
+                cblAlgorithms.Items.Add(algo.Name, true);
             }
         }
 
