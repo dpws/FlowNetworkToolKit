@@ -12,7 +12,7 @@ namespace FlowNetworkToolKit.Algorithms
 
         public EdmondsKarp()
         {
-            Name = "EK";
+            Name = "*EdmondsKarp";
             Url = "https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%AD%D0%B4%D0%BC%D0%BE%D0%BD%D0%B4%D1%81%D0%B0_%E2%80%94_%D0%9A%D0%B0%D1%80%D0%BF%D0%B0";
             Description =
                 @"Алгоритм Эдмондса—Карпа — это вариант алгоритма Форда—Фалкерсона, при котором на каждом шаге выбирают кратчайший дополняющий путь из источника в сток в остаточной сети (полагая, что каждое ребро имеет единичную длину). Кратчайший путь находится поиском в ширину.";

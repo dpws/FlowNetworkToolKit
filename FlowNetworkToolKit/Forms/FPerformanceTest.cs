@@ -74,6 +74,7 @@ namespace FlowNetworkToolKit.Forms
 
         private void RunMultipleTests()
         {
+            // тестовый метод для сбора статистики - запуск алгоритмов на нескольких файлах из директории rootDir
             var importer = new Importer();
             var rootDir = new DirectoryInfo("E:\\wash\\test_sets");
             foreach (var workDir in rootDir.GetDirectories())
@@ -82,6 +83,7 @@ namespace FlowNetworkToolKit.Forms
                 foreach (var setDir in workDir.GetDirectories())
                 {
                     Log.Write($"    Processing {setDir.Name}");
+                    //файл для выгрузки собранной статистики
                     var statFile = new FileInfo(Path.Combine(setDir.FullName, "stats.csv"));
                     var counters = new Dictionary<int, PerformanceCounter>();
                     foreach (var networkFile in setDir.GetFiles())
@@ -109,6 +111,7 @@ namespace FlowNetworkToolKit.Forms
                                 {
                                 
                                     BaseMaxFlowAlgorithm algo = Runtime.loadedAlghoritms[(int)item].Instance;
+                                    // диниц работает медленно - пропускаем
                                     if (count >= 500 && algo.GetName() == "Dinic") continue;
                                     for (int i = 0; i < udRunsCount.Value; i++)
                                     {

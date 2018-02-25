@@ -148,7 +148,7 @@
             this.panel1.Size = new System.Drawing.Size(989, 47);
             this.panel1.TabIndex = 7;
             // 
-            // btnGetStats
+            // btnGetStats 
             // 
             this.btnGetStats.Location = new System.Drawing.Point(783, 12);
             this.btnGetStats.Name = "btnGetStats";

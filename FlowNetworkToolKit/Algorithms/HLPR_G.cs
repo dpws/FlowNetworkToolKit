@@ -18,7 +18,7 @@ namespace FlowNetworkToolKit.Algorithms
         int b;
         public HLPR_G()
         {
-            Name = "HLPR_G";
+            Name = "*HLPR_G";
             Url = "";
             Description = @"";
         }
